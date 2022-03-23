@@ -59,4 +59,4 @@ exports.deleteagent = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-// console
+// console.log()
