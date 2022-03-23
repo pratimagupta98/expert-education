@@ -58,3 +58,9 @@ exports.deleteagent = async (req, res) => {
     .then((data) => resp.deleter(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.delete = async (req, res) => {
+  await Agent.deleteOne({ _id: req.params.id })
+    .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
