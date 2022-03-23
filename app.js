@@ -83,7 +83,7 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
+  res.status(err.status || 3000);
   res.render("error");
 });
 
@@ -109,8 +109,8 @@ mongoose
     console.log(error);
   });
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log("Example app listening on port 5000");
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Example app listening on port 3000");
 });
 
 //    http://localhost:5000/admin
