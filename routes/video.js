@@ -21,7 +21,7 @@ if (!fs.existsSync("./uploads")) {
   const upload = multer({ storage: storage });
   
 
-const {addvideo,getvideo,deletevideo} = require("../controllers/video");
+const {addvideo,getvideo,deletevideo,videobycourse} = require("../controllers/video");
 
 
 //PATHS
@@ -37,8 +37,9 @@ router.post("/admin/addvideo",verifyToken,upload.fields([
 
 router.get("/admin/getvideo", getvideo);
 router.get("/admin/deletevideo/:id", deletevideo);
+router.get("/admin/videobycourse/:id", videobycourse);
 
-
+ 
  
 module.exports  = router
 
