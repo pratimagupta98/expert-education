@@ -64,3 +64,6 @@ exports.delete = async (req, res) => {
     .then((data) => resp.deleter(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
+//console
