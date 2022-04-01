@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
- 
+  
+
 const {addCat,editCat,viewoneCat,allCat,deleteCat
    
 } = require("../controllers/category");

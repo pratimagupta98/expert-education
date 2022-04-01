@@ -6,7 +6,7 @@ exports.addCat = async (req, res) => {
 
   const newCategory = new Category({
     catName: catName,
-  });
+   });
   const findexist = await Category.findOne({ catName: catName });
   if (findexist) {
     resp.alreadyr(res);

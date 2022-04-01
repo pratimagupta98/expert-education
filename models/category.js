@@ -7,7 +7,12 @@ const CategorySchema = new Schema(
     catName: {
       type: String,
     },
+    // teacher: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "staff",
+    // },
   },
+  
   { timestamps: true }
 );
 
