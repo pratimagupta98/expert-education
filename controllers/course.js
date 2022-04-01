@@ -216,6 +216,9 @@ exports.editcoursebystaff = async (req, res) => {
 exports.viewonecourse = async (req, res) => {
   await Course.findOne({ _id: req.params.id })
     .populate("teacher")
+    .populate("category_id")
+     .populate("video_id")
+     .populate("pdf_id")
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
