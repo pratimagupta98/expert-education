@@ -275,7 +275,7 @@ exports.countcourse = async (req, res) => {
 
 
 exports.coursebytitle = async (req,res) =>{
-  const findall = await Course.find({course_title :req.params.id})
+  const findall = await Course.find({video_id :req.params.id})
   .populate("teacher")
     .populate("category_id")
      .populate("video_id")
