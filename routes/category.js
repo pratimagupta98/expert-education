@@ -16,7 +16,4 @@ router.get("/admin/deleteCat/:id", deleteCat);
 module.exports = router;
 
 
-
-//console
-
 //http://localhost:5000/api/admin/allusers
