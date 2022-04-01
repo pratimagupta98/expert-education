@@ -238,6 +238,9 @@ exports.mycourses = async (req, res) => {
   await Course.find({ teacher: req.staffId })
     .sort({ popularity: 1 })
     .populate("teacher")
+    .populate("category_id")
+    .populate("video_id")
+    .populate("pdf_id")
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
