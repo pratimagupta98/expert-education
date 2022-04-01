@@ -10,6 +10,10 @@ const pdffileSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "course",
     },
+    teacher: {
+      type: Schema.Types.ObjectId,
+      ref: "staff",
+    },
 
     pdf: [
       {
