@@ -10,7 +10,8 @@ exports.addvideo = async(req,res) =>{
 
     const newVideo = new Video({
       videoTitle :videoTitle,
-      course :course
+      course :course,
+      teacher: req.staffId,
     })
 
     const findexist = await Video.findOne({ videoTitle: videoTitle });
@@ -84,3 +85,13 @@ exports.addvideo = async(req,res) =>{
         .then((data) => resp.deleter(res, data))
         .catch((error) => resp.errorr(res, error));
     };
+
+    exports.videobycourse= async (req,res) =>{
+      const findall = await Video.find({course :req.params.id})
+      .populate("teacher")
+        .populate("category_id")
+         .populate("video_id")
+         .populate("pdf_id")
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+    }

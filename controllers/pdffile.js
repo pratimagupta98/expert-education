@@ -24,7 +24,8 @@ exports.addpdf = async (req, res) => {
   } else {
     const newPdffile = new Pdffile({
       pdf_title: pdf_title,
-      course :course
+      course :course,
+      teacher: req.staffId,
       // pdf_file: pdf_file,
       //pdf_image: pdf_image,
 

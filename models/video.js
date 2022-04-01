@@ -16,6 +16,10 @@ course : {
   type: Schema.Types.ObjectId,
   ref: "course",
 },
+teacher: {
+  type: Schema.Types.ObjectId,
+  ref: "staff",
+},
    video_link: [{
     video_image: String,
     video_file: String,

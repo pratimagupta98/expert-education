@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router();
 const fs = require("fs");
 const multer = require("multer");
+const { verifyToken } = require("../functions/stafftoken");
 
 if (!fs.existsSync("./uploads")) {
     fs.mkdirSync("./uploads");
@@ -25,7 +26,7 @@ const {addvideo,getvideo,deletevideo} = require("../controllers/video");
 
 //PATHS
 
-router.post("/admin/addvideo",upload.fields([
+router.post("/admin/addvideo",verifyToken,upload.fields([
     {
         name :"video_file"
     },

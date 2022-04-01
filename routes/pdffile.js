@@ -5,6 +5,9 @@ const multer = require("multer");
 const {} = require("multer");
 const fs = require("fs");
 
+const { verifyToken } = require("../functions/stafftoken");
+
+
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
 }
@@ -24,7 +27,7 @@ const upload = multer({ storage: storage });
 const { addpdf } = require("../controllers/pdffile");
 
 router.post(
-  "/admin/addpdf",
+  "/admin/addpdf",verifyToken,
   upload.fields([
     {
       name: "pdf_file",
