@@ -34,6 +34,7 @@ const {
   allcoursebyrecent,
   deletecourse,
   countcourse,
+  coursebytitle
 } = require("../controllers/course");
 
 //Paths
@@ -89,5 +90,5 @@ router.get("/admin/mycourses", verifyToken, mycourses);
 router.get("/admin/allcoursebyrecent", allcoursebyrecent);
 router.get("/admin/deletecourse/:id", deletecourse);
 router.get("/admin/countcourse", countcourse);
-
+router.get("/admin/coursebytitle/:id", coursebytitle);
 module.exports = router;

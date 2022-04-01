@@ -272,3 +272,14 @@ exports.countcourse = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
+exports.coursebytitle = async (req,res) =>{
+  const findall = await Course.find({course_title :req.params.id})
+  .populate("teacher")
+    .populate("category_id")
+     .populate("video_id")
+     .populate("pdf_id")
+  .then((data) => resp.successr(res, data))
+  .catch((error) => resp.errorr(res, error));
+}
