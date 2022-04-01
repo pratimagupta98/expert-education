@@ -2,6 +2,7 @@
 const Video = require("../models/video");
 const resp = require("../helpers/apiResponse");
  const { uploadFile } = require("../helpers/awsuploader");
+ const Course = require("../models/course");
 
 
 
