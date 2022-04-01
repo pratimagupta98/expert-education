@@ -5,7 +5,7 @@ const { uploadFile } = require("../helpers/awsuploader");
 const fs = require("fs");
 
 exports.addpdf = async (req, res) => {
-  const { pdf_title } = req.body;
+  const { pdf_title,course } = req.body;
 
   // const newPdffile = new Pdffile({
   //   pdf_title: pdf_title,
@@ -15,6 +15,7 @@ exports.addpdf = async (req, res) => {
 
   const findexist = await Pdffile.findOne({
     pdf_title: pdf_title,
+  
     // pdf_file: pdf_file,
     // pdf_image: pdf_image,
   });
@@ -23,6 +24,7 @@ exports.addpdf = async (req, res) => {
   } else {
     const newPdffile = new Pdffile({
       pdf_title: pdf_title,
+      course :course
       // pdf_file: pdf_file,
       //pdf_image: pdf_image,
 

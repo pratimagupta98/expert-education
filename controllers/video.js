@@ -6,10 +6,11 @@ const resp = require("../helpers/apiResponse");
 
 
 exports.addvideo = async(req,res) =>{
-    const {videoTitle,video_file,video_image}  = req.body
+    const {videoTitle,video_file,video_image,course}  = req.body
 
     const newVideo = new Video({
-      videoTitle :videoTitle
+      videoTitle :videoTitle,
+      course :course
     })
 
     const findexist = await Video.findOne({ videoTitle: videoTitle });

@@ -6,6 +6,10 @@ const pdffileSchema = new Schema(
     pdf_title: {
       type: String,
     },
+    course : {
+      type: Schema.Types.ObjectId,
+      ref: "course",
+    },
 
     pdf: [
       {

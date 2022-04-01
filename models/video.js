@@ -12,7 +12,10 @@ const VideoSchema  = new Schema (
 //    video_file : {
 //        type : String
 //    },
-
+course : {
+  type: Schema.Types.ObjectId,
+  ref: "course",
+},
    video_link: [{
     video_image: String,
     video_file: String,
