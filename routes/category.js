@@ -17,6 +17,6 @@ module.exports = router;
 
 
 
-
+//console
 
 //http://localhost:5000/api/admin/allusers
