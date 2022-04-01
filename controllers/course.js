@@ -200,8 +200,21 @@ exports.editcourse = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+exports.editcoursebystaff = async (req, res) => {
+  await Course.findOneAndUpdate(
+    {
+      _id: req.staffId,
+    },
+    { $set: req.body },
+    { new: true }
+  )
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
 exports.viewonecourse = async (req, res) => {
-  await Course.findOne({ _id: req.params.id })
+  await Course.findOne({ _id: req.sellerId })
     .populate("teacher")
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
