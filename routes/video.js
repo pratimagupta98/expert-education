@@ -35,7 +35,7 @@ router.post("/admin/addvideo",upload.fields([
 ]),addvideo)
 
 router.get("/admin/getvideo", getvideo);
-router.get("/admin/getvideo", deletevideo);
+router.get("/admin/deletevideo/:id", deletevideo);
 
 
  
