@@ -43,7 +43,7 @@ const thisSchema = new Schema(
     },
     pdf_id: {
       type: Schema.Types.ObjectId,
-      ref: "pdf",
+      ref: "pdffile",
     },
 
     popularity: {
