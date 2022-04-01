@@ -197,7 +197,7 @@ exports.setting = async (req, res) => {
 exports.settingbytoken = async (req, res) => {
   await Staff.findOneAndUpdate(
     {
-      staff: req.staffId,
+      _id: req.staffId,
     },
     { $set: req.body },
     { new: true }
