@@ -98,7 +98,7 @@ exports.addcourse = async (req, res) => {
 };
 
 exports.addcoursebyadmin = async (req, res) => {
-  const { course_title, desc, teacher, category } = req.body;
+  const { course_title, desc, teacher, category_id,long_desc } = req.body;
 
   const findexist = await Course.findOne({ course_title: course_title });
   if (findexist) {
