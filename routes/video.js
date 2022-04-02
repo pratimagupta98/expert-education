@@ -38,7 +38,14 @@ router.post("/admin/addvideo",verifyToken,upload.fields([
 router.get("/admin/getvideo", getvideo);
 router.get("/admin/deletevideo/:id", deletevideo);
 router.get("/admin/videobycourse/:id", videobycourse);
-router.post("/admin/addvideobyadmin", addvideobyadmin);
+router.post("/admin/addvideobyadmin",upload.fields([
+  {
+      name :"video_file"
+  },
+  {
+      name : "video_image"
+  }
+]), addvideobyadmin);
 
  
  
