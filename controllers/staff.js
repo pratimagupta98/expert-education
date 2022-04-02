@@ -1,6 +1,6 @@
 const Staff = require("../models/staff");
 const resp = require("../helpers/apiResponse");
-const cloudinary = require("cloudinary").v2;
+const { uploadFile } = require("../helpers/awsuploader");
 const bcrypt = require("bcryptjs");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
@@ -8,6 +8,85 @@ const { body, validationResult } = require("express-validator");
 const staff = require("../models/staff");
 
 exports.addstaff = async (req, res) => {
+  const {
+    fullname,
+    email,
+    mobile,
+    password,
+    cnfmPassword,
+    gender,
+    dob,
+    state,
+    city,
+    institute,
+    approvedstatus,
+  } = req.body;
+
+  //hashing password
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  const newStaff = new Staff({
+    fullname: fullname,
+    email: email,
+    mobile: mobile,
+    password: hashPassword,
+    cnfmPassword: hashPassword,
+    gender: gender,
+    dob: dob,
+    state: state,
+    city: city,
+    institute: institute,
+    approvedstatus: approvedstatus,
+  });
+
+  const findexist = await Staff.findOne({
+    $or: [{ email: email }, { mobile: mobile }],
+  });
+  if (findexist) {
+    resp.alreadyr(res);
+  } else {
+    if (req.files) {
+      console.log(req.files);
+      if (req.files.image) {
+        const geturl = await uploadFile(
+          req.files.image[0]?.path,
+          req.files.image[0]?.filename,
+          "jpg"
+        );
+        if (geturl) {
+          newStaff.image = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
+    newStaff
+      .save()
+      .then((result) => {
+        const token = jwt.sign(
+          {
+            staffId: staff._id,
+          },
+          key,
+          {
+            expiresIn: "365d",
+          }
+        );
+        res.header("staff-token", token).status(200).json({
+          status: true,
+          token: token,
+          msg: "success",
+          staff: result,
+        });
+      })
+      .catch((error) => resp.errorr(res, error));
+  }
+}
+}
+
+
+
+
+exports.staffbyadmin = async (req, res) => {
   const {
     fullname,
     email,

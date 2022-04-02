@@ -107,9 +107,9 @@ exports.addcoursebyadmin = async (req, res) => {
     const newCourse = new Course({
       course_title: course_title,
       desc: desc,
-
+      long_desc :long_desc,
       teacher: teacher,
-      category: category,
+      category_id: category_id,
     });
 
     if (req.files) {
@@ -292,10 +292,10 @@ exports.countcourse = async (req, res) => {
 
 exports.coursebytitle = async (req,res) =>{
   const findall = await Course.find({video_id :req.params.id})
-  .populate("teacher")
-    .populate("category_id")
-     .populate("video_id")
-     .populate("pdf_id")
+  // .populate("teacher")
+  //   .populate("category_id")
+  //    .populate("video_id")
+  //    .populate("pdf_id")
   .then((data) => resp.successr(res, data))
   .catch((error) => resp.errorr(res, error));
 }
