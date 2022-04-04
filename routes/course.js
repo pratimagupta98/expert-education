@@ -35,7 +35,7 @@ const {
   deletecourse,
   countcourse,
   coursebytitle,
-   
+  updatecourse
 } = require("../controllers/course");
 
 //Paths
@@ -92,4 +92,7 @@ router.get("/admin/allcoursebyrecent", allcoursebyrecent);
 router.get("/admin/deletecourse/:id", deletecourse);
 router.get("/admin/countcourse", countcourse);
 router.get("/admin/coursebytitle/:id", coursebytitle);
+router.post("/admin/updatecourse/:id",verifyToken ,updatecourse);
+
 module.exports = router;
+ 

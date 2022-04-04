@@ -214,7 +214,7 @@ exports.editcoursebystaff = async (req, res) => {
 
 
 exports.viewonecourse = async (req, res) => {
-  await Course.findOne({ $or: [{  teacher: req.staffId}, { course_title: req.params.id }] })
+  await Course.find({ $or: [{  teacher: req.staffId}, { _id: req.params.id }] })
   //_id: req.params.id }
    
     .populate("teacher")
@@ -301,3 +301,28 @@ exports.coursebytitle = async (req,res) =>{
   .then((data) => resp.successr(res, data))
   .catch((error) => resp.errorr(res, error));
 }
+
+
+exports.updatecourse = async (req, res) => {
+  const coursedetail = await Course.findOne({ _id: req.params.id });
+  if (coursedetail) {
+    //console.log(coursedetail.popularity)
+   // let increment = coursedetail.popularity + 1;
+    await Course.findOneAndUpdate(
+      {
+      // _id: req.params.id},
+      $and: [{ _id: req.staffId }, { _id: req.params.id }]},
+        // {
+          // $push: {
+      // tank_map: {
+      //   $each: [ { tank_number:newarr, product_map:newarr2,capacity_litre:newarr3}]}}},
+      {$push: {video_id: video_id}},
+      {$push: {pdf_id: pdf_id}},
+          // },
+      { new: true }
+    )
+      //.populate("teacher")
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+  }
+};
