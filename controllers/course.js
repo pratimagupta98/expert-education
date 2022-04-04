@@ -304,6 +304,7 @@ exports.coursebytitle = async (req,res) =>{
 
 
 exports.updatecourse = async (req, res) => {
+  const {video_id,pdf_id} = req.body
   const coursedetail = await Course.findOne({ _id: req.params.id });
   if (coursedetail) {
     //console.log(coursedetail.popularity)
