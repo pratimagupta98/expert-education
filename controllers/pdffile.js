@@ -97,8 +97,7 @@ exports.addpdfbyadmin = async (req, res) => {
 
   const findexist = await Pdffile.findOne({
     pdf_title: pdf_title,
-    course :course,
-    teacher:  teacher
+     
     // pdf_file: pdf_file,
     // pdf_image: pdf_image,
   });
@@ -108,7 +107,7 @@ exports.addpdfbyadmin = async (req, res) => {
     const newPdffile = new Pdffile({
       pdf_title: pdf_title,
       course :course,
-      teacher: req.staffId,
+      teacher: teacher
       // pdf_file: pdf_file,
       //pdf_image: pdf_image,
 
