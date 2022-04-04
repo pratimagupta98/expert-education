@@ -317,8 +317,8 @@ exports.updatecourse = async (req, res) => {
           // $push: {
       // tank_map: {
       //   $each: [ { tank_number:newarr, product_map:newarr2,capacity_litre:newarr3}]}}},
-      {$push: {video_id: video_id}},
-      {$push: {pdf_id: pdf_id}},
+      {$push: {video_id: req.params.id}},
+      {$push: {pdf_id: req.params.id}},
           // },
       { new: true }
     )
