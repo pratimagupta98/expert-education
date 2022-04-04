@@ -87,7 +87,7 @@ exports.addpdf = async (req, res) => {
 };
 
 exports.addpdfbyadmin = async (req, res) => {
-  const { pdf_title,course } = req.body;
+  const { pdf_title,course,teacher } = req.body;
 
   // const newPdffile = new Pdffile({
   //   pdf_title: pdf_title,
