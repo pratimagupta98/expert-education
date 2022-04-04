@@ -125,56 +125,56 @@ exports.addcoursebyadmin = async (req, res) => {
           //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
         }
       }
-      if (req.files.pdf_file && req.files.pdf_image) {
-        for (let i = 0; i < req.files.pdf_file.length; i++) {
-          const getpdfurl = await uploadFile(
-            req.files.pdf_file[i]?.path,
-            req.files.pdf_file[i]?.filename,
-            "pdf"
-          );
+      // if (req.files.pdf_file && req.files.pdf_image) {
+      //   for (let i = 0; i < req.files.pdf_file.length; i++) {
+      //     const getpdfurl = await uploadFile(
+      //       req.files.pdf_file[i]?.path,
+      //       req.files.pdf_file[i]?.filename,
+      //       "pdf"
+      //     );
 
-          let pdfObj = new Object();
-          if (getpdfurl) {
-            pdfObj.pdf_file = getpdfurl.Location;
-            //fs.unlinkSync(`../uploads/${req.files.pdf_file[i]?.filename}`);
-          }
-          const getimgurl = await uploadFile(
-            req.files.pdf_image[i]?.path,
-            req.files.pdf_image[i]?.filename,
-            "jpg"
-          );
-          if (getimgurl) {
-            pdfObj.pdf_image = getimgurl.Location;
-            //fs.unlinkSync(`../uploads/${req.files.pdf_image[i]?.filename}`);
-          }
-          newCourse.pdf[i] = pdfObj;
-        }
-      }
-      if (req.files.video_file && req.files.video_image) {
-        for (let i = 0; i < req.files.video_file.length; i++) {
-          const getpdfurl = await uploadFile(
-            req.files.video_file[i]?.path,
-            req.files.video_file[i]?.filename,
-            "mp4"
-          );
+      //     let pdfObj = new Object();
+      //     if (getpdfurl) {
+      //       pdfObj.pdf_file = getpdfurl.Location;
+      //       //fs.unlinkSync(`../uploads/${req.files.pdf_file[i]?.filename}`);
+      //     }
+      //     const getimgurl = await uploadFile(
+      //       req.files.pdf_image[i]?.path,
+      //       req.files.pdf_image[i]?.filename,
+      //       "jpg"
+      //     );
+      //     if (getimgurl) {
+      //       pdfObj.pdf_image = getimgurl.Location;
+      //       //fs.unlinkSync(`../uploads/${req.files.pdf_image[i]?.filename}`);
+      //     }
+      //     newCourse.pdf[i] = pdfObj;
+      //   }
+      // }
+      // if (req.files.video_file && req.files.video_image) {
+      //   for (let i = 0; i < req.files.video_file.length; i++) {
+      //     const getpdfurl = await uploadFile(
+      //       req.files.video_file[i]?.path,
+      //       req.files.video_file[i]?.filename,
+      //       "mp4"
+      //     );
 
-          let videoObj = new Object();
-          if (getpdfurl) {
-            videoObj.video_file = getpdfurl.Location;
-            //fs.unlinkSync(`../uploads/${req.files.video_file[i]?.filename}`);
-          }
-          const getimgurl = await uploadFile(
-            req.files.video_image[i]?.path,
-            req.files.video_image[i]?.filename,
-            "jpg"
-          );
-          if (getimgurl) {
-            videoObj.video_image = getimgurl.Location;
-            //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
-          }
-          newCourse.video_link[i] = videoObj;
-        }
-      }
+      //     let videoObj = new Object();
+      //     if (getpdfurl) {
+      //       videoObj.video_file = getpdfurl.Location;
+      //       //fs.unlinkSync(`../uploads/${req.files.video_file[i]?.filename}`);
+      //     }
+      //     const getimgurl = await uploadFile(
+      //       req.files.video_image[i]?.path,
+      //       req.files.video_image[i]?.filename,
+      //       "jpg"
+      //     );
+      //     if (getimgurl) {
+      //       videoObj.video_image = getimgurl.Location;
+      //       //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
+      //     }
+      //     newCourse.video_link[i] = videoObj;
+      //   }
+      // }
       newCourse
         .save()
         .then((data) => resp.successr(res, data))
@@ -214,7 +214,9 @@ exports.editcoursebystaff = async (req, res) => {
 
 
 exports.viewonecourse = async (req, res) => {
-  await Course.findOne({ _id: req.params.id })
+  await Course.findOne({ $or: [{  teacher: req.staffId}, { _id: req.params.id }] })
+  //_id: req.params.id }
+   
     .populate("teacher")
     .populate("category_id")
      .populate("video_id")

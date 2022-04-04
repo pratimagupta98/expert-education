@@ -84,7 +84,7 @@ router.post(
   addcoursebyadmin
 );
 router.post("/admin/editcourse/:id", editcourse);
-router.get("/admin/viewonecourse/:id", viewonecourse);
+router.get("/admin/viewonecourse/:id",verifyToken, viewonecourse);
 router.get("/admin/viewonecoursep/:id", viewonecoursep);
 router.get("/admin/allcourse", allcourse);
 router.get("/admin/mycourses", verifyToken, mycourses);
