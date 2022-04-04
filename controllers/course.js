@@ -303,27 +303,40 @@ exports.coursebytitle = async (req,res) =>{
 }
 
 
+// exports.updatecourse = async (req, res) => {
+//   const {video_id,pdf_id} = req.body
+//   const coursedetail = await Course.findOne({ _id: req.params.id });
+//   if (coursedetail) {
+//     //console.log(coursedetail.popularity)
+//    // let increment = coursedetail.popularity + 1;
+//     await Course.findOneAndUpdate(
+//       {
+//       // _id: req.params.id},
+//         _id: req.params.id },
+//         // {
+//           // $push: {
+//       // tank_map: {
+//       //   $each: [ { tank_number:newarr, product_map:newarr2,capacity_litre:newarr3}]}}},
+//       {$push: {video_id: req.body.video_id}},
+//      // {$push: {pdf_id: req.params.id}},
+//           // },
+//     //  { new: true }
+//     )
+//       //.populate("teacher")
+//       .then((data) => resp.successr(res, data))
+//       .catch((error) => resp.errorr(res, error));
+//   }
+// };
+
 exports.updatecourse = async (req, res) => {
-  const {video_id,pdf_id} = req.body
-  const coursedetail = await Course.findOne({ _id: req.params.id });
-  if (coursedetail) {
-    //console.log(coursedetail.popularity)
-   // let increment = coursedetail.popularity + 1;
-    await Course.findOneAndUpdate(
-      {
-      // _id: req.params.id},
-        _id: req.params.id },
-        // {
-          // $push: {
-      // tank_map: {
-      //   $each: [ { tank_number:newarr, product_map:newarr2,capacity_litre:newarr3}]}}},
-      {$push: {video_id: req.params.video_id}},
-     // {$push: {pdf_id: req.params.id}},
-          // },
-    //  { new: true }
-    )
-      //.populate("teacher")
-      .then((data) => resp.successr(res, data))
-      .catch((error) => resp.errorr(res, error));
-  }
+  await Course.findOneAndUpdate(
+    {
+      _id: req.params.id,
+    },
+    //{ $push:{video_id:req.body.id}},
+    { $push:{pdf_id:req.body.id}},
+    { new: true }
+  )
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
 };
