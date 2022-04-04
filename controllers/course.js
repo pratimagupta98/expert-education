@@ -214,7 +214,7 @@ exports.editcoursebystaff = async (req, res) => {
 
 
 exports.viewonecourse = async (req, res) => {
-  await Course.findOne({ $or: [{  teacher: req.staffId}, { _id: req.params.id }] })
+  await Course.findOne({ $or: [{  teacher: req.staffId}, { course_title: req.params.id }] })
   //_id: req.params.id }
    
     .populate("teacher")
