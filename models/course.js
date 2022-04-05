@@ -16,10 +16,10 @@ const thisSchema = new Schema(
     long_desc: {
       type: String,
     },
-    video_id:[{
-          video_id1:[{type:Schema.Types.ObjectId,
-            ref: "staff",}],
-      }],
+    // video_id:[{
+    //       video_id1:[{type:Schema.Types.ObjectId,
+    //         ref: "staff",}],
+    //   }],
     // pdf: [
     //   {
     //     pdf_image: String,
@@ -57,5 +57,15 @@ const thisSchema = new Schema(
   },
   { timestamps: true }
 );
+
+thisSchema.virtual('videolist',{
+  ref: 'video',
+  localField: '_id',
+  foreignField: 'course',
+  justOne:false
+});
+
+thisSchema.set('toObject', { virtuals: true });
+thisSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model("course", thisSchema);

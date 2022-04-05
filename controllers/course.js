@@ -7,59 +7,7 @@ const fs = require("fs");
 exports.addcourse = async (req, res) => {
   const { course_title, desc, long_desc, category_id, video_id, pdf_id } =
   req.body;
-// let cours = await Course.findOne({"course_title":req.body.course_title}).populate("video_id")
-// console.log("cours",cours.video_id)
-// cours.video_id
-// if (cours){
-  // await Course. updateOne(
-  //   {},
-  //   { $set: {"video_id2": req.body.video_id} },
-  //   false,
-  //   true
-  // )
 
-  // await Course.insertMany( [ {'video_id':req.body.video_id },{'pdf_id':req.body.pdf_id }]);
-  // resp.successr(res, cours)
-//   // console.log(cours)
-// let qq= await   Course.findOneAndUpdate({
-//     query: {course_title:course_title },
-//     update: {
-//       $setOnInsert: { video_id2:" req.body.video_id"}
-//     },
-//     new: true,   // return new doc if one is upserted
-  //  upsert: true // insert the document if it does not exist
- // })
- //Course.findOrCreate({ video_id: 'Mike' }, (err, result) => {
-  // my new or existing model is loaded as result
-//})
-//  let qq= await Course.findOneAndUpdate(
-//   { course_title: req.body.course_title }, 
-//   { $push: { video_id_1: req.bodyvideo_id  } },
-//  )
-//   res.sendStatus(200)
- //const newOrUpdatedDocument = qq.value;
-//   console.log("newOrUpdatedDocument",newOrUpdatedDocument)
-
- // await Course.updateOne(
-//     { },
-    
-//         { $push: { video_id:req.body.video_id }} ,
-   
-//     {upsert: true },
-//  {new: true, }
-//   )
-  // {
-  //   course_title: req.body.course_title},
-  //   {
-  //     $push: {
-  //       'video_id':  { "video_id1": req.body.video_id}}},
-// { $set: req.body },
-//   { new: true }
-// )
-// resp.successr(res, "qq");
-
-//  }else{
- 
   const findexist = await Course.findOne({ course_title: course_title });
   if (findexist) {
     resp.alreadyr(res);
@@ -75,7 +23,6 @@ exports.addcourse = async (req, res) => {
     });
 
     if (req.files) {
-      console.log(req.files);
       if (req.files.course_image) {
         const geturl = await uploadFile(
           req.files.course_image[0]?.path,
@@ -302,8 +249,11 @@ exports.allcourse = async (req, res) => {
     .sort({ popularity: 1 })
     .populate("teacher")
     .populate("category_id")
-     .populate("video_id")
-     .populate("pdf_id")
+    //.populate("video_id")
+    .populate([
+      {path:"videolist"}
+    ])
+    .populate("pdf_id")
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
