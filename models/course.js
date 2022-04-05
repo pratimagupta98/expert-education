@@ -16,6 +16,10 @@ const thisSchema = new Schema(
     long_desc: {
       type: String,
     },
+    video_id:[{
+          video_id1:[{type:Schema.Types.ObjectId,
+            ref: "staff",}],
+      }],
     // pdf: [
     //   {
     //     pdf_image: String,
