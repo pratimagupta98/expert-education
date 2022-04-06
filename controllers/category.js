@@ -64,7 +64,8 @@ exports.viewoneCat = async (req, res) => {
 };
 
 exports.allCat = async (req, res) => {
-  await Category.find()
+  await Category.find() .sort({ createdAt: -1 })
+
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
@@ -152,7 +153,8 @@ exports.deletelavel = async (req, res) => {
 
 
 exports.allLavel = async (req, res) => {
-  await Lavel.find()
+  await Lavel.find() .sort({ createdAt: -1 })
+
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
