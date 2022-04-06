@@ -154,7 +154,8 @@ exports.addlavel = async (req, res) => {
   const { level } = req.body;
 
   const newlavel = new Lavel({
-    lavel: level,
+    
+    level: level,
     ///fonk
    });
   const findexist = await Lavel.findOne({ level: level });

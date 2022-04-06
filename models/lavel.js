@@ -20,4 +20,3 @@ const lavelSchema = new Schema(
 );
 
 module.exports = mongoose.model("lavel", lavelSchema);
-//con
