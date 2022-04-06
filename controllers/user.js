@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Batch = require("../models/studentBatch");
 const resp = require("../helpers/apiResponse");
 const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
@@ -212,5 +213,50 @@ exports.myprofile = async (req, res) => {
 exports.deleteuser = async (req, res) => {
   await User.deleteOne({ _id: req.params.id })
     .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.addbatch = async (req, res) => {
+  const { student_Id,lavel_Id} = req.body;
+  
+  const newbatch = new Batch({
+    student_Id: student_Id,
+    lavel_Id:lavel_Id
+   });
+   newbatch
+   .save()
+   .then((data) => resp.successr(res, data))
+   .catch((error) => resp.errorr(res, error));
+}
+
+exports.allbatch = async (req, res) => {
+  await Batch.find()
+    .sort({ createdAt: -1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.viewonebatch = async (req, res) => {
+  await Batch.findOne({ _id: req.params.id })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.deletebatch = async (req, res) => {
+  await Batch.deleteOne({ _id: req.params.id })
+    .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+exports.updatebatch = async (req, res) => {
+  await Batch.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: req.body },
+    { new: true }
+  )
+    .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
