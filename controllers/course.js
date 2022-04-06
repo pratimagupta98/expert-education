@@ -252,6 +252,8 @@ exports.allcourse = async (req, res) => {
     //.populate("video_id")
     .populate([
       {path:"videolist"}
+    ]).populate([
+      {path:"pdflist"}
     ])
     .populate("pdf_id")
     .sort({ sortorder: 1 })

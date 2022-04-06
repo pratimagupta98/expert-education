@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const pdffileSchema = new Schema(
   {
+
+course : {
+  type: Schema.Types.ObjectId,
+  ref: "course",
+},
     pdf_title: {
       type: String,
     },
@@ -22,7 +27,9 @@ const pdffileSchema = new Schema(
       },
     ],
   },
+
   { timestamps: true }
 );
+
 
 module.exports = mongoose.model("pdffile", pdffileSchema);
