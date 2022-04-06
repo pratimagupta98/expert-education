@@ -43,7 +43,7 @@ const {addCat,editCat,viewoneCat,allCat,deleteCat,addlavel, deletelavel,allLavel
 
 router.post("/admin/addCat",multipleUpload ,addCat);
 router.post("/admin/addlavel",multipleUpload ,addlavel);
-router.post("/admin/editCat/:id", editCat);
+router.post("/admin/editCat/:id",multipleUpload,editCat);
 router.get("/admin/viewoneCat/:id", viewoneCat);
 router.get("/admin/allCat", allCat);
 router.get("/admin/deleteCat/:id", deleteCat);

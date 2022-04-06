@@ -46,6 +46,25 @@ exports.addCat = async (req, res) => {
 };
 
 exports.editCat = async (req, res) => {
+  const{catName}=req.body
+  data = {};
+  if (catName) {
+    data.catName = catName;
+  }
+  if (req.files) {
+    console.log(req.files);
+    if (req.files.icon) {
+      const geturl = await uploadFile(
+        req.files.icon[0]?.path,
+        req.files.icon[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.icon = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+  }
   await Category.findOneAndUpdate(
     {
       _id: req.params.id,
@@ -55,6 +74,7 @@ exports.editCat = async (req, res) => {
   )
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
+  
 };
 
 exports.viewoneCat = async (req, res) => {

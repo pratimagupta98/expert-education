@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const lavelSchema = new Schema(
   {
-    lavel: {
+    level: {
       type: String,
     },
     // teacher: {
