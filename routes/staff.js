@@ -7,6 +7,7 @@ const { verifyToken } = require("../functions/stafftoken");
 
 const multer = require("multer");
 const fs = require("fs");
+
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
 }
@@ -21,8 +22,24 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype.includes("jpeg") ||
+    file.mimetype.includes("png") ||
+    file.mimetype.includes("jpg")
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
+let uploads = multer({ storage: storage });
+
+let multipleUpload = uploads.fields([
+  { name: "image", maxCount: 1 },
+ 
+]);
 const {
   addstaff,
   changepassstaff,
@@ -41,14 +58,14 @@ const {
 
 //paths
 
-router.post("/admin/addstaff", upload.single("image"), addstaff);
+router.post("/admin/addstaff",multipleUpload, addstaff);
 router.post("/admin/stafflogin", stafflogin);
 router.post("/admin/changepassstaff/:id", changepassstaff);
-router.post("/admin/setting/:id", upload.single("image"), setting);
+router.post("/admin/setting/:id", multipleUpload, setting);
 router.post(
   "/admin/settingbytoken",
   verifyToken,
-  upload.single("image"),
+  multipleUpload,
   settingbytoken
 );
 
