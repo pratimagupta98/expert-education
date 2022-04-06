@@ -1,5 +1,16 @@
 const Category = require("../models/category");
 const resp = require("../helpers/apiResponse");
+const fs = require("fs");
+const { uploadFile } = require("../helpers/awsuploader");
+const cloudinary = require("cloudinary").v2;
+const dotenv = require("dotenv");
+dotenv.config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 exports.addCat = async (req, res) => {
   const { catName } = req.body;
@@ -11,11 +22,26 @@ exports.addCat = async (req, res) => {
   if (findexist) {
     resp.alreadyr(res);
   } else {
+   
+    if (req.files) {
+      console.log(req.files);
+      if (req.files.icon) {
+        const geturl = await uploadFile(
+          req.files.icon[0]?.path,
+          req.files.icon[0]?.filename,
+          "jpg"
+        );
+        if (geturl) {
+          newCategory.icon = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
     newCategory
       .save()
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   }
+}
 };
 
 exports.editCat = async (req, res) => {

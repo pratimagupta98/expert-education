@@ -11,8 +11,11 @@ const CategorySchema = new Schema(
     //   type: Schema.Types.ObjectId,
     //   ref: "staff",
     // },
+
+  icon : {
+    type: Array,
   },
-  
+},
   { timestamps: true }
 );
 
