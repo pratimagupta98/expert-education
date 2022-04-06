@@ -1,4 +1,5 @@
 const Staff = require("../models/staff");
+
 const resp = require("../helpers/apiResponse");
 const { uploadFile } = require("../helpers/awsuploader");
 const bcrypt = require("bcryptjs");
@@ -342,5 +343,3 @@ exports.countstaff = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-
-//console.log()

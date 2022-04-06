@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Lavel = require("../models/lavel");
 const resp = require("../helpers/apiResponse");
 const fs = require("fs");
 const { uploadFile } = require("../helpers/awsuploader");
@@ -72,5 +73,87 @@ exports.allCat = async (req, res) => {
 exports.deleteCat = async (req, res) => {
   await Category.deleteOne({ _id: req.params.id })
     .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.addCat = async (req, res) => {
+  const { catName } = req.body;
+
+  const newCategory = new Category({
+    catName: catName,
+   });
+  const findexist = await Category.findOne({ catName: catName });
+  if (findexist) {
+    resp.alreadyr(res);
+  } else {
+   
+    if (req.files) {
+      console.log(req.files);
+      if (req.files.icon) {
+        const geturl = await uploadFile(
+          req.files.icon[0]?.path,
+          req.files.icon[0]?.filename,
+          "jpg"
+        );
+        if (geturl) {
+          newCategory.icon = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
+    newCategory
+      .save()
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+  }
+}
+};
+
+
+
+
+exports.addlavel = async (req, res) => {
+  const { lavel } = req.body;
+
+  const newlavel = new Lavel({
+    lavel: lavel,
+   });
+  const findexist = await Lavel.findOne({ lavel: lavel });
+  if (findexist) {
+    resp.alreadyr(res);
+  } else {
+   
+    if (req.files) {
+      console.log(req.files);
+      if (req.files.icon) {
+        const geturl = await uploadFile(
+          req.files.icon[0]?.path,
+          req.files.icon[0]?.filename,
+          "jpg"
+        );
+        if (geturl) {
+          newlavel.icon = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
+      newlavel
+      .save()
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+  }
+}
+};
+
+exports.deletelavel = async (req, res) => {
+  await Lavel.deleteOne({ _id: req.params.id })
+    .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.allLavel = async (req, res) => {
+  await Lavel.find()
+    .sort({ sortorder: 1 })
+    .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };

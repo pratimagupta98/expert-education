@@ -37,15 +37,18 @@ if (!fs.existsSync("./uploads")) {
    
   ]);
   
-const {addCat,editCat,viewoneCat,allCat,deleteCat
+const {addCat,editCat,viewoneCat,allCat,deleteCat,addlavel, deletelavel,allLavel
    
 } = require("../controllers/category");
 
 router.post("/admin/addCat",multipleUpload ,addCat);
+router.post("/admin/addlavel",multipleUpload ,addlavel);
 router.post("/admin/editCat/:id", editCat);
 router.get("/admin/viewoneCat/:id", viewoneCat);
 router.get("/admin/allCat", allCat);
 router.get("/admin/deleteCat/:id", deleteCat);
+router.get("/admin/deletelavel/:id", deletelavel);
+router.get("/admin/allLavel", allLavel);
 
  
 
