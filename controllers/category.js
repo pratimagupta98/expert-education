@@ -65,17 +65,34 @@ exports.editCat = async (req, res) => {
       }
     }
   }
-  await Category.findOneAndUpdate(
+  if (data) {
+    console.log("data",data);
+ let findandUpdateEntry = await Category.findOneAndUpdate(
     {
       _id: req.params.id,
     },
     { $set: req.body },
     { new: true }
   )
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-  
-};
+    
+    if (findandUpdateEntry) {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: findandUpdateEntry,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    }
+  }
+}
+
+
+
 
 exports.viewoneCat = async (req, res) => {
   await Category.findOne({ _id: req.params.id })
