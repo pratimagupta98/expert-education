@@ -134,12 +134,12 @@ exports.addCat = async (req, res) => {
 
 
 exports.addlavel = async (req, res) => {
-  const { lavel } = req.body;
+  const { level } = req.body;
 
   const newlavel = new Lavel({
-    lavel: lavel,
+    lavel: level,
    });
-  const findexist = await Lavel.findOne({ lavel: lavel });
+  const findexist = await Lavel.findOne({ level: level });
   if (findexist) {
     resp.alreadyr(res);
   } else {
