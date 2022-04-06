@@ -1,7 +1,7 @@
 const Course = require("../models/course");
 const resp = require("../helpers/apiResponse");
 const { uploadFile } = require("../helpers/awsuploader");
-const findOrCreate = require('mongoose-find-or-create');
+//const findOrCreate = require('mongoose-find-or-create');
 const fs = require("fs");
 
 exports.addcourse = async (req, res) => {
