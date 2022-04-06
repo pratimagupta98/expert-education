@@ -21,7 +21,7 @@ exports.addcourse = async (req, res) => {
       video_id: video_id,
       pdf_id: pdf_id,
     });
-
+//con
     if (req.files) {
       if (req.files.course_image) {
         const geturl = await uploadFile(
