@@ -2,24 +2,19 @@ const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
 
 exports.tokenverify = (req, res, next) => {
-  let bearerHeader = req.headers["auth-token"];
-   
-  console.log(bearerHeader)
-  if (!bearerHeader) {
+  let token = req.headers["user-token"];
+
+  //console.log(token)
+  if (!token) {
     return res.status(403).send({ message: "No token provided!" });
   }
 
-  if (bearerHeader) {
-    const bearer = bearerHeader.split(' ');
-    const bearerToken = bearer[1];
-    req.token = bearerToken;
-
-  jwt.verify(bearerToken, key, (err, decoded) => {
+  jwt.verify(token, key, (err, decoded) => {
     if (err) {
       return res.status(401).send({ message: "Unauthorized!" });
     }
     req.userId = decoded.userId;
     next();
   });
-}
+
 };

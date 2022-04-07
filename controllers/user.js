@@ -221,7 +221,7 @@ exports.addbatch = async (req, res) => {
   const { student_Id,lavel_Id} = req.body;
   
   const newbatch = new Batch({
-    student_Id: student_Id,
+    student_Id: req.userId,
     lavel_Id:lavel_Id
    });
    newbatch
