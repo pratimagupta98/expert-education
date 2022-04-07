@@ -231,7 +231,7 @@ exports.addbatch = async (req, res) => {
 }
 
 exports.allbatch = async (req, res) => {
-  await Batch.find()
+  await Batch.find().populate('student_Id').populate('lavel_Id')
     .sort({ createdAt: -1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
@@ -239,7 +239,7 @@ exports.allbatch = async (req, res) => {
 
 
 exports.viewonebatch = async (req, res) => {
-  await Batch.findOne({_id: req.params.id })
+  await Batch.findOne({_id: req.params.id }).populate('student_Id').populate('lavel_Id')
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
@@ -247,7 +247,7 @@ exports.viewonebatch = async (req, res) => {
 
 
 exports.viewonebatchUser = async (req, res) => {
-  await Batch.findOne({ student_Id: req.userId})
+  await Batch.findOne({ student_Id: req.userId}).populate('student_Id').populate('lavel_Id')
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
@@ -264,7 +264,7 @@ exports.updatebatch = async (req, res) => {
     { _id: req.params.id },
     { $set: req.body },
     { new: true }
-  )
+  ).populate('student_Id').populate('lavel_Id')
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
