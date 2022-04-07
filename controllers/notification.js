@@ -1,5 +1,7 @@
 const Notification = require("../models/notification");
 const resp = require("../helpers/apiResponse");
+const Usernotification = require("../models/usernotification");
+
 
 exports.addNotification = async(req,res)=>{
     const{usertype,userid,staffid,noti_title,desc} = req.body
@@ -98,3 +100,59 @@ exports.viewonenotification = async (req, res) => {
       .catch((error) => resp.errorr(res, error));
   };
   
+
+  exports.addUserNotification = async(req,res)=>{
+    const{userid,noti_title,desc} = req.body
+
+    const newUserNotification = new Usernotification({
+       userid :userid,
+       noti_title :noti_title,
+        desc : desc
+    })
+const findexist = await Usernotification.findOne({noti_title :noti_title})
+if(findexist){
+    resp.alreadyr(res);
+}else{
+  newUserNotification
+      .save()
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+  }
+
+}
+
+
+exports.viewoneNotificationUser = async (req, res) => {
+  await Usernotification.findOne({ _id: req.params.id }).populate('userid')
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.del_NotificationUser = async (req, res) => {
+  await Usernotification.deleteOne({ _id: req.params.id })
+    .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.all_NotificationUser = async (req, res) => {
+  await Usernotification.find().populate('userid')
+    .sort({ createdAt: -1})
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.allUserNotification = async (req, res) => {
+  await Usernotification.find({userid: req.userId}).populate('userid')
+    .sort({ createdAt: -1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+exports.viewone_NotificationUser = async (req, res) => {
+  await Usernotification.findOne({userid: req.userId}).populate('userid')
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
