@@ -42,7 +42,7 @@ router.post("/admin/addbatch", addbatch);
 router.get("/admin/allbatch", allbatch);
 router.get("/admin/viewonebatc/:id", viewonebatch);
 router.get("/user/viewonebatchUser",tokenverify, viewonebatchUser);
-router.get("/user/deletebatch/:id", deletebatch);
+router.get("/admin/deletebatch/:id", deletebatch);
 router.post("/user/updatebatch/:id", updatebatch);
 
 module.exports = router;
