@@ -20,7 +20,8 @@ const {
   allbatch,
   viewonebatch,
   deletebatch,
-  updatebatch
+  updatebatch,
+  viewonebatchUser
 } = require("../controllers/user");
 
 router.post("/user/signup", signup);
@@ -39,7 +40,8 @@ router.get("/admin/deleteuser/:id", deleteuser);
 router.get("/admin/countuser", countuser);
 router.post("/admin/addbatch", addbatch);
 router.get("/admin/allbatch", allbatch);
-router.get("/admin/viewonebatch/:id", viewonebatch);
+router.get("/admin/viewonebatc", viewonebatch);
+router.get("/user/viewonebatchUser",tokenverify, viewonebatchUser);
 router.get("/user/deletebatch/:id", deletebatch);
 router.post("/user/updatebatch/:id", updatebatch);
 

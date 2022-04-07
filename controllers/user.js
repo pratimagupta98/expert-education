@@ -247,7 +247,7 @@ exports.viewonebatch = async (req, res) => {
 
 
 exports.viewonebatchUser = async (req, res) => {
-  await Batch.findOne({ _id: req.params.id })
+  await Batch.findOne({ student_Id: req.userId})
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
