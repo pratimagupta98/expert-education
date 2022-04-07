@@ -37,9 +37,9 @@ router.get("/admin/allusers", allusers);
 router.get("/admin/enrollusers", enrollusers);
 router.get("/admin/deleteuser/:id", deleteuser);
 router.get("/admin/countuser", countuser);
-router.post("/user/addbatch",tokenverify, addbatch);
-router.get("/user/allbatch", allbatch);
-router.get("/user/viewonebatch/:id", viewonebatch);
+router.post("/admin/addbatch", addbatch);
+router.get("/admin/allbatch", allbatch);
+router.get("/admin/viewonebatch/:id", viewonebatch);
 router.get("/user/deletebatch/:id", deletebatch);
 router.post("/user/updatebatch/:id", updatebatch);
 

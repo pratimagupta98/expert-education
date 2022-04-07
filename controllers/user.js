@@ -221,7 +221,7 @@ exports.addbatch = async (req, res) => {
   const { student_Id,lavel_Id} = req.body;
   
   const newbatch = new Batch({
-    student_Id: req.userId,
+    student_Id:student_Id,
     lavel_Id:lavel_Id
    });
    newbatch
@@ -239,6 +239,14 @@ exports.allbatch = async (req, res) => {
 
 
 exports.viewonebatch = async (req, res) => {
+  await Batch.findOne({_id: req.params.id })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
+
+exports.viewonebatchUser = async (req, res) => {
   await Batch.findOne({ _id: req.params.id })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
