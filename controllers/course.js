@@ -215,7 +215,7 @@ exports.editcoursebystaff = async (req, res) => {
 
 
 exports.viewonecourse = async (req, res) => {
-  await Course.find({ $or: [{  teacher: req.staffId}, { _id: req.params.id }] })
+  await Course.findOne({ $or: [{  teacher: req.staffId}, { _id: req.params.id }] })
   //_id: req.params.id }
    
     .populate("teacher")
@@ -242,7 +242,11 @@ exports.viewonecoursep = async (req, res) => {
       { $set: { popularity: increment } },
       { new: true }
     )
-      .populate("teacher")
+      .populate("teacher").populate([
+        {path:"videolist"}
+      ]).populate([
+        {path:"pdflist"}
+      ]) .populate("category_id") .populate("video_id") .populate("pdf_id")
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   }
