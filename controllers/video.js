@@ -23,24 +23,38 @@ exports.addvideo = async(req,res) =>{
     // else{
     // const newVideo = new Video ({
     //     videoTitle : videoTitle,
-    //     videolink:videolink,
-    //     videoImg :videoImg
+    //     video_file:video_file,
+    //     video_image :video_image
     // })
     // if(req.files){
     //     console.log(req.files)
-    //     if(req.files.videoImg){
+    //     if(req.files.video_image){
     //         const geturl = await uploadFile(
-    //             req.files.videoImg[0]?.path,
-    //             req.files.videoImg[0]?.filename,
+    //             req.files.video_image[0]?.path,
+    //             req.files.video_image[0]?.filename,
     //             "jpg"
     //           );
     //           if (geturl) {
-    //             newVideo.videoImg = geturl.Location;
+    //             newVideo.video_image = geturl.Location;
     //             //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
     //     }
     // }
 
-    if (req.files.video_file && req.files.video_image) {
+    //  if(req.files){
+    //     console.log(req.files)
+    //     if(req.files.video_file){
+    //         const geturl = await uploadFile(
+    //             req.files.video_file[0]?.path,
+    //             req.files.video_file[0]?.filename,
+    //             "jpg"
+    //           );
+    //           if (geturl) {
+    //             newVideo.video_file = geturl.Location;
+    //             //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+    //     }
+    // }
+      //} 
+         if (req.files.video_file && req.files.video_image) {
         for (let i = 0; i < req.files.video_file.length; i++) {
           const getpdfurl = await uploadFile(
             req.files.video_file[i]?.path,
@@ -50,7 +64,7 @@ exports.addvideo = async(req,res) =>{
 
           let videoObj = new Object();
           if (getpdfurl) {
-            videoObj.video_file = getpdfurl.Location;
+            newVideo.video_file = getpdfurl.Location;
             //fs.unlinkSync(`../uploads/${req.files.video_file[i]?.filename}`);
           }
           const getimgurl = await uploadFile(
@@ -59,11 +73,12 @@ exports.addvideo = async(req,res) =>{
             "jpg"
           );
           if (getimgurl) {
-            videoObj.video_image = getimgurl.Location;
+            newVideo.video_image = getimgurl.Location;
             //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
           }
-          newVideo.video_link[i] = videoObj;
-        }
+         
+
+       }
       }
 
       newVideo
@@ -115,22 +130,22 @@ exports.addvideo = async(req,res) =>{
               req.files.video_file[i]?.filename,
               "mp4"
             );
-  
-            let videoObj = new Object();
-            if (getpdfurl) {
-              videoObj.video_file = getpdfurl.Location;
+            newVideo.video_file[i] = geturl.Location;
+            // let videoObj = new Object();
+            // if (getpdfurl) {
+            //   videoObj.video_file = getpdfurl.Location;
               //fs.unlinkSync(`../uploads/${req.files.video_file[i]?.filename}`);
-            }
+          //  }
             const getimgurl = await uploadFile(
               req.files.video_image[i]?.path,
               req.files.video_image[i]?.filename,
               "jpg"
             );
-            if (getimgurl) {
-              videoObj.video_image = getimgurl.Location;
-              //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
-            }
-            newVideo.video_link[i] = videoObj;
+            // if (getimgurl) {
+            //   videoObj.video_image = getimgurl.Location;
+            //   //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
+            // }
+            newVideo.video_image[i] = geturl.Location;
           }
         }
   

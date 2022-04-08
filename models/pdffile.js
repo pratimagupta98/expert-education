@@ -18,10 +18,10 @@ const pdffileSchema = new Schema(
     },
 
     pdf_image: {
-      type: String
+      type: Array
     },
     pdf_file: {
-      type: String
+      type: Array
     },
 
   },

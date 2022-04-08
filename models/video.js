@@ -21,10 +21,10 @@ const VideoSchema = new Schema(
       ref: "staff",
     },
     video_image: {
-      type: String
+      type: Array
     },
     video_file: {
-      type: String
+      type: Array
     },
 
   },

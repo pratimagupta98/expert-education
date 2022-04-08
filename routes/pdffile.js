@@ -27,7 +27,7 @@ const upload = multer({ storage: storage });
 const { addpdf,addpdfbyadmin ,getpdf} = require("../controllers/pdffile");
 
 router.post(
-  "/admin/addpdf",verifyToken,
+  "/admin/addpdf",
   upload.fields([
     {
       name: "pdf_file",

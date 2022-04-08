@@ -52,22 +52,22 @@ exports.addpdf = async (req, res) => {
             req.files.pdf_file[i]?.filename,
             "pdf"
           );
-
-          let pdfObj = new Object();
-          if (getpdfurl) {
-            pdfObj.pdf_file = getpdfurl.Location;
-            //fs.unlinkSync(`../uploads/${req.files.pdf_file[i]?.filename}`);
-          }
+          newPdffile.pdf_file[i] = getpdfurl.Location;;
+          // let pdfObj = new Object();
+          // if (getpdfurl) {
+          //   pdfObj.pdf_file = getpdfurl.Location;
+          //   //fs.unlinkSync(`../uploads/${req.files.pdf_file[i]?.filename}`);
+          // }
           const getimgurl = await uploadFile(
             req.files.pdf_image[i]?.path,
             req.files.pdf_image[i]?.filename,
             "jpg"
           );
-          if (getimgurl) {
-            pdfObj.pdf_image = getimgurl.Location;
-            //fs.unlinkSync(`../uploads/${req.files.pdf_image[i]?.filename}`);
-          }
-          newPdffile.pdf[i] = pdfObj;
+          // if (getimgurl) {
+          //   pdfObj.pdf_image = getimgurl.Location;
+          //   //fs.unlinkSync(`../uploads/${req.files.pdf_image[i]?.filename}`);
+          // }
+          newPdffile.pdf_image[i] = getimgurl.Location;;
         }
       }
 
