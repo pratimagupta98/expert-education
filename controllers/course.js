@@ -221,7 +221,11 @@ exports.viewonecourse = async (req, res) => {
     .populate("teacher")
     .populate("category_id")
      .populate("video_id")
-     .populate("pdf_id")
+     .populate("pdf_id").populate([
+      {path:"videolist"}
+    ]).populate([
+      {path:"pdflist"}
+    ])
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
