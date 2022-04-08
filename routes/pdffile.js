@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const { addpdf,addpdfbyadmin } = require("../controllers/pdffile");
+const { addpdf,addpdfbyadmin ,getpdf} = require("../controllers/pdffile");
 
 router.post(
   "/admin/addpdf",verifyToken,
@@ -51,7 +51,7 @@ router.post(
   ]),
   addpdfbyadmin
 );
-
+router.get("/admin/getpdf", getpdf);
 
 module.exports = router;
 

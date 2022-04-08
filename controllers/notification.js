@@ -1,4 +1,5 @@
 const Notification = require("../models/notification");
+const Staffnotification=require("../models/notification");
 const resp = require("../helpers/apiResponse");
 const Usernotification = require("../models/usernotification");
 
@@ -109,17 +110,13 @@ exports.viewonenotification = async (req, res) => {
        noti_title :noti_title,
         desc : desc
     })
-const findexist = await Usernotification.findOne({noti_title :noti_title})
-if(findexist){
-    resp.alreadyr(res);
-}else{
   newUserNotification
       .save()
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   }
 
-}
+
 
 
 exports.viewoneNotificationUser = async (req, res) => {
@@ -155,4 +152,59 @@ exports.viewone_NotificationUser = async (req, res) => {
   await Usernotification.findOne({userid: req.userId}).populate('userid')
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
+};
+////staff Notification
+
+
+
+exports.addSaffNotification = async(req,res)=>{
+  const{staffid,noti_title,desc} = req.body
+
+  const newStaffNotification = new Staffnotification({
+    staffid :staffid,
+     noti_title :noti_title,
+      desc : desc
+  })
+newStaffNotification
+    .save()
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+}
+
+
+
+
+exports.viewoneNotificationStaff = async (req, res) => {
+await Staffnotification.findOne({ _id: req.params.id }).populate('staffid')
+  .then((data) => resp.successr(res, data))
+  .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.del_NotificationStaff = async (req, res) => {
+await Staffnotification.deleteOne({ _id: req.params.id })
+  .then((data) => resp.deleter(res, data))
+  .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.all_NotificationStaff = async (req, res) => {
+await Staffnotification.find().populate('staffid')
+  .sort({ createdAt: -1})
+  .then((data) => resp.successr(res, data))
+  .catch((error) => resp.errorr(res, error));
+};
+
+
+exports.allStaffNotification = async (req, res) => {
+await Staffnotification.find({staffid: req.staffId}).populate('staffid')
+  .sort({ createdAt: -1 })
+  .then((data) => resp.successr(res, data))
+  .catch((error) => resp.errorr(res, error));
+};
+
+exports.viewone_NotificationStaff = async (req, res) => {
+await Staffnotification.findOne({staffid: req.staffId}).populate('staffid')
+  .then((data) => resp.successr(res, data))
+  .catch((error) => resp.errorr(res, error));
 };

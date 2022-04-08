@@ -11,10 +11,7 @@ course : {
     pdf_title: {
       type: String,
     },
-    course : {
-      type: Schema.Types.ObjectId,
-      ref: "course",
-    },
+   
     teacher: {
       type: Schema.Types.ObjectId,
       ref: "staff",

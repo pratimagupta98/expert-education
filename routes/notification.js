@@ -7,7 +7,8 @@ const { tokenverify } = require("../functions/tokenverify");
 
 const {addNotification,viewonenotification,viewoneNot_bytoken,allNotification,allstaffNotification,all_userNotification,del_notification,clrnotification,noti_bytype,
     addUserNotification,viewoneNotificationUser,del_NotificationUser,all_NotificationUser,allUserNotification,
-    viewone_NotificationUser
+    viewone_NotificationUser,addSaffNotification,viewoneNotificationStaff,del_NotificationStaff,
+    all_NotificationStaff,allStaffNotification,viewone_NotificationStaff
 } = require("../controllers/notification");
 
 router.post("/admin/addNotification", addNotification);
@@ -36,6 +37,15 @@ router.get("/admin/all_NotificationUser", all_NotificationUser);
 router.get("/user/allUserNotification",tokenverify, allUserNotification);
 router.get("/user/viewone_NotificationUser",tokenverify, viewone_NotificationUser);
 
+//satff by admin
+router.post("/admin/addSaffNotification", addSaffNotification);
+router.get("/admin/viewoneNotificationStaff/:id", viewoneNotificationStaff);
+router.get("/admin/del_NotificationStaff/:id", del_NotificationStaff);
+router.get("/admin/all_NotificationStaff", all_NotificationStaff);
+
+// staff by teacher
+router.get("/user/allStaffNotification",verifyToken, allStaffNotification);
+router.get("/user/viewone_NotificationStaff",verifyToken, viewone_NotificationStaff);
  module.exports = router;
 
 //console
