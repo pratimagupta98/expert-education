@@ -297,6 +297,17 @@ exports.changepassstaff = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+
+exports.changepassstaffUser = async (req, res) => {
+  await Staff.findOneAndUpdate(
+    { _id: req.params.staffId },
+    { $set: { password: req.body.password } },
+    { new: true }
+  )
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
 exports.viewonestaff = async (req, res) => {
   await Staff.findOne({ _id: req.params.id })
     .then((data) => resp.successr(res, data))

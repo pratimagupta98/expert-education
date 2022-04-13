@@ -54,6 +54,7 @@ const {
   deletestaff,
   approved_staff,
   countstaff,
+  changepassstaffUser
 } = require("../controllers/staff");
 
 //paths
@@ -63,7 +64,7 @@ router.post("/admin/stafflogin", stafflogin);
 router.post("/admin/changepassstaff/:id", changepassstaff);
 router.post("/admin/setting/:id", multipleUpload, setting);
 router.post(
-  "/admin/settingbytoken",
+  "/user/settingbytoken",
   verifyToken,
   multipleUpload,
   settingbytoken
@@ -71,8 +72,8 @@ router.post(
 
 router.get("/admin/viewonestaff/:id", viewonestaff);
 router.get("/admin/viewonestaffbytoken", verifyToken, viewonestaffbytoken);
-
 router.get("/admin/viewstaffbytoken", verifyToken, viewstaffbytoken);
+router.get("/user/changepassstaffUser", verifyToken, changepassstaffUser);
 router.get("/admin/allstaff", allstaff);
 router.get("/admin/deletestaff/:id", deletestaff);
 router.get("/admin/approved_staff", approved_staff);

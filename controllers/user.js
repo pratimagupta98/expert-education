@@ -168,6 +168,15 @@ exports.changepassid = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+exports.changepassidUser = async (req, res) => {
+  await User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $set: { password: req.body.password } },
+    { new: true }
+  )
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
 
 exports.edituser = async (req, res) => {
   await User.findOneAndUpdate(
