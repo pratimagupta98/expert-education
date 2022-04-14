@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { tokenverify } = require("../functions/tokenverify");
-
+const { adminToken } = require("../functions/adminToken");
 const multer = require("multer");
 const fs = require("fs");
 
@@ -57,14 +57,16 @@ const {
   deletebatch,
   updatebatch,
   viewonebatchUser,
-  changepassidUser
+  changepassidUser,
+  editadmin
 } = require("../controllers/user");
 
 router.post("/user/signup", signup);
 router.post("/user/login", login);
-router.post("/user/adminlogin", adminlogin);
+//router.post("/user/adminlogin", adminlogin);
 
 router.post("/user/setting", tokenverify,multipleUpload, setting);
+router.post("/admin/editadmin", adminToken,multipleUpload, editadmin);
 router.post("/user/changepass", tokenverify, changepass);
 router.get("/user/myprofile", tokenverify, myprofile);
 router.post("/admin/edituser/:id", edituser);
