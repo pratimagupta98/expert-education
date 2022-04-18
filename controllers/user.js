@@ -138,7 +138,7 @@ exports.adminlogin = async (req, res) => {
     });
   }
 };
-
+///console
 exports.setting = async (req, res) => {
   await User.findOneAndUpdate(
     { _id: req.userId },
