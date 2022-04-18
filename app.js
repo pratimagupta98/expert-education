@@ -12,7 +12,7 @@ const cors = require("cors");
 var indexRouter = require("./routes/index");
 //var usersRouter = require("./routes/users");
 //Require
-const user = require("./routes/user");
+//const user = require("./routes/user");
 const staff = require("./routes/staff");
 const kycform = require("./routes/kycform");
 const course = require("./routes/course");
@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Use
 app.use("/", indexRouter);
-app.use("/api", user);
+//app.use("/api", user);
 app.use("/api", staff);
 app.use("/api", kycform);
 app.use("/api", course);
