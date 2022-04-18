@@ -49,7 +49,7 @@ exports.signup = async (req, res) => {
             expiresIn: 86400000,
           }
         );
-        res.header("auth-token", token).status(200).json({
+        res.header("user-token", token).status(200).json({
           status: true,
           token: token,
           msg: "success",
@@ -77,7 +77,7 @@ exports.login = async (req, res) => {
           expiresIn: 86400000,
         }
       );
-      res.header("auth-token", token).status(200).send({
+      res.header("user-token", token).status(200).send({
         status: true,
         token: token,
         msg: "success",
