@@ -33,10 +33,7 @@ const fileFilter = (req, file, cb) => {
 
 let uploads = multer({ storage: storage });
 
-let multipleUpload = uploads.fields([
-  { name: "userimg", maxCount: 1 },
- 
-]);
+let multipleUpload = uploads.fields([{ name: "userimg", maxCount: 1 }]);
 const {
   signup,
   adminlogin,
@@ -58,20 +55,20 @@ const {
   updatebatch,
   viewonebatchUser,
   changepassidUser,
-  editadmin
+  editadmin,
 } = require("../controllers/user");
 
 router.post("/user/signup", signup);
 router.post("/user/login", login);
 //router.post("/user/adminlogin", adminlogin);
 
-router.post("/user/setting", tokenverify,multipleUpload, setting);
-router.post("/admin/editadmin", adminToken,multipleUpload, editadmin);
+router.post("/user/setting", tokenverify, multipleUpload, setting);
+//router.post("/admin/editadmin", adminToken,multipleUpload, editadmin);
 router.post("/user/changepass", tokenverify, changepass);
 router.get("/user/myprofile", tokenverify, myprofile);
 router.post("/admin/edituser/:id", edituser);
 router.post("/user/changepassid/:id", changepassid);
-router.post("/admin/changepassidUser", tokenverify,changepassidUser);
+router.post("/admin/changepassidUser", tokenverify, changepassidUser);
 router.get("/admin/viewoneuser/:id", viewoneuser);
 router.get("/admin/allusers", allusers);
 router.get("/admin/enrollusers", enrollusers);
@@ -80,7 +77,7 @@ router.get("/admin/countuser", countuser);
 router.post("/admin/addbatch", addbatch);
 router.get("/admin/allbatch", allbatch);
 router.get("/admin/viewonebatc/:id", viewonebatch);
-router.get("/user/viewonebatchUser",tokenverify, viewonebatchUser);
+router.get("/user/viewonebatchUser", tokenverify, viewonebatchUser);
 router.get("/admin/deletebatch/:id", deletebatch);
 router.post("/user/updatebatch/:id", updatebatch);
 
