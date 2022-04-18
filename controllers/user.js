@@ -52,7 +52,7 @@ exports.signup = async (req, res) => {
         );
         res.header("user-token", token).status(200).json({
           status: true,
-          "token": token,
+          token: token,
           msg: "success",
           user: result,
         });
@@ -100,16 +100,15 @@ exports.login = async (req, res) => {
   }
 };
 
-
-exports.editadmin = async (req, res) => {
-  await User.findOneAndUpdate(
-    { _id: req.adminId },
-    { $set: req.body },
-    { new: true }
-  )
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
+// exports.editadmin = async (req, res) => {
+//   await User.findOneAndUpdate(
+//     { _id: req.adminId },
+//     { $set: req.body },
+//     { new: true }
+//   )
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// };
 
 exports.setting = async (req, res) => {
   await User.findOneAndUpdate(
@@ -196,42 +195,43 @@ exports.deleteuser = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-
 exports.addbatch = async (req, res) => {
-  const { student_Id,lavel_Id} = req.body;
-  
+  const { student_Id, lavel_Id } = req.body;
+
   const newbatch = new Batch({
-    student_Id:student_Id,
-    lavel_Id:lavel_Id
-   });
-   newbatch
-   .save()
-   .then((data) => resp.successr(res, data))
-   .catch((error) => resp.errorr(res, error));
-}
+    student_Id: student_Id,
+    lavel_Id: lavel_Id,
+  });
+  newbatch
+    .save()
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
 
 exports.allbatch = async (req, res) => {
-  await Batch.find().populate('student_Id').populate('lavel_Id')
+  await Batch.find()
+    .populate("student_Id")
+    .populate("lavel_Id")
     .sort({ createdAt: -1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
 
-
 exports.viewonebatch = async (req, res) => {
-  await Batch.findOne({_id: req.params.id }).populate('student_Id').populate('lavel_Id')
+  await Batch.findOne({ _id: req.params.id })
+    .populate("student_Id")
+    .populate("lavel_Id")
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-
-
 
 exports.viewonebatchUser = async (req, res) => {
-  await Batch.findOne({ student_Id: req.userId}).populate('student_Id').populate('lavel_Id')
+  await Batch.findOne({ student_Id: req.userId })
+    .populate("student_Id")
+    .populate("lavel_Id")
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-
 
 exports.deletebatch = async (req, res) => {
   await Batch.deleteOne({ _id: req.params.id })
@@ -244,7 +244,9 @@ exports.updatebatch = async (req, res) => {
     { _id: req.params.id },
     { $set: req.body },
     { new: true }
-  ).populate('student_Id').populate('lavel_Id')
+  )
+    .populate("student_Id")
+    .populate("lavel_Id")
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
