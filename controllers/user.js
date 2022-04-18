@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const Batch = require("../models/studentBatch");
 const resp = require("../helpers/apiResponse");
 const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
@@ -50,9 +49,9 @@ exports.signup = async (req, res) => {
             expiresIn: 86400000,
           }
         );
-        res.header("user-token", token).status(200).json({
+        res.header("auth-token", token).status(200).json({
           status: true,
-          token: token,
+          "auth-token": token,
           msg: "success",
           user: result,
         });
@@ -78,7 +77,7 @@ exports.login = async (req, res) => {
           expiresIn: 86400000,
         }
       );
-      res.header("user-token", token).status(200).send({
+      res.header("auth-token", token).status(200).send({
         status: true,
         token: token,
         msg: "success",
@@ -100,15 +99,45 @@ exports.login = async (req, res) => {
   }
 };
 
-// exports.editadmin = async (req, res) => {
-//   await User.findOneAndUpdate(
-//     { _id: req.adminId },
-//     { $set: req.body },
-//     { new: true }
-//   )
-//     .then((data) => resp.successr(res, data))
-//     .catch((error) => resp.errorr(res, error));
-// };
+exports.adminlogin = async (req, res) => {
+  const { mobile, email, password } = req.body;
+  const user = await User.findOne({
+    $or: [{ mobile: mobile }, { email: email }],
+  });
+  if (user) {
+    const validPass = await bcrypt.compare(password, user.password);
+    if (validPass) {
+      const token = jwt.sign(
+        {
+          adminId: user._id,
+        },
+        key,
+        {
+          expiresIn: 86400000,
+        }
+      );
+      res.header("ad-token", token).status(200).send({
+        status: true,
+        token: token,
+        msg: "success",
+        user: user,
+        user_type: "admin",
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "Incorrect Password",
+        error: "error",
+      });
+    }
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "admin Doesnot Exist",
+      error: "error",
+    });
+  }
+};
 
 exports.setting = async (req, res) => {
   await User.findOneAndUpdate(
@@ -132,15 +161,6 @@ exports.changepass = async (req, res) => {
 exports.changepassid = async (req, res) => {
   await User.findOneAndUpdate(
     { _id: req.params.id },
-    { $set: { password: req.body.password } },
-    { new: true }
-  )
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-exports.changepassidUser = async (req, res) => {
-  await User.findOneAndUpdate(
-    { _id: req.params.userId },
     { $set: { password: req.body.password } },
     { new: true }
   )
@@ -192,61 +212,5 @@ exports.myprofile = async (req, res) => {
 exports.deleteuser = async (req, res) => {
   await User.deleteOne({ _id: req.params.id })
     .then((data) => resp.deleter(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.addbatch = async (req, res) => {
-  const { student_Id, lavel_Id } = req.body;
-
-  const newbatch = new Batch({
-    student_Id: student_Id,
-    lavel_Id: lavel_Id,
-  });
-  newbatch
-    .save()
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.allbatch = async (req, res) => {
-  await Batch.find()
-    .populate("student_Id")
-    .populate("lavel_Id")
-    .sort({ createdAt: -1 })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.viewonebatch = async (req, res) => {
-  await Batch.findOne({ _id: req.params.id })
-    .populate("student_Id")
-    .populate("lavel_Id")
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.viewonebatchUser = async (req, res) => {
-  await Batch.findOne({ student_Id: req.userId })
-    .populate("student_Id")
-    .populate("lavel_Id")
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.deletebatch = async (req, res) => {
-  await Batch.deleteOne({ _id: req.params.id })
-    .then((data) => resp.deleter(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.updatebatch = async (req, res) => {
-  await Batch.findOneAndUpdate(
-    { _id: req.params.id },
-    { $set: req.body },
-    { new: true }
-  )
-    .populate("student_Id")
-    .populate("lavel_Id")
-    .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };

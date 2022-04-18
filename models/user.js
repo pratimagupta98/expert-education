@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const thisSchema = new Schema(
+const UserSchema = new Schema(
   {
     userimg: {
       type: String,
@@ -23,10 +23,10 @@ const thisSchema = new Schema(
     cnfmPassword: {
       type: String,
     },
-    kyc_form: {
-      type: Schema.Types.ObjectId,
-      ref: "kycform",
-    },
+    // kyc_form: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "kycform",
+    // },
     status: {
       type: String,
       default: "Unenroll",
@@ -37,8 +37,8 @@ const thisSchema = new Schema(
       type: String,
       // default: "u",
     },
-  },
-  { timestamps: true }
+  }
+  // { timestamps: true }
 );
 
-module.exports = mongoose.model("user", thisSchema);
+module.exports = mongoose.model("user", UserSchema);
