@@ -5,7 +5,6 @@ const cloudinary = require("cloudinary").v2;
 const { uploadFile } = require("../helpers/awsuploader");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
-//dhfd
 
 exports.signup = async (req, res) => {
   const { adminname, adminimg, email, mobile, password, cnfmPassword } =
