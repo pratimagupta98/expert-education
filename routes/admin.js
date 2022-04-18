@@ -3,7 +3,7 @@ const router = express.Router();
 const { adminToken } = require("../functions/admintoken");
 const multer = require("multer");
 const fs = require("fs");
-
+//console
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
 }
