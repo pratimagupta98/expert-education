@@ -58,21 +58,21 @@ const thisSchema = new Schema(
   { timestamps: true }
 );
 
-thisSchema.virtual('videolist',{
-  ref: 'video',
-  localField: '_id',
-  foreignField: 'course',
-  justOne:false
+thisSchema.virtual("videolist", {
+  ref: "video",
+  localField: "_id",
+  foreignField: "course",
+  justOne: false,
 });
 
-thisSchema.set('toObject', { virtuals: true });
-thisSchema.set('toJSON', { virtuals: true });
+thisSchema.set("toObject", { virtuals: true });
+thisSchema.set("toJSON", { virtuals: true });
 
-thisSchema.virtual('pdflist',{
-  ref: 'pdffile',
-  localField: '_id',
-  foreignField: 'course',
-  justOne:false
+thisSchema.virtual("pdflist", {
+  ref: "pdffile",
+  localField: "_id",
+  foreignField: "course",
+  justOne: false,
 });
 
 module.exports = mongoose.model("course", thisSchema);

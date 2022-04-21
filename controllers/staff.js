@@ -60,32 +60,29 @@ exports.addstaff = async (req, res) => {
           //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
         }
       }
-    newStaff
-      .save()
-      .then((result) => {
-        const token = jwt.sign(
-          {
-            staffId: staff._id,
-          },
-          key,
-          {
-            expiresIn: "365d",
-          }
-        );
-        res.header("staff-token", token).status(200).json({
-          status: true,
-          token: token,
-          msg: "success",
-          staff: result,
-        });
-      })
-      .catch((error) => resp.errorr(res, error));
+      newStaff
+        .save()
+        .then((result) => {
+          const token = jwt.sign(
+            {
+              staffId: staff._id,
+            },
+            key,
+            {
+              expiresIn: "365d",
+            }
+          );
+          res.header("staff-token", token).status(200).json({
+            status: true,
+            token: token,
+            msg: "success",
+            staff: result,
+          });
+        })
+        .catch((error) => resp.errorr(res, error));
+    }
   }
-}
-}
-
-
-
+};
 
 exports.staffbyadmin = async (req, res) => {
   const {
@@ -203,7 +200,6 @@ exports.staffbyadmin = async (req, res) => {
 //   }
 // };
 
-
 exports.stafflogin = async (req, res) => {
   // const errors = validationResult(req);
   // if (!errors.isEmpty()) {
@@ -218,10 +214,10 @@ exports.stafflogin = async (req, res) => {
 
   const staff = await Staff.findOne({
     $or: [{ mobile: mobile }, { email: email }],
-  })
+  });
   if (staff) {
     //console.log(staff);
-    if (staff.approvedstatus == true ) {
+    if (staff.approvedstatus == true) {
       const validPass = await bcrypt.compare(password, staff.password);
       if (validPass) {
         const token = jwt.sign(
@@ -233,9 +229,9 @@ exports.stafflogin = async (req, res) => {
             expiresIn: "365d",
           }
         );
-        res.header("ad-token", token).status(200).send({
+        res.header("staff-token", token).status(200).send({
           status: true,
-          ad_token: token,
+          staff_token: token,
           msg: "success",
           staff: staff,
         });
@@ -296,7 +292,6 @@ exports.changepassstaff = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-
 
 exports.changepassstaffUser = async (req, res) => {
   await Staff.findOneAndUpdate(

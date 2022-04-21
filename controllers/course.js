@@ -5,8 +5,15 @@ const { uploadFile } = require("../helpers/awsuploader");
 const fs = require("fs");
 
 exports.addcourse = async (req, res) => {
-  const { course_title, desc, long_desc, category_id, video_id, pdf_id } =
-  req.body;
+  const {
+    course_title,
+    desc,
+    long_desc,
+    category_id,
+    teacher,
+    video_id,
+    pdf_id,
+  } = req.body;
 
   const findexist = await Course.findOne({ course_title: course_title });
   if (findexist) {
@@ -21,7 +28,7 @@ exports.addcourse = async (req, res) => {
       video_id: video_id,
       pdf_id: pdf_id,
     });
-//con
+    //con
     if (req.files) {
       if (req.files.course_image) {
         const geturl = await uploadFile(
@@ -95,11 +102,11 @@ exports.addcourse = async (req, res) => {
         .catch((error) => resp.errorr(res, error));
     }
   }
-//}
+  //}
 };
 
 exports.addcoursebyadmin = async (req, res) => {
-  const { course_title, desc, teacher, category_id,long_desc } = req.body;
+  const { course_title, desc, teacher, category_id, long_desc } = req.body;
 
   const findexist = await Course.findOne({ course_title: course_title });
   if (findexist) {
@@ -108,7 +115,7 @@ exports.addcoursebyadmin = async (req, res) => {
     const newCourse = new Course({
       course_title: course_title,
       desc: desc,
-      long_desc :long_desc,
+      long_desc: long_desc,
       teacher: teacher,
       category_id: category_id,
     });
@@ -213,19 +220,18 @@ exports.editcoursebystaff = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-
 exports.viewonecourse = async (req, res) => {
-  await Course.findOne({ $or: [{  teacher: req.staffId}, { _id: req.params.id }] })
-  //_id: req.params.id }
-   
+  await Course.findOne({
+    $or: [{ teacher: req.staffId }, { _id: req.params.id }],
+  })
+    //_id: req.params.id }
+
     .populate("teacher")
     .populate("category_id")
-     .populate("video_id")
-     .populate("pdf_id").populate([
-      {path:"videolist"}
-    ]).populate([
-      {path:"pdflist"}
-    ])
+    .populate("video_id")
+    .populate("pdf_id")
+    .populate([{ path: "videolist" }])
+    .populate([{ path: "pdflist" }])
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
@@ -242,11 +248,12 @@ exports.viewonecoursep = async (req, res) => {
       { $set: { popularity: increment } },
       { new: true }
     )
-      .populate("teacher").populate([
-        {path:"videolist"}
-      ]).populate([
-        {path:"pdflist"}
-      ]) .populate("category_id") .populate("video_id") .populate("pdf_id")
+      .populate("teacher")
+      .populate([{ path: "videolist" }])
+      .populate([{ path: "pdflist" }])
+      .populate("category_id")
+      .populate("video_id")
+      .populate("pdf_id")
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   }
@@ -258,11 +265,8 @@ exports.allcourse = async (req, res) => {
     .populate("teacher")
     .populate("category_id")
     //.populate("video_id")
-    .populate([
-      {path:"videolist"}
-    ]).populate([
-      {path:"pdflist"}
-    ])
+    .populate([{ path: "videolist" }])
+    .populate([{ path: "pdflist" }])
     .populate("pdf_id")
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
@@ -274,8 +278,8 @@ exports.mycourses = async (req, res) => {
     .sort({ popularity: 1 })
     .populate("teacher")
     .populate("category_id")
-     .populate("video_id")
-     .populate("pdf_id")
+    .populate("video_id")
+    .populate("pdf_id")
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
@@ -286,8 +290,8 @@ exports.allcoursebyrecent = async (req, res) => {
     .sort({ createdAt: 1 })
     .populate("teacher")
     .populate("category_id")
-     .populate("video_id")
-     .populate("pdf_id")
+    .populate("video_id")
+    .populate("pdf_id")
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
@@ -300,22 +304,20 @@ exports.deletecourse = async (req, res) => {
 };
 
 exports.countcourse = async (req, res) => {
-  await Course.countDocuments()
+  await Course.countDocuments({ staffId: req.staffId })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
 
-
-exports.coursebytitle = async (req,res) =>{
-  const findall = await Course.find({video_id :req.params.id})
-  // .populate("teacher")
-  //   .populate("category_id")
-  //    .populate("video_id")
-  //    .populate("pdf_id")
-  .then((data) => resp.successr(res, data))
-  .catch((error) => resp.errorr(res, error));
-}
-
+exports.coursebytitle = async (req, res) => {
+  const findall = await Course.find({ video_id: req.params.id })
+    // .populate("teacher")
+    //   .populate("category_id")
+    //    .populate("video_id")
+    //    .populate("pdf_id")
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
 
 // exports.updatecourse = async (req, res) => {
 //   const {video_id,pdf_id} = req.body
@@ -343,29 +345,26 @@ exports.coursebytitle = async (req,res) =>{
 // };
 
 exports.updatecourse = async (req, res) => {
-  await Course
-  
-    .findOneAndUpdate(
-      {
-        _id: req.params.id,
-        //  console.log(req.params._id);
-      },
-      {
-        $set: req.body,
-      },
-      { new: true }
-    )
+  await Course.findOneAndUpdate(
+    {
+      _id: req.params.id,
+      //  console.log(req.params._id);
+    },
+    {
+      $set: req.body,
+    },
+    { new: true }
+  )
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
 
-
-exports.coursebytitle= async (req,res) =>{
-  const findall = await Course.find({course_title :req.params.id})
-  .populate("teacher")
+exports.coursebytitle = async (req, res) => {
+  const findall = await Course.find({ course_title: req.params.id })
+    .populate("teacher")
     .populate("category_id")
-     .populate("video_id")
-     .populate("pdf_id")
-  .then((data) => resp.successr(res, data))
-  .catch((error) => resp.errorr(res, error));
-}
+    .populate("video_id")
+    .populate("pdf_id")
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

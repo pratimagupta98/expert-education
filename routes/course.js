@@ -36,7 +36,7 @@ const {
   countcourse,
   //coursebytitle,
   updatecourse,
-  coursebytitle
+  coursebytitle,
 } = require("../controllers/course");
 
 //Paths
@@ -85,16 +85,15 @@ router.post(
   addcoursebyadmin
 );
 router.post("/admin/editcourse/:id", editcourse);
-router.get("/admin/viewonecourse/:id",verifyToken, viewonecourse);
+router.get("/admin/viewonecourse/:id", verifyToken, viewonecourse);
 router.get("/admin/viewonecoursep/:id", viewonecoursep);
 router.get("/admin/allcourse", allcourse);
 router.get("/admin/mycourses", verifyToken, mycourses);
 router.get("/admin/allcoursebyrecent", allcoursebyrecent);
 router.get("/admin/deletecourse/:id", deletecourse);
-router.get("/admin/countcourse", countcourse);
+router.get("/user/countcourse", verifyToken, countcourse);
 //router.get("/admin/coursebytitle/:id", coursebytitle);
-router.post("/admin/updatecourse/:id",updatecourse);
-router.get("/admin/coursebytitle/:id",coursebytitle);
+router.post("/admin/updatecourse/:id", updatecourse);
+router.get("/admin/coursebytitle/:id", coursebytitle);
 
 module.exports = router;
- 

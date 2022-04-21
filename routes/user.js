@@ -20,7 +20,7 @@ const {
 
 router.post("/user/signup", signup);
 router.post("/user/login", login);
-router.post("/user/adminlogin", adminlogin);
+//router.post("/user/adminlogin", adminlogin);
 
 router.post("/user/setting", tokenverify, setting);
 router.post("/user/changepass", tokenverify, changepass);
@@ -34,3 +34,5 @@ router.get("/admin/deleteuser/:id", deleteuser);
 router.get("/admin/countuser", countuser);
 
 module.exports = router;
+
+//http://localhost:5000/api/admin/allusers
