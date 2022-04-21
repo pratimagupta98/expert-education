@@ -231,7 +231,7 @@ exports.stafflogin = async (req, res) => {
         );
         res.header("staff-token", token).status(200).send({
           status: true,
-          staff_token: token,
+          token: token,
           msg: "success",
           staff: staff,
         });
