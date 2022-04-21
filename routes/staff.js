@@ -36,10 +36,7 @@ const fileFilter = (req, file, cb) => {
 
 let uploads = multer({ storage: storage });
 
-let multipleUpload = uploads.fields([
-  { name: "image", maxCount: 1 },
- 
-]);
+let multipleUpload = uploads.fields([{ name: "image", maxCount: 1 }]);
 const {
   addstaff,
   changepassstaff,
@@ -54,12 +51,13 @@ const {
   deletestaff,
   approved_staff,
   countstaff,
-  changepassstaffUser
+  changepassstaffUser,
+  myprofileStaff,
 } = require("../controllers/staff");
 
 //paths
 
-router.post("/admin/addstaff",multipleUpload, addstaff);
+router.post("/admin/addstaff", multipleUpload, addstaff);
 router.post("/admin/stafflogin", stafflogin);
 router.post("/admin/changepassstaff/:id", changepassstaff);
 router.post("/admin/setting/:id", multipleUpload, setting);
@@ -78,6 +76,6 @@ router.get("/admin/allstaff", allstaff);
 router.get("/admin/deletestaff/:id", deletestaff);
 router.get("/admin/approved_staff", approved_staff);
 router.get("/admin/countstaff", countstaff);
-
+router.get("/user/myprofileStaff", verifyToken, myprofileStaff);
 module.exports = router;
 //console

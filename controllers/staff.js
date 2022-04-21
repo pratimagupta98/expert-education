@@ -349,3 +349,8 @@ exports.countstaff = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+exports.myprofileStaff = async (req, res) => {
+  await User.findOne({ _id: req.staffId })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
