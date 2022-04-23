@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
 const { uploadFile } = require("../helpers/awsuploader");
 const User = require("../models/user");
+const Course = require("../models/course");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
 
@@ -211,6 +212,11 @@ exports.countUser = async (req, res) => {
 };
 exports.countUserEnroll = async (req, res) => {
   await User.countDocuments({ status: "Enroll" })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+exports.councours = async (req, res) => {
+  await Course.countDocuments()
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };

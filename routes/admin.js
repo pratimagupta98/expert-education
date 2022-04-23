@@ -45,6 +45,7 @@ const {
   countteacherAprove,
   countUser,
   countUserEnroll,
+  councours,
 } = require("../controllers/admin");
 router.post("/admin/signup", multipleUpload, signup);
 router.post("/admin/adminlogin", adminlogin);
@@ -55,5 +56,6 @@ router.get("/admin/countteacher", countteacher);
 router.get("/admin/countteacherAprove", countteacherAprove);
 router.get("/admin/countUser", countUser);
 router.get("/admin/countUserEnroll", countUserEnroll);
+router.get("/admin/councours", councours);
 router.get("/admin/getAdmin", getAdmin);
 module.exports = router;
