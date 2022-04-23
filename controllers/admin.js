@@ -1,8 +1,10 @@
 const Admin = require("../models/admin");
 const resp = require("../helpers/apiResponse");
+const Staff = require("../models/staff");
 const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
 const { uploadFile } = require("../helpers/awsuploader");
+const User = require("../models/user");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
 
@@ -184,6 +186,31 @@ exports.deleteAdmin = async (req, res) => {
 
 exports.getAdmin = async (req, res) => {
   await Admin.find()
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+exports.countteacher = async (req, res) => {
+  await Staff.countDocuments()
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+exports.countteacherAprove = async (req, res) => {
+  await Staff.countDocuments({ approvedstatus: true })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+exports.countteacherAprove = async (req, res) => {
+  await Staff.countDocuments({ approvedstatus: true })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+exports.countUser = async (req, res) => {
+  await User.countDocuments()
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+exports.countUserEnroll = async (req, res) => {
+  await User.countDocuments({ status: "Enroll" })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };

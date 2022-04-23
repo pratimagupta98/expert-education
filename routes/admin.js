@@ -41,11 +41,19 @@ const {
   viewoneAdmin,
   deleteAdmin,
   getAdmin,
+  countteacher,
+  countteacherAprove,
+  countUser,
+  countUserEnroll,
 } = require("../controllers/admin");
 router.post("/admin/signup", multipleUpload, signup);
 router.post("/admin/adminlogin", adminlogin);
 router.post("/admin/editAdmin", adminToken, multipleUpload, editAdmin);
 router.get("/admin/viewoneAdmin", adminToken, viewoneAdmin);
 router.get("/admin/deleteAdmin", adminToken, deleteAdmin);
+router.get("/admin/countteacher", countteacher);
+router.get("/admin/countteacherAprove", countteacherAprove);
+router.get("/admin/countUser", countUser);
+router.get("/admin/countUserEnroll", countUserEnroll);
 router.get("/admin/getAdmin", getAdmin);
 module.exports = router;
