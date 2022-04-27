@@ -37,6 +37,10 @@ const UserSchema = new Schema(
       type: String,
       // default: "u",
     },
+    batge_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "studentBatch",
+    },
   }
   // { timestamps: true }
 );

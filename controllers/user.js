@@ -13,9 +13,10 @@ exports.signup = async (req, res) => {
     mobile,
     password,
     cnfmPassword,
-    kyc_form,
+
     status,
     user_type,
+    batge_id,
   } = req.body;
 
   const salt = await bcrypt.genSalt(10);
@@ -30,6 +31,7 @@ exports.signup = async (req, res) => {
     kyc_form: kyc_form,
     status: status,
     user_type: user_type,
+    batge_id: batge_id,
   });
 
   const findexist = await User.findOne({
