@@ -1,4 +1,5 @@
 const Staff = require("../models/staff");
+const User = require("../models/user");
 
 const resp = require("../helpers/apiResponse");
 const { uploadFile } = require("../helpers/awsuploader");
@@ -351,6 +352,13 @@ exports.countstaff = async (req, res) => {
 };
 exports.myprofileStaff = async (req, res) => {
   await Staff.findOne({ _id: req.staffId })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+exports.countenrollStudent = async (req, res) => {
+  await User.countDocuments({
+    $and: [{ status: "Enroll" }, { _id: req.userId }],
+  })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };

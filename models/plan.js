@@ -7,18 +7,6 @@ const thisSchema = new Schema(
       type: String,
       require: true,
     },
-    planprice: {
-      type: Number,
-    },
-    validityday: {
-      type: Number,
-    },
-    minute_balance: {
-      type: Number,
-    },
-    desc: {
-      type: String,
-    },
   },
   { timestamps: true }
 );

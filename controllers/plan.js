@@ -2,14 +2,10 @@ const Plan = require("../models/plan");
 const resp = require("../helpers/apiResponse");
 
 exports.addplan = async (req, res) => {
-  const { plantitle, planprice, validityday, minute_balance, desc } = req.body;
+  const { plantitle } = req.body;
 
   const newPlan = new Plan({
     plantitle: plantitle,
-    planprice: planprice,
-    validityday: validityday,
-    minute_balance: minute_balance,
-    desc: desc,
   });
   const findexist = await Plan.findOne({ plantitle: plantitle });
   if (findexist) {
@@ -19,7 +15,7 @@ exports.addplan = async (req, res) => {
       .save()
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
-  } 
+  }
 };
 
 exports.editplan = async (req, res) => {

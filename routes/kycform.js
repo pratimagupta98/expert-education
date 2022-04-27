@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
 
 const { body, validationResult } = require("express-validator");
 const { check } = require("express-validator");
 const { tokenverify } = require("../functions/tokenverify");
-
-const {} = require("multer");
+const multer = require("multer");
 const fs = require("fs");
 
 const {
@@ -17,31 +15,49 @@ const {
   deletekycform,
 } = require("../controllers/kycform");
 
-
-
-
-if (!fs.existsSync("./uploads")) {
-  fs.mkdirSync("./uploads");
-}
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    //console.log(file);
+    let path = `./uploadesimages`;
+    if (!fs.existsSync("uploadesimages")) {
+      fs.mkdirSync("uploadesimages");
+    }
+    cb(null, path);
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + "-" + uniqueSuffix);
+    cb(null, file.originalname);
   },
 });
 
-const upload = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype.includes("jpeg") ||
+    file.mimetype.includes("png") ||
+    file.mimetype.includes("jpg")
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
+let uploads = multer({ storage: storage });
 
+let multipleUpload = uploads.fields([
+  { name: "frount", maxCount: 1 },
+  { name: "back", maxCount: 1 },
+  { name: "photo", maxCount: 1 },
+
+  //   { name: "storepan_img", maxCount: 5 },
+  //   { name: "tradelicence_img", maxCount: 5 },
+  //   { name: "companypan_img", maxCount: 5 },
+  //   { name: "address_proof_img", maxCount: 5 },
+]);
 //Paths
-router.post("/admin/addkycform",upload.fields( [{name: "front_img"},{name: "back_img"},{name: "selfie_img"}]),tokenverify, addkycform);
-router.post("/admin/editkycform/:id", editkycform);
-router.get("/admin/viewonekycform/:id", viewonekycform);
-router.get("/admin/allkycform", allkycform);
-router.get("/admin/deletekycform/:id", deletekycform);
+router.post("/admin/addkycform", multipleUpload, tokenverify, addkycform);
+router.post("/admin/editkycform", tokenverify, multipleUpload, editkycform);
+router.get("/admin/viewonekycform", tokenverify, viewonekycform);
+router.get("/admin/allkycform", tokenverify, allkycform);
+router.get("/admin/deletekycform", tokenverify, deletekycform);
 
 module.exports = router;

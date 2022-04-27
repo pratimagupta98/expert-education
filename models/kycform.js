@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const thisSchema = new Schema(
   {
-
     userid: { type: Schema.Types.ObjectId, ref: "user" },
     gender: {
       type: String,
@@ -17,15 +16,7 @@ const thisSchema = new Schema(
     aadhar_num: {
       type: String,
     },
-    pan_num: {
-      type: String,
-    },
-    driving_licence_num: {
-      type: String,
-    },
-    passport_num: {
-      type: String,
-    },
+
     aadhar_front_img: {
       type: String,
     },
@@ -52,6 +43,16 @@ const thisSchema = new Schema(
     },
     status: {
       type: Boolean,
+    },
+
+    photo: {
+      type: Array,
+    },
+    frount: {
+      type: Array,
+    },
+    back: {
+      type: Array,
     },
   },
   { timestamps: true }

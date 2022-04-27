@@ -23,7 +23,8 @@ const notification = require("./routes/notification");
 const comment1 = require("./routes/comment1");
 const pdffile = require("./routes/pdffile");
 const admin = require("./routes/admin");
-
+const plan = require("./routes/plan");
+const enrollStudent = require("./routes/enrollStudent");
 var app = express();
 
 // view engine setup
@@ -51,6 +52,8 @@ app.use("/api", pdffile);
 //app.use("/api", comment);
 app.use("/api", comment1);
 app.use("/api", admin);
+app.use("/api", plan);
+app.use("/api", enrollStudent);
 const fs = require("fs");
 const AWS = require("aws-sdk");
 
