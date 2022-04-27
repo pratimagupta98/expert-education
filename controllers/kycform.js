@@ -176,7 +176,7 @@ exports.viewonekycform = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-
+///console
 exports.allkycform = async (req, res) => {
   await Kycform.find({ userid: req.userId })
     .populate("userid")
