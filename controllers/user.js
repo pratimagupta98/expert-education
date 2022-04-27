@@ -197,7 +197,7 @@ exports.deleteuser = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.addbatch = async (req, res) => {
+exports.addbatchn = async (req, res) => {
   const { student_Id, lavel_Id } = req.body;
 
   const newbatch = new Batch({

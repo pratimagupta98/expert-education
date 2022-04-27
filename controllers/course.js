@@ -370,3 +370,17 @@ exports.coursebytitle = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.allcoursefree = async (req, res) => {
+  await Course.find({ available: "Free" })
+    .sort({ popularity: 1 })
+    .populate("teacher")
+    .populate("category_id")
+    //.populate("video_id")
+    .populate([{ path: "videolist" }])
+    .populate([{ path: "pdflist" }])
+    .populate("pdf_id")
+    .sort({ sortorder: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

@@ -16,6 +16,11 @@ const {
   deleteuser,
   myprofile,
   countuser,
+  allbatch,
+  addbatchn,
+  viewonebatch,
+  deletebatch,
+  updatebatch,
 } = require("../controllers/user");
 
 router.post("/user/signup", signup);
@@ -32,7 +37,13 @@ router.get("/admin/allusers", allusers);
 router.get("/admin/enrollusers", enrollusers);
 router.get("/admin/deleteuser/:id", deleteuser);
 router.get("/admin/countuser", countuser);
+router.get("/user/allbatch", allbatch);
+router.post("user/addbatchn", addbatchn);
 
+router.post("user/updatebatch/:id", updatebatch);
+
+router.get("/user/deletebatch/:id", deletebatch);
+router.get("/user/viewonebatch/:id", viewonebatch);
 module.exports = router;
 
 //http://localhost:5000/api/admin/allusers
