@@ -6,7 +6,7 @@ const {
   signup,
   adminlogin,
   login,
-  setting,
+  edituserbytoken,
   changepass,
   changepassid,
   viewoneuser,
@@ -28,7 +28,7 @@ router.post("/user/signup", signup);
 router.post("/user/login", login);
 //router.post("/user/adminlogin", adminlogin);
 
-router.post("/user/setting", tokenverify, setting);
+router.post("/user/edituserbytoken", tokenverify, edituserbytoken);
 router.post("/user/changepass", tokenverify, changepass);
 router.get("/user/myprofile", tokenverify, myprofile);
 router.post("/admin/edituser/:id", edituser);

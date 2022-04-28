@@ -112,7 +112,7 @@ exports.editadmin = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.setting = async (req, res) => {
+exports.edituserbytoken = async (req, res) => {
   await User.findOneAndUpdate(
     { _id: req.userId },
     { $set: req.body },
@@ -255,7 +255,7 @@ exports.updatebatch = async (req, res) => {
 
 exports.editusertoken = async (req, res) => {
   await User.findOneAndUpdate(
-    { _id: req.params.userId },
+    { _id: req.userId },
     { $set: req.body },
     { new: true }
   )
