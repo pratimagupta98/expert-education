@@ -21,6 +21,7 @@ const {
   viewonebatch,
   deletebatch,
   updatebatch,
+  editusertoken,
 } = require("../controllers/user");
 
 router.post("/user/signup", signup);
@@ -39,7 +40,7 @@ router.get("/admin/deleteuser/:id", deleteuser);
 router.get("/admin/countuser", countuser);
 router.get("/user/allbatch", allbatch);
 router.post("user/addbatchn", addbatchn);
-
+router.post("user/editusertoken", tokenverify, editusertoken);
 router.post("user/updatebatch/:id", updatebatch);
 
 router.get("/user/deletebatch/:id", deletebatch);

@@ -252,3 +252,13 @@ exports.updatebatch = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.editusertoken = async (req, res) => {
+  await User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { $set: req.body },
+    { new: true }
+  )
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
