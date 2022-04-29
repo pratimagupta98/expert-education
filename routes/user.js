@@ -39,9 +39,9 @@ router.get("/admin/enrollusers", enrollusers);
 router.get("/admin/deleteuser/:id", deleteuser);
 router.get("/admin/countuser", countuser);
 router.get("/user/allbatch", allbatch);
-router.post("user/addbatchn", addbatchn);
-router.post("user/editusertoken", tokenverify, editusertoken);
-router.post("user/updatebatch/:id", updatebatch);
+router.post("/user/addbatchn", addbatchn);
+router.post("/user/editusertoken", tokenverify, editusertoken);
+router.post("/user/updatebatch/:id", updatebatch);
 
 router.get("/user/deletebatch/:id", deletebatch);
 router.get("/user/viewonebatch/:id", viewonebatch);
