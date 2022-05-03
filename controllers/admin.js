@@ -21,6 +21,7 @@ exports.signup = async (req, res) => {
     cnfmPassword: hashPassword,
     email: email,
     mobile: mobile,
+    adminimg: adminimg,
   });
 
   const findexist = await Admin.findOne({
