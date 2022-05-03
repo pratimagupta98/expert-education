@@ -108,7 +108,8 @@ exports.adminlogin = async (req, res) => {
 
 exports.editAdmin = async (req, res) => {
   const { adminname, email, mobile, password, cnfmPassword } = req.body;
-
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
   data = {};
   if (adminname) {
     data.adminname = adminname;

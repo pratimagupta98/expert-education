@@ -22,7 +22,7 @@ exports.addenrollStudent = async (req, res) => {
     console.log(p1);
     if (p1 >= 1) {
       console.log(p);
-      resp.successr(res, "you cant enrolles more then one course");
+      resp.successr(res, "you canot enrolles more then one course");
     } else {
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
