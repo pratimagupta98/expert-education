@@ -20,40 +20,6 @@ exports.addvideo = async (req, res) => {
     resp.alreadyr(res);
   }
 
-  // else{
-  // const newVideo = new Video ({
-  //     videoTitle : videoTitle,
-  //     video_file:video_file,
-  //     video_image :video_image
-  // })
-  // if(req.files){
-  //     console.log(req.files)
-  //     if(req.files.video_image){
-  //         const geturl = await uploadFile(
-  //             req.files.video_image[0]?.path,
-  //             req.files.video_image[0]?.filename,
-  //             "jpg"
-  //           );
-  //           if (geturl) {
-  //             newVideo.video_image = geturl.Location;
-  //             //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-  //     }
-  // }
-
-  //  if(req.files){
-  //     console.log(req.files)
-  //     if(req.files.video_file){
-  //         const geturl = await uploadFile(
-  //             req.files.video_file[0]?.path,
-  //             req.files.video_file[0]?.filename,
-  //             "jpg"
-  //           );
-  //           if (geturl) {
-  //             newVideo.video_file = geturl.Location;
-  //             //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-  //     }
-  // }
-  //}
   if (req.files.video_file && req.files.video_image) {
     for (let i = 0; i < req.files.video_file.length; i++) {
       const getpdfurl = await uploadFile(
