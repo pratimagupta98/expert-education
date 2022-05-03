@@ -13,7 +13,7 @@ exports.addcourse = async (req, res) => {
     teacher,
     video_id,
     pdf_id,
-    available,
+    course_type,
   } = req.body;
 
   const findexist = await Course.findOne({ course_title: course_title });
@@ -28,7 +28,7 @@ exports.addcourse = async (req, res) => {
       category_id: category_id,
       video_id: video_id,
       pdf_id: pdf_id,
-      available: available,
+      course_type: course_type,
     });
     //con
     if (req.files) {

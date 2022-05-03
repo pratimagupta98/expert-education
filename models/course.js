@@ -54,7 +54,7 @@ const thisSchema = new Schema(
       type: Number,
       default: 0,
     },
-    available: {
+    course_type: {
       type: String,
     },
   },
