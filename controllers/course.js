@@ -372,7 +372,7 @@ exports.coursebytitle = async (req, res) => {
 };
 
 exports.allcoursefree = async (req, res) => {
-  await Course.find({ available: "Free" })
+  await Course.find({ course_type: "Free" })
     .sort({ popularity: 1 })
     .populate("teacher")
     .populate("category_id")
