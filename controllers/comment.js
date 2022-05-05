@@ -1,4 +1,4 @@
-const Comment = require("../models/Comment");
+const Comment = require("../models/comment");
 const resp = require("../helpers/apiResponse");
 
 exports.addcommentbystudent = async (req, res) => {
