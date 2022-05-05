@@ -20,8 +20,8 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + uniqueSuffix);
   },
 });
-
 const upload = multer({ storage: storage });
+//let multipleUpload = upload.fields([{ name: "course_image", maxCount: 1 }]);
 
 const {
   addcourse,
@@ -85,7 +85,15 @@ router.post(
   ]),
   addcoursebyadmin
 );
-router.post("/admin/editcourse/:id", editcourse);
+router.post(
+  "/admin/editcourse/:id",
+  upload.fields([
+    {
+      name: "course_image",
+    },
+  ]),
+  editcourse
+);
 router.get("/admin/viewonecourse/:id", verifyToken, viewonecourse);
 router.get("/admin/viewonecoursep/:id", viewonecoursep);
 router.get("/admin/allcourse", allcourse);
@@ -94,7 +102,7 @@ router.get("/admin/allcoursebyrecent", allcoursebyrecent);
 router.get("/admin/deletecourse/:id", deletecourse);
 router.get("/user/countcourse", verifyToken, countcourse);
 //router.get("/admin/coursebytitle/:id", coursebytitle);
-router.post("/admin/updatecourse/:id", updatecourse);
+router.post("/user/updatecourse/:id", updatecourse);
 router.get("/admin/coursebytitle/:id", coursebytitle);
 router.get("/user/allcoursefree", allcoursefree);
 module.exports = router;

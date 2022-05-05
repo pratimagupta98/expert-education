@@ -199,15 +199,60 @@ exports.addcoursebyadmin = async (req, res) => {
 };
 
 exports.editcourse = async (req, res) => {
-  await Course.findOneAndUpdate(
-    {
-      _id: req.params.id,
-    },
-    { $set: req.body },
-    { new: true }
-  )
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
+  console.log("enter");
+  const {
+    course_title,
+    desc,
+    teacher,
+    category_id,
+    long_desc,
+    course_type,
+    course_image,
+  } = req.body;
+  data = {};
+  if (course_title) {
+    data.course_title = course_title;
+  }
+  if (desc) {
+    data.desc = desc;
+  }
+  if (teacher) {
+    data.teacher = teacher;
+  }
+  if (category_id) {
+    data.category_id = category_id;
+  }
+  if (long_desc) {
+    data.long_desc = long_desc;
+  }
+  if (course_type) {
+    data.course_type = course_type;
+  }
+  if (req.files) {
+    console.log(req.files);
+    if (req.files.course_image) {
+      const geturl = await uploadFile(
+        req.files.course_image[0]?.path,
+        req.files.course_image[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.course_image = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+  }
+  if (data) {
+    await Course.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: req.body },
+      { new: true }
+    )
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+  }
 };
 
 exports.editcoursebystaff = async (req, res) => {
@@ -321,45 +366,64 @@ exports.coursebytitle = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-// exports.updatecourse = async (req, res) => {
-//   const {video_id,pdf_id} = req.body
-//   const coursedetail = await Course.findOne({ _id: req.params.id });
-//   if (coursedetail) {
-//     //console.log(coursedetail.popularity)
-//    // let increment = coursedetail.popularity + 1;
-//     await Course.findOneAndUpdate(
-//       {
-//       // _id: req.params.id},
-//         _id: req.params.id },
-//         // {
-//           // $push: {
-//       // tank_map: {
-//       //   $each: [ { tank_number:newarr, product_map:newarr2,capacity_litre:newarr3}]}}},
-//       {$push: {video_id: req.body.video_id}},
-//      // {$push: {pdf_id: req.params.id}},
-//           // },
-//     //  { new: true }
-//     )
-//       //.populate("teacher")
-//       .then((data) => resp.successr(res, data))
-//       .catch((error) => resp.errorr(res, error));
-//   }
-// };
-
 exports.updatecourse = async (req, res) => {
-  await Course.findOneAndUpdate(
+  // console.log("enter");
+  // const { course_title, desc, teacher, category_id, long_desc } = req.body;
+  // data = {};
+  // if (course_title) {
+  //   data.course_title = course_title;
+  // }
+  // if (desc) {
+  //   data.desc = desc;
+  // }
+  // if (teacher) {
+  //   data.teacher = teacher;
+  // }
+  // if (category_id) {
+  //   data.category_id = category_id;
+  // }
+  // // if (long_desc) {
+  // //   data.long_desc = long_desc;
+  // // }
+  // // if (req.files) {
+  // //   console.log(req.files);
+  // //   if (req.files.course_image) {
+  // //     const geturl = await uploadFile(
+  // //       req.files.course_image[0]?.path,
+  // //       req.files.course_image[0]?.filename,
+  // //       "jpg"
+  // //     );
+  // //     if (geturl) {
+  // //       data.course_image = geturl.Location;
+  // //       //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+  // //     }
+  // //   }
+
+  // if (data) {
+  const findandUpdateEntry = await Course.findOneAndUpdate(
     {
       _id: req.params.id,
-      //  console.log(req.params._id);
     },
-    {
-      $set: req.body,
-    },
+    { $set: data },
     { new: true }
-  )
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
+  );
+
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+  //}
 };
+//};
 
 exports.coursebytitle = async (req, res) => {
   const findall = await Course.find({ course_title: req.params.id })

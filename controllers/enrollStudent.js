@@ -12,6 +12,8 @@ exports.addenrollStudent = async (req, res) => {
       return value.plantitle;
     });
     console.log(plan);
+  } else {
+    resp.successr(res, "you have no any plan");
   }
   if (plan == "Plan 2") {
     console.log("1", plan);
