@@ -8,7 +8,7 @@ const thisSchema = new Schema(
       type: String,
     },
     course_image: {
-      type: String,
+      type: Array,
     },
     desc: {
       type: String,
@@ -57,7 +57,9 @@ const thisSchema = new Schema(
     course_type: {
       type: String,
     },
+    posterimg: { type: Array },
   },
+
   { timestamps: true }
 );
 

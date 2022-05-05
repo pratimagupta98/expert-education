@@ -5,7 +5,7 @@ const { uploadFile } = require("../helpers/awsuploader");
 const fs = require("fs");
 
 exports.addpdf = async (req, res) => {
-  const { pdf_title,course } = req.body;
+  const { pdf_title, course } = req.body;
 
   // const newPdffile = new Pdffile({
   //   pdf_title: pdf_title,
@@ -15,7 +15,7 @@ exports.addpdf = async (req, res) => {
 
   const findexist = await Pdffile.findOne({
     pdf_title: pdf_title,
-  
+
     // pdf_file: pdf_file,
     // pdf_image: pdf_image,
   });
@@ -24,7 +24,7 @@ exports.addpdf = async (req, res) => {
   } else {
     const newPdffile = new Pdffile({
       pdf_title: pdf_title,
-      course :course,
+      course: course,
       teacher: req.staffId,
       // pdf_file: pdf_file,
       //pdf_image: pdf_image,
@@ -52,7 +52,7 @@ exports.addpdf = async (req, res) => {
             req.files.pdf_file[i]?.filename,
             "pdf"
           );
-          newPdffile.pdf_file[i] = getpdfurl.Location;;
+          newPdffile.pdf_file[i] = getpdfurl.Location;
           // let pdfObj = new Object();
           // if (getpdfurl) {
           //   pdfObj.pdf_file = getpdfurl.Location;
@@ -67,7 +67,7 @@ exports.addpdf = async (req, res) => {
           //   pdfObj.pdf_image = getimgurl.Location;
           //   //fs.unlinkSync(`../uploads/${req.files.pdf_image[i]?.filename}`);
           // }
-          newPdffile.pdf_image[i] = getimgurl.Location;;
+          newPdffile.pdf_image[i] = getimgurl.Location;
         }
       }
 
@@ -87,7 +87,7 @@ exports.addpdf = async (req, res) => {
 };
 
 exports.addpdfbyadmin = async (req, res) => {
-  const { pdf_title,course,teacher } = req.body;
+  const { pdf_title, course, teacher } = req.body;
 
   // const newPdffile = new Pdffile({
   //   pdf_title: pdf_title,
@@ -97,7 +97,7 @@ exports.addpdfbyadmin = async (req, res) => {
 
   const findexist = await Pdffile.findOne({
     pdf_title: pdf_title,
-     
+
     // pdf_file: pdf_file,
     // pdf_image: pdf_image,
   });
@@ -106,8 +106,8 @@ exports.addpdfbyadmin = async (req, res) => {
   } else {
     const newPdffile = new Pdffile({
       pdf_title: pdf_title,
-      course :course,
-      teacher: teacher
+      course: course,
+      teacher: teacher,
       // pdf_file: pdf_file,
       //pdf_image: pdf_image,
 
@@ -169,9 +169,15 @@ exports.addpdfbyadmin = async (req, res) => {
 };
 
 exports.getpdf = async (req, res) => {
-  await Pdffile.find().populate("course")
+  await Pdffile.find()
+    .populate("course")
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
 
+exports.deletepdf = async (req, res) => {
+  await Pdffile.deleteOne({ _id: req.params.id })
+    .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

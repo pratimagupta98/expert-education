@@ -48,17 +48,9 @@ router.post(
     {
       name: "course_image",
     },
+
     {
-      name: "pdf_image",
-    },
-    {
-      name: "pdf_file",
-    },
-    {
-      name: "video_image",
-    },
-    {
-      name: "video_file",
+      name: "posterimg",
     },
   ]),
   addcourse
@@ -71,16 +63,7 @@ router.post(
       name: "course_image",
     },
     {
-      name: "pdf_image",
-    },
-    {
-      name: "pdf_file",
-    },
-    {
-      name: "video_image",
-    },
-    {
-      name: "video_file",
+      name: "posterimg",
     },
   ]),
   addcoursebyadmin
@@ -90,6 +73,9 @@ router.post(
   upload.fields([
     {
       name: "course_image",
+    },
+    {
+      name: "posterimg",
     },
   ]),
   editcourse

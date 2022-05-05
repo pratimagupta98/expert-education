@@ -25,7 +25,7 @@ exports.allComment = async (req, res) => {
     .populate("cource_Id")
     .populate("user_id")
     .populate("staff_id")
-    .sort({ sortorder: 1 })
+    .sort({ createdAt: -1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };

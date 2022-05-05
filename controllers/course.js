@@ -11,8 +11,7 @@ exports.addcourse = async (req, res) => {
     long_desc,
     category_id,
     teacher,
-    video_id,
-    pdf_id,
+    posterimg,
     course_type,
   } = req.body;
 
@@ -26,8 +25,8 @@ exports.addcourse = async (req, res) => {
       long_desc: long_desc,
       teacher: req.staffId,
       category_id: category_id,
-      video_id: video_id,
-      pdf_id: pdf_id,
+      posterimg: posterimg,
+
       course_type: course_type,
     });
     //con
@@ -43,6 +42,17 @@ exports.addcourse = async (req, res) => {
           //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
         }
       }
+      // if (req.files.posterimg) {
+      //   const geturl = await uploadFile(
+      //     req.files.posterimg[0]?.path,
+      //     req.files.posterimg[0]?.filename,
+      //     "jpg"
+      //   );
+      //   if (geturl) {
+      //     newCourse.posterimg = geturl.Location;
+      //     //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      //   }
+      // }
       if (req.files.pdf_file && req.files.pdf_image) {
         for (let i = 0; i < req.files.pdf_file.length; i++) {
           const getpdfurl = await uploadFile(
@@ -108,7 +118,15 @@ exports.addcourse = async (req, res) => {
 };
 
 exports.addcoursebyadmin = async (req, res) => {
-  const { course_title, desc, teacher, category_id, long_desc } = req.body;
+  const {
+    course_title,
+    desc,
+    teacher,
+    category_id,
+    long_desc,
+    posterimg,
+    course_type,
+  } = req.body;
 
   const findexist = await Course.findOne({ course_title: course_title });
   if (findexist) {
@@ -120,6 +138,9 @@ exports.addcoursebyadmin = async (req, res) => {
       long_desc: long_desc,
       teacher: teacher,
       category_id: category_id,
+      posterimg: posterimg,
+
+      course_type: course_type,
     });
 
     if (req.files) {
@@ -132,6 +153,17 @@ exports.addcoursebyadmin = async (req, res) => {
         );
         if (geturl) {
           newCourse.course_image = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
+      if (req.files.posterimg) {
+        const geturl = await uploadFile(
+          req.files.posterimg[0]?.path,
+          req.files.posterimg[0]?.filename,
+          "jpg"
+        );
+        if (geturl) {
+          newCourse.posterimg = geturl.Location;
           //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
         }
       }
@@ -238,6 +270,17 @@ exports.editcourse = async (req, res) => {
       );
       if (geturl) {
         data.course_image = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+    if (req.files.posterimg) {
+      const geturl = await uploadFile(
+        req.files.posterimg[0]?.path,
+        req.files.posterimg[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.posterimg = geturl.Location;
         //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
       }
     }
