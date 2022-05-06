@@ -53,6 +53,7 @@ const {
   countstaff,
   changepassstaffUser,
   myprofileStaff,
+  not_approved_staff,
 } = require("../controllers/staff");
 
 //paths
@@ -75,6 +76,7 @@ router.get("/user/changepassstaffUser", verifyToken, changepassstaffUser);
 router.get("/admin/allstaff", allstaff);
 router.get("/admin/deletestaff/:id", deletestaff);
 router.get("/admin/approved_staff", approved_staff);
+router.get("/admin/not_approved_staff", not_approved_staff);
 router.get("/admin/countstaff", countstaff);
 router.get("/user/myprofileStaff", verifyToken, myprofileStaff);
 module.exports = router;

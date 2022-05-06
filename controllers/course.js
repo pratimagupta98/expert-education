@@ -491,7 +491,6 @@ exports.allcoursefree = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-
 exports.searchcourse = async (req, res) => {
   const { course } = req.body;
   const findall = await Course.find({
@@ -517,12 +516,6 @@ exports.searchcourse = async (req, res) => {
       });
     };
     getname();
-
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findall,
-    });
   } else {
     res.status(400).json({
       status: false,

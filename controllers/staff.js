@@ -345,6 +345,13 @@ exports.approved_staff = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.not_approved_staff = async (req, res) => {
+  await Staff.find({ approvedstatus: "false" })
+    .sort({ createdAt: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
 exports.countstaff = async (req, res) => {
   await Staff.countDocuments()
     .then((data) => resp.successr(res, data))
