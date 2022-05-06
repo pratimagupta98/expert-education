@@ -272,11 +272,75 @@ exports.setting = async (req, res) => {
 };
 
 exports.settingbytoken = async (req, res) => {
+  const {
+    fullname,
+    email,
+    mobile,
+    password,
+    cnfmPassword,
+    image,
+    gender,
+    dob,
+    state,
+    city,
+    institute,
+    approvedstatus,
+  } = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+  data = {};
+  if (fullname) {
+    data.fullname = fullname;
+  }
+  if (email) {
+    data.email = email;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+  if (password) {
+    data.password = hashPassword;
+  }
+  if (gender) {
+    data.gender = gender;
+  }
+  if (dob) {
+    data.dob = dob;
+  }
+  if (state) {
+    data.state = state;
+  }
+  if (city) {
+    data.city = city;
+  }
+  if (institute) {
+    data.institute = institute;
+  }
+  if (approvedstatus) {
+    data.approvedstatus = approvedstatus;
+  }
+  if (req.files) {
+    console.log(req.files);
+    if (req.files.image) {
+      const geturl = await uploadFile(
+        req.files.image[0]?.path,
+        req.files.image[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.image = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+  }
   await Staff.findOneAndUpdate(
     {
       _id: req.staffId,
     },
-    { $set: req.body },
+    { $set: data },
     { new: true }
   )
 
