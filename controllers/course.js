@@ -491,3 +491,43 @@ exports.allcoursefree = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.searchcourse = async (req, res) => {
+  const { course } = req.body;
+  const findall = await Course.find({
+    course_title: { $regex: course, $options: "i" },
+  });
+
+  if (findall) {
+    let somearray = [];
+    findall.forEach((i) => {
+      somearray.indexOf(i.course_title) === -1
+        ? somearray.push(i.course_title)
+        : console.log("already exists");
+      //console.log(i)
+    });
+    console.log(somearray);
+
+    let getname = async () => {
+      await Course.find({ course_title: { $in: somearray } }).then((data1) => {
+        res.status(200).json({
+          status: true,
+          data: data1,
+        });
+      });
+    };
+    getname();
+
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
