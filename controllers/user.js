@@ -3,6 +3,7 @@ const Batch = require("../models/studentBatch");
 const resp = require("../helpers/apiResponse");
 const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
+const { uploadFile } = require("../helpers/awsuploader");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
 
@@ -13,10 +14,10 @@ exports.signup = async (req, res) => {
     mobile,
     password,
     cnfmPassword,
-
     status,
     user_type,
     batge_id,
+    userimg,
   } = req.body;
 
   const salt = await bcrypt.genSalt(10);
@@ -28,18 +29,33 @@ exports.signup = async (req, res) => {
     mobile: mobile,
     password: hashPassword,
     cnfmPassword: hashPassword,
-    kyc_form: kyc_form,
+    userimg: userimg,
     status: status,
     user_type: user_type,
     batge_id: batge_id,
   });
 
   const findexist = await User.findOne({
-    $or: [{ email: email }, { mobile: mobile }],
+    $or: [{ email: req.body.email }, { mobile: req.body.mobile }],
   });
+  console.log(findexist);
   if (findexist) {
     resp.alreadyr(res);
   } else {
+    if (req.files) {
+      console.log(req.files);
+      if (req.files.userimg) {
+        const geturl = await uploadFile(
+          req.files.userimg[0]?.path,
+          req.files.userimg[0]?.filename,
+          "jpg"
+        );
+        if (geturl) {
+          newuser.userimg = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
+    }
     newuser
       .save()
       .then((result) => {
@@ -151,16 +167,86 @@ exports.changepassidUser = async (req, res) => {
 };
 
 exports.edituser = async (req, res) => {
-  await User.findOneAndUpdate(
-    { _id: req.params.id },
-    { $set: req.body },
-    { new: true }
-  )
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
+  const {
+    fullname,
+    email,
+    mobile,
+    password,
+    cnfmPassword,
+    status,
+    user_type,
+    batge_id,
+    userimg,
+  } = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+  data = {};
+  if (fullname) {
+    data.fullname = fullname;
+  }
+  if (email) {
+    data.email = email;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+  if (password) {
+    data.password = hashPassword;
+  }
+  if (batge_id) {
+    data.batge_id = batge_id;
+  }
+  if (user_type) {
+    data.user_type = user_type;
+  }
+  if (status) {
+    data.status = status;
+  }
+  if (req.files) {
+    console.log(req.files);
+    if (req.files.userimg) {
+      const geturl = await uploadFile(
+        req.files.userimg[0]?.path,
+        req.files.userimg[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.userimg = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+
+    if (data) {
+      const findandUpdateEntry = await User.findOneAndUpdate(
+        {
+          _id: req.userId,
+        },
+        { $set: data },
+        { new: true }
+      );
+
+      if (findandUpdateEntry) {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: findandUpdateEntry,
+        });
+      } else {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+        });
+      }
+    }
+  }
 };
 
 exports.allusers = async (req, res) => {
+  //await User.remove();
   await User.find()
     .sort({ createdAt: 1 })
     .then((data) => resp.successr(res, data))

@@ -54,10 +54,10 @@ let multipleUpload = uploads.fields([
   //   { name: "address_proof_img", maxCount: 5 },
 ]);
 //Paths
-router.post("/admin/addkycform", multipleUpload, tokenverify, addkycform);
-router.post("/admin/editkycform", tokenverify, multipleUpload, editkycform);
-router.get("/admin/viewonekycform", tokenverify, viewonekycform);
-router.get("/admin/allkycform", tokenverify, allkycform);
-router.get("/admin/deletekycform", tokenverify, deletekycform);
+router.post("/user/addkycform", multipleUpload, tokenverify, addkycform);
+router.post("/user/editkycform", tokenverify, multipleUpload, editkycform);
+router.get("/user/viewonekycform/:id", tokenverify, viewonekycform);
+router.get("/user/allkycform", tokenverify, allkycform);
+router.get("/user/deletekycform", tokenverify, deletekycform);
 
 module.exports = router;

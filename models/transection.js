@@ -4,11 +4,12 @@ const Schema = mongoose.Schema;
 const transection = new Schema(
   {
     user_id: { type: Schema.Types.ObjectId, ref: "user" },
-    comment: {
-      type: String,
+    amount: {
+      type: Number,
     },
-    cource_Id: { type: Schema.Types.ObjectId, ref: "course" },
-    staff_id: { type: Schema.Types.ObjectId, ref: "staff" },
+    transectionId: { type: String, generated: true },
+    plan_id: { type: Schema.Types.ObjectId, ref: "plan" },
+    paymenyt_id: { type: String },
   },
 
   { timestamps: true }

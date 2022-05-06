@@ -1,6 +1,39 @@
 const express = require("express");
 const router = express.Router();
 const { tokenverify } = require("../functions/tokenverify");
+const multer = require("multer");
+const fs = require("fs");
+
+//cjdhjd
+if (!fs.existsSync("./uploads")) {
+  fs.mkdirSync("./uploads");
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + "-" + uniqueSuffix);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype.includes("jpeg") ||
+    file.mimetype.includes("png") ||
+    file.mimetype.includes("jpg")
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+let uploads = multer({ storage: storage });
+
+let multipleUpload = uploads.fields([{ name: "userimg", maxCount: 1 }]);
 
 const {
   signup,
@@ -24,14 +57,14 @@ const {
   editusertoken,
 } = require("../controllers/user");
 
-router.post("/user/signup", signup);
+router.post("/user/signup", multipleUpload, signup);
 router.post("/user/login", login);
 //router.post("/user/adminlogin", adminlogin);
 
 router.post("/user/edituserbytoken", tokenverify, edituserbytoken);
 router.post("/user/changepass", tokenverify, changepass);
 router.get("/user/myprofile", tokenverify, myprofile);
-router.post("/admin/edituser/:id", edituser);
+router.post("/user/edituser", multipleUpload, tokenverify, edituser);
 router.post("/user/changepassid/:id", changepassid);
 router.get("/admin/viewoneuser/:id", viewoneuser);
 router.get("/admin/allusers", allusers);

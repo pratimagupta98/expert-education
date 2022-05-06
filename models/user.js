@@ -4,9 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema(
   {
     userimg: {
-      type: String,
-      default:
-        "https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659651_960_720.png",
+      type: Array,
     },
     fullname: {
       type: String,
