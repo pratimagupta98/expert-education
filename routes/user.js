@@ -61,10 +61,15 @@ router.post("/user/signup", multipleUpload, signup);
 router.post("/user/login", login);
 //router.post("/user/adminlogin", adminlogin);
 
-router.post("/user/edituserbytoken", tokenverify, edituserbytoken);
+router.post(
+  "/user/edituserbytoken",
+  tokenverify,
+  multipleUpload,
+  edituserbytoken
+);
 router.post("/user/changepass", tokenverify, changepass);
 router.get("/user/myprofile", tokenverify, myprofile);
-router.post("/user/edituser", multipleUpload, tokenverify, edituser);
+router.post("/admin/edituser/:id", edituser);
 router.post("/user/changepassid/:id", changepassid);
 router.get("/admin/viewoneuser/:id", viewoneuser);
 router.get("/admin/allusers", allusers);

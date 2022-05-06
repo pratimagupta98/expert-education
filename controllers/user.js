@@ -128,9 +128,9 @@ exports.editadmin = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.edituserbytoken = async (req, res) => {
+exports.edituser = async (req, res) => {
   await User.findOneAndUpdate(
-    { _id: req.userId },
+    { _id: req.params.id },
     { $set: req.body },
     { new: true }
   )
@@ -166,7 +166,7 @@ exports.changepassidUser = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.edituser = async (req, res) => {
+exports.edituserbytoken = async (req, res) => {
   const {
     fullname,
     email,
