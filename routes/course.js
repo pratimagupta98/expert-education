@@ -39,6 +39,7 @@ const {
   coursebytitle,
   allcoursefree,
   searchcourse,
+  editcoursebystaff,
 } = require("../controllers/course");
 
 //Paths
@@ -80,6 +81,19 @@ router.post(
     },
   ]),
   editcourse
+);
+router.post(
+  "/user/editcoursebystaff/:id",
+  upload.fields([
+    {
+      name: "course_image",
+    },
+    {
+      name: "posterimg",
+    },
+  ]),
+  verifyToken,
+  editcoursebystaff
 );
 router.get("/admin/viewonecourse/:id", verifyToken, viewonecourse);
 router.get("/admin/viewonecoursep/:id", viewonecoursep);

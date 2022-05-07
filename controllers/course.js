@@ -290,7 +290,7 @@ exports.editcourse = async (req, res) => {
       {
         _id: req.params.id,
       },
-      { $set: req.body },
+      { $set: data },
       { new: true }
     )
       .then((data) => resp.successr(res, data))
@@ -299,15 +299,70 @@ exports.editcourse = async (req, res) => {
 };
 
 exports.editcoursebystaff = async (req, res) => {
-  await Course.findOneAndUpdate(
-    {
-      _id: req.staffId,
-    },
-    { $set: req.body },
-    { new: true }
-  )
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
+  const {
+    course_title,
+    desc,
+    teacher,
+    category_id,
+    long_desc,
+    course_type,
+    course_image,
+  } = req.body;
+  data = {};
+  if (course_title) {
+    data.course_title = course_title;
+  }
+  if (desc) {
+    data.desc = desc;
+  }
+  if (teacher) {
+    data.teacher = teacher;
+  }
+  if (category_id) {
+    data.category_id = category_id;
+  }
+  if (long_desc) {
+    data.long_desc = long_desc;
+  }
+  if (course_type) {
+    data.course_type = course_type;
+  }
+  if (req.files) {
+    console.log(req.files);
+    if (req.files.course_image) {
+      const geturl = await uploadFile(
+        req.files.course_image[0]?.path,
+        req.files.course_image[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.course_image = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+    if (req.files.posterimg) {
+      const geturl = await uploadFile(
+        req.files.posterimg[0]?.path,
+        req.files.posterimg[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.posterimg = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+  }
+  if (data) {
+    await Course.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: data },
+      { new: true }
+    )
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+  }
 };
 
 exports.viewonecourse = async (req, res) => {
