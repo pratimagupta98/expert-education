@@ -25,7 +25,7 @@ const pdffile = require("./routes/pdffile");
 const admin = require("./routes/admin");
 const plan = require("./routes/plan");
 const enrollStudent = require("./routes/enrollStudent");
-const wallet = require("./routes/wallet");
+const transection = require("./routes/transection");
 var app = express();
 
 // view engine setup
@@ -55,7 +55,7 @@ app.use("/api", comment1);
 app.use("/api", admin);
 app.use("/api", plan);
 app.use("/api", enrollStudent);
-app.use("/api", wallet);
+app.use("/api", transection);
 const fs = require("fs");
 const AWS = require("aws-sdk");
 

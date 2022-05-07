@@ -6,7 +6,7 @@ const {
   allTransection,
   allUserTransection,
   deleteenrollStudent,
-} = require("../controllers/wallet");
+} = require("../controllers/transection");
 
 router.post("/admin/addTransection", addTransection);
 //router.post("/admin/editCat/:id", editCat);

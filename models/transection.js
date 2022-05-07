@@ -3,10 +3,12 @@ const Schema = mongoose.Schema;
 
 const transection = new Schema(
   {
+    date: { type: String },
     user_id: { type: Schema.Types.ObjectId, ref: "user" },
     amount: {
       type: Number,
     },
+
     transectionId: { type: String, generated: true },
     plan_id: { type: Schema.Types.ObjectId, ref: "plan" },
     paymenyt_id: { type: String },

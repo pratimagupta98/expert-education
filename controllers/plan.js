@@ -2,10 +2,11 @@ const Plan = require("../models/plan");
 const resp = require("../helpers/apiResponse");
 
 exports.addplan = async (req, res) => {
-  const { plantitle } = req.body;
+  const { plantitle, amount } = req.body;
 
   const newPlan = new Plan({
     plantitle: plantitle,
+    amount: amount,
   });
   const findexist = await Plan.findOne({ plantitle: plantitle });
   if (findexist) {

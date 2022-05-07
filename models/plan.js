@@ -7,6 +7,7 @@ const thisSchema = new Schema(
       type: String,
       require: true,
     },
+    amount: { type: Number },
   },
   { timestamps: true }
 );

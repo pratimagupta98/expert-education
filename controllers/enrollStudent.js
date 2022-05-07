@@ -15,7 +15,7 @@ exports.addenrollStudent = async (req, res) => {
   } else {
     resp.successr(res, "you have no any plan");
   }
-  if (plan == "Plan 2") {
+  if (plan == "Plan 1") {
     console.log("1", plan);
     let p1 = await enrollStudent.countDocuments({
       student_Id: req.body.student_Id,
@@ -38,7 +38,7 @@ exports.addenrollStudent = async (req, res) => {
         .catch((error) => resp.errorr(res, error));
     }
   }
-  if (plan == "Plan 3") {
+  if (plan == "Plan 2") {
     console.log("2", plan);
     let p2 = await enrollStudent.countDocuments({
       student_Id: req.body.student_Id,
@@ -47,19 +47,29 @@ exports.addenrollStudent = async (req, res) => {
       console.log(p2);
       resp.successr(res, "you cant enrolles more then two course");
     } else {
-      const newenrollStudent = new enrollStudent({
-        plan_Id: plan_Id,
-        student_Id: student_Id,
-        course_Id: course_Id,
+      let coursebook = await enrollStudent.findOne({
+        $and: [
+          { student_Id: req.body.student_Id },
+          { course_Id: req.body.course_Id },
+        ],
       });
+      if (coursebook) {
+        resp.successr(res, "you dont enrolles again this course");
+      } else {
+        const newenrollStudent = new enrollStudent({
+          plan_Id: plan_Id,
+          student_Id: student_Id,
+          course_Id: course_Id,
+        });
 
-      newenrollStudent
-        .save()
-        .then((data) => resp.successr(res, data))
-        .catch((error) => resp.errorr(res, error));
+        newenrollStudent
+          .save()
+          .then((data) => resp.successr(res, data))
+          .catch((error) => resp.errorr(res, error));
+      }
     }
   }
-  if (plan == "Plan 4") {
+  if (plan == "Plan 3") {
     console.log("3", plan);
     let p3 = await enrollStudent.countDocuments({
       student_Id: req.body.student_Id,
@@ -68,6 +78,15 @@ exports.addenrollStudent = async (req, res) => {
       console.log(p3);
       resp.successr(res, "you cant enrolles more then five  course");
     } else {
+      let coursebook = await enrollStudent.findOne({
+        $and: [
+          { student_Id: req.body.student_Id },
+          { course_Id: req.body.course_Id },
+        ],
+      });
+      if (coursebook) {
+        resp.successr(res, "you dont enrolles again this course");
+      }
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
         student_Id: student_Id,

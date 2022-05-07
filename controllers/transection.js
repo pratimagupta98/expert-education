@@ -3,13 +3,21 @@ const Staffnotification = require("../models/notification");
 const resp = require("../helpers/apiResponse");
 const Usernotification = require("../models/usernotification");
 
+let getCurrentDate = function () {
+  const t = new Date();
+  const date = ("0" + t.getDate()).slice(-2);
+  const month = ("0" + (t.getMonth() + 1)).slice(-2);
+  const year = t.getFullYear();
+  return `${date}-${month}-${year}`;
+};
 exports.addTransection = async (req, res) => {
-  const { user_id, amount, paymenyt_id, transectionId } = req.body;
+  const { user_id, amount, paymenyt_id, transectionId, date } = req.body;
   let length = 6;
   let transectionid = (
     "0".repeat(length) + Math.floor(Math.random() * 10 ** length)
   ).slice(-length);
   const newTransection = new Transection({
+    date: getCurrentDate(),
     user_id: user_id,
     amount: amount,
     paymenyt_id: paymenyt_id,

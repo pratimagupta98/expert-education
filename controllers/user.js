@@ -140,8 +140,10 @@ exports.edituserbytoken = async (req, res) => {
     user_type,
     batge_id,
   } = req.body;
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
+  if (password) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
+  }
   data = {};
   if (fullname) {
     data.fullname = fullname;
@@ -156,6 +158,8 @@ exports.edituserbytoken = async (req, res) => {
     data.mobile = mobile;
   }
   if (password) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
     data.password = hashPassword;
   }
 
