@@ -3,6 +3,7 @@ const Batch = require("../models/studentBatch");
 const resp = require("../helpers/apiResponse");
 const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
+const { uploadFile } = require("../helpers/awsuploader");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
 
@@ -13,7 +14,7 @@ exports.signup = async (req, res) => {
     mobile,
     password,
     cnfmPassword,
-
+    userimg,
     status,
     user_type,
     batge_id,
@@ -28,7 +29,7 @@ exports.signup = async (req, res) => {
     mobile: mobile,
     password: hashPassword,
     cnfmPassword: hashPassword,
-    kyc_form: kyc_form,
+    userimg: userimg,
     status: status,
     user_type: user_type,
     batge_id: batge_id,
@@ -40,6 +41,20 @@ exports.signup = async (req, res) => {
   if (findexist) {
     resp.alreadyr(res);
   } else {
+    if (req.files) {
+      console.log(req.files);
+      if (req.files.userimg) {
+        const geturl = await uploadFile(
+          req.files.userimg[0]?.path,
+          req.files.userimg[0]?.filename,
+          "jpg"
+        );
+        if (geturl) {
+          newuser.userimg = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
+    }
     newuser
       .save()
       .then((result) => {
@@ -68,6 +83,7 @@ exports.login = async (req, res) => {
   const user = await User.findOne({
     $or: [{ mobile: mobile }, { email: email }],
   });
+  console.log("user", user);
   if (user) {
     const validPass = await bcrypt.compare(password, user.password);
     if (validPass) {
@@ -113,9 +129,63 @@ exports.editadmin = async (req, res) => {
 };
 
 exports.edituserbytoken = async (req, res) => {
+  const {
+    fullname,
+    email,
+    mobile,
+    password,
+
+    userimg,
+    status,
+    user_type,
+    batge_id,
+  } = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+  data = {};
+  if (fullname) {
+    data.fullname = fullname;
+  }
+  if (email) {
+    data.email = email;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+  if (password) {
+    data.password = hashPassword;
+  }
+
+  if (status) {
+    data.status = status;
+  }
+  if (user_type) {
+    data.user_type = user_type;
+  }
+  if (batge_id) {
+    data.batge_id = batge_id;
+  }
+
+  if (req.files) {
+    console.log(req.files);
+    if (req.files.userimg) {
+      const geturl = await uploadFile(
+        req.files.userimg[0]?.path,
+        req.files.userimg[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.userimg = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+  }
   await User.findOneAndUpdate(
     { _id: req.userId },
-    { $set: req.body },
+    { $set: data },
     { new: true }
   )
     .then((data) => resp.successr(res, data))
@@ -161,6 +231,7 @@ exports.edituser = async (req, res) => {
 };
 
 exports.allusers = async (req, res) => {
+  //await User.remove();
   await User.find()
     .sort({ createdAt: 1 })
     .then((data) => resp.successr(res, data))
