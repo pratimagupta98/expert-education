@@ -44,7 +44,7 @@ exports.allTransection = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 exports.allUserTransection = async (req, res) => {
-  await Transection.find({ user_id: req.user_id })
+  await Transection.find({ user_id: req.userId })
     .populate("user_id")
 
     .sort({ createdAt: -1 })
