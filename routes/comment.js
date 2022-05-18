@@ -10,10 +10,10 @@ const {
   addcommentbyteachar,
 } = require("../controllers/comment");
 
-router.post("/user/addcommentbystudent/:id", tokenverify, addcommentbystudent);
+router.post("/user/addcommentbystudent", tokenverify, addcommentbystudent);
 //router.post("/admin/editCat/:id", editCat);
 router.get("/admin/viewoneComment/:id", viewoneComment);
 router.get("/user/allComment", allComment);
 //router.get("/admin/deleteCat/:id", deleteCat);
-router.post("/user/addcommentbyteachar/:id", verifyToken, addcommentbyteachar);
+router.post("/user/addcommentbyteachar", verifyToken, addcommentbyteachar);
 module.exports = router;

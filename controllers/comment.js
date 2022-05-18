@@ -9,7 +9,8 @@ exports.addcommentbystudent = async (req, res) => {
 
   const newComment = new Comment({
     comment: comment,
-    cource_Id: req.params.id,
+   // cource_Id: req.params.id,
+   cource_Id:cource_Id,
     user_id: req.userId,
   });
 
@@ -36,14 +37,14 @@ exports.viewoneComment = async (req, res) => {
 };
 
 exports.addcommentbyteachar = async (req, res) => {
-  const { comment, user_id, cource_Id } = req.body;
+  const { comment, staff_id, cource_Id } = req.body;
 
   // const salt = await bcrypt.genSalt(10);
   //const hashPassword = await bcrypt.hash(password, salt);
 
   const newComment = new Comment({
     comment: comment,
-    cource_Id: req.params.id,
+    cource_Id: cource_Id,
     staff_id: req.staffId,
   });
 
