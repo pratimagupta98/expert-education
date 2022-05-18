@@ -579,3 +579,18 @@ exports.searchcourse = async (req, res) => {
     });
   }
 };
+
+
+// exports.viewonevideo = async (req, res) => {
+//   await Course.findOne( { _id: req.params.id })
+//     //_id: req.params.id }
+
+//     .populate("teacher")
+//     .populate("category_id")
+//     .populate("video_id")
+//     .populate("pdf_id")
+//     .populate([{ path: "videolist" }])
+//     .populate([{ path: "pdflist" }])
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// }

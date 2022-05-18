@@ -55,3 +55,16 @@ exports.addcommentbyteachar = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
+exports.getcommentby_student = async (req, res) => {
+  await Comment.find({$and: [{ user_id: req.userId }, { cource_Id: req.params.id }], })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+exports.getcommentby_teacher = async (req, res) => {
+  await Comment.find({$and: [{ staff_id: req.staffId }, { cource_Id: req.params.id }], })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
