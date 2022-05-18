@@ -26,6 +26,7 @@ const {
   deletevideo,
   videobycourse,
   addvideobyadmin,
+  viewonevideo
 } = require("../controllers/video");
 
 //PATHS
@@ -59,5 +60,8 @@ router.post(
   ]),
   addvideobyadmin
 );
+router.get("/admin/viewonevideo/:id", viewonevideo);
+
 
 module.exports = router;
+ 

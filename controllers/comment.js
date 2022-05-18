@@ -63,8 +63,4 @@ exports.getcommentby_student = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.getcommentby_teacher = async (req, res) => {
-  await Comment.find({$and: [{ staff_id: req.staffId }, { cource_Id: req.params.id }], })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
+ 

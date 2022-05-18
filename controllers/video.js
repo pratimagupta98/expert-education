@@ -139,4 +139,11 @@ exports.videobycourse = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-///console
+ 
+
+exports.viewonevideo = async (req, res) => {
+  const findall = await Video.findOne({ videoTitle: req.params.id })
+     
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

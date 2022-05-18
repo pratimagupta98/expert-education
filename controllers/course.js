@@ -533,6 +533,8 @@ exports.coursebytitle = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+ 
+
 exports.allcoursefree = async (req, res) => {
   await Course.find({ course_type: "Free" })
     .sort({ popularity: 1 })

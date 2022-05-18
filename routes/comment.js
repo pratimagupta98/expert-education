@@ -9,7 +9,7 @@ const {
   viewoneComment,
   addcommentbyteachar,
   getcommentby_student,
-  getcommentby_teacher
+   
 } = require("../controllers/comment");
 
 router.post("/user/addcommentbystudent", tokenverify, addcommentbystudent);
@@ -19,7 +19,6 @@ router.get("/user/allComment/:id", allComment);
 //router.get("/admin/deleteCat/:id", deleteCat);
 router.post("/user/addcommentbyteachar", verifyToken, addcommentbyteachar);
 router.get("/admin/getcommentby_student/:id",tokenverify, getcommentby_student);
-router.get("/admin/getcommentby_teacher/:id",verifyToken, getcommentby_teacher);
-
+ 
 module.exports = router;
  
