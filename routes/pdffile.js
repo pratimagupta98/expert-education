@@ -28,6 +28,7 @@ const {
   addpdfbyadmin,
   getpdf,
   deletepdf,
+  viewonepdf
 } = require("../controllers/pdffile");
 
 router.post(
@@ -57,7 +58,9 @@ router.post(
 );
 router.get("/admin/getpdf", getpdf);
 router.get("/admin/deletepdf/:id", deletepdf);
+router.get("/admin/viewonepdf/:id", viewonepdf);
 
 module.exports = router;
 
 //http://localhost:5000/api/admin/allusers
+ 
