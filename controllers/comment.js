@@ -22,7 +22,7 @@ exports.addcommentbystudent = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 exports.allComment = async (req, res) => {
-  await Comment.find()
+  await Comment.find({cource_Id: req.params.id})
     .populate("cource_Id")
     .populate("user_id")
     .populate("staff_id")
