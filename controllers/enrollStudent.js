@@ -142,3 +142,11 @@ exports.deleteenrollStudent = async (req, res) => {
     .then((data) => resp.deleter(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
+exports.Studentenroll_couses = async (req, res) => {
+  await enrollStudent
+    .find({ student_Id: req.userId }).populate("plan_Id").populate("course_Id").populate("student_Id")
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

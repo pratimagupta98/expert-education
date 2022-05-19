@@ -26,6 +26,8 @@ const admin = require("./routes/admin");
 const plan = require("./routes/plan");
 const enrollStudent = require("./routes/enrollStudent");
 const transection = require("./routes/transection");
+
+
 var app = express();
 
 // view engine setup
