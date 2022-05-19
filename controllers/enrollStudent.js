@@ -28,7 +28,7 @@ exports.addenrollStudent = async (req, res) => {
     } else {
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
-        student_Id: student_Id,
+        student_Id:req.userId,
         course_Id: course_Id,
       });
 
@@ -58,7 +58,7 @@ exports.addenrollStudent = async (req, res) => {
       } else {
         const newenrollStudent = new enrollStudent({
           plan_Id: plan_Id,
-          student_Id: student_Id,
+          student_Id: req.userId,
           course_Id: course_Id,
         });
 
@@ -89,7 +89,7 @@ exports.addenrollStudent = async (req, res) => {
       }
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
-        student_Id: student_Id,
+        student_Id: req.userId,
         course_Id: course_Id,
       });
 
@@ -119,7 +119,11 @@ exports.editenrollStudent = async (req, res) => {
 
 exports.viewoneenrollStudent = async (req, res) => {
   await enrollStudent
-    .findOne({ _id: req.params.id })
+    .findOne({$a$and: [
+      { student_Id: req.userId },
+      { course_Id: req.params.id },
+    ],
+  })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
@@ -150,3 +154,5 @@ exports.Studentenroll_couses = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+  
