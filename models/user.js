@@ -39,6 +39,10 @@ const UserSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "studentBatch",
     },
+    student_Id: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   }
   // { timestamps: true }
 );
