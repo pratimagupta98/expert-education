@@ -123,6 +123,11 @@ exports.viewoneenrollStudent = async (req, res) => {
       { student_Id: req.userId },
       { course_Id: req.params.id },
     ],
+  }).populate("plan_Id").populate("course_Id").populate("video_id").populate("pdf_id").populate({
+    path: "course_Id",
+    populate: {
+      path: "teacher",
+    },
   })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
@@ -151,6 +156,12 @@ exports.deleteenrollStudent = async (req, res) => {
 exports.Studentenroll_couses = async (req, res) => {
   await enrollStudent
     .find({ student_Id: req.userId }).populate("plan_Id").populate("course_Id").populate("student_Id")
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "teacher",
+      },
+    })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };

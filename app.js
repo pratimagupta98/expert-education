@@ -26,8 +26,9 @@ const admin = require("./routes/admin");
 const plan = require("./routes/plan");
 const enrollStudent = require("./routes/enrollStudent");
 const transection = require("./routes/transection");
+const membership = require("./routes/membership");
 
-
+ 
 var app = express();
 
 // view engine setup
@@ -58,7 +59,10 @@ app.use("/api", admin);
 app.use("/api", plan);
 app.use("/api", enrollStudent);
 app.use("/api", transection);
-const fs = require("fs");
+app.use("/api", membership);
+
+
+ const fs = require("fs");
 const AWS = require("aws-sdk");
 
 const s3 = new AWS.S3({
