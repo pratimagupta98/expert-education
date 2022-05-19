@@ -243,7 +243,7 @@ exports.allusers = async (req, res) => {
 };
 
 exports.enrollusers = async (req, res) => {
-  await User.find({ status: "enroll" })
+  await User.find({ status: "Enroll" })
     .sort({ createdAt: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));

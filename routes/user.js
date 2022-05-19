@@ -55,6 +55,7 @@ const {
   deletebatch,
   updatebatch,
   editusertoken,
+  viewonebatchUser
 } = require("../controllers/user");
 
 router.post("/user/signup", multipleUpload, signup);
@@ -83,6 +84,9 @@ router.post("/user/updatebatch/:id", updatebatch);
 
 router.get("/user/deletebatch/:id", deletebatch);
 router.get("/user/viewonebatch/:id", viewonebatch);
+router.get("/user/viewonebatchUser", tokenverify,viewonebatchUser);
+
 module.exports = router;
 
 //http://localhost:5000/api/admin/allusers
+ 
