@@ -135,6 +135,18 @@ exports.viewone_enroll_course = async (req, res) => {
         path: "pdflist",
       }
     })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "teacher",
+      }
+    })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "category_id",
+      }
+    })
    
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
@@ -184,7 +196,18 @@ exports.Studentenroll_couses = async (req, res) => {
         path: "pdflist",
       }
     })
-   
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "teacher",
+      }
+    })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "category_id",
+      }
+    })
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     
