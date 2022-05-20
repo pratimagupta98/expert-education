@@ -397,8 +397,7 @@ exports.viewonecoursep = async (req, res) => {
       .populate([{ path: "videolist" }])
       .populate([{ path: "pdflist" }])
       .populate("category_id")
-      .populate("video_id")
-      .populate("pdf_id")
+      
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   }
