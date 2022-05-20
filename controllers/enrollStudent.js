@@ -119,15 +119,16 @@ exports.editenrollStudent = async (req, res) => {
 
 exports.viewoneenrollStudent = async (req, res) => {
   await enrollStudent
-    .findOne({$a$and: [
-      { student_Id: req.userId },
-      { course_Id: req.params.id },
-    ],
-  }).populate("plan_Id").populate("course_Id").populate("video_id").populate("pdf_id").populate({
+    .findOne({ $and :[{student_Id: req.userId},{course_Id: req.params.id }]})
+  .populate("plan_Id") 
+  .populate( "student_Id" )
+    //  .populate([{ path: "video_id" }])
+    // .populate([{ path: "pdf_id" }])
+  .populate({
     path: "course_Id",
     populate: {
       path: "teacher",
-    },
+    }
   })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
@@ -166,4 +167,4 @@ exports.Studentenroll_couses = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-  
+ 
