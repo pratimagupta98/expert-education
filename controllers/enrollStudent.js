@@ -121,7 +121,8 @@ exports.editenrollStudent = async (req, res) => {
 exports.viewone_enroll_course = async (req, res) => {
   await enrollStudent
     .findOne({ $and :[{student_Id: req.userId},{course_Id: req.params.id }]})
-   
+   .populate("student_Id")
+   .populate("plan_Id")
     .populate({
       path: "course_Id",
       populate: {
@@ -165,7 +166,8 @@ exports.deleteenrollStudent = async (req, res) => {
 exports.Studentenroll_couses = async (req, res) => {
   await enrollStudent.find()
     .sort({ popularity: 1 })
-     
+    .populate("student_Id")
+    .populate("plan_Id")
   
    // .populate("course_Id")
     // .populate([{ path: "videolist" }])
