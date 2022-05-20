@@ -1,6 +1,7 @@
 const enrollStudent = require("../models/enrollStudent");
 const Plan = require("../models/plan");
 const resp = require("../helpers/apiResponse");
+const Course = require("../models/course");
 
 exports.addenrollStudent = async (req, res) => {
   const { plan_Id, course_Id, student_Id } = req.body;
@@ -117,20 +118,26 @@ exports.editenrollStudent = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.viewoneenrollStudent = async (req, res) => {
+exports.viewone_enroll_course = async (req, res) => {
   await enrollStudent
     .findOne({ $and :[{student_Id: req.userId},{course_Id: req.params.id }]})
-  .populate("plan_Id") 
-  .populate( "student_Id" )
-    //  .populate([{ path: "video_id" }])
-    // .populate([{ path: "pdf_id" }])
-  .populate({
-    path: "course_Id",
-    populate: {
-      path: "teacher",
-    }
-  })
+   
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "videolist",
+      }
+    })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "pdflist",
+      }
+    })
+   
+    .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
+    
     .catch((error) => resp.errorr(res, error));
 };
 
@@ -140,6 +147,7 @@ exports.allenrollStudent = async (req, res) => {
     .populate("plan_Id")
     .populate("course_Id")
     .populate("student_Id")
+    
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
@@ -155,16 +163,30 @@ exports.deleteenrollStudent = async (req, res) => {
 
 
 exports.Studentenroll_couses = async (req, res) => {
-  await enrollStudent
-    .find({ student_Id: req.userId }).populate("plan_Id").populate("course_Id").populate("student_Id")
+  await enrollStudent.find()
+    .sort({ popularity: 1 })
+     
+  
+   // .populate("course_Id")
+    // .populate([{ path: "videolist" }])
+    // .populate([{ path: "pdflist" }])
     .populate({
       path: "course_Id",
       populate: {
-        path: "teacher",
-      },
+        path: "videolist",
+      }
     })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "pdflist",
+      }
+    })
+   
+    .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
+    
     .catch((error) => resp.errorr(res, error));
 };
 
- 
+   

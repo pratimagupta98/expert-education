@@ -8,8 +8,8 @@ const {
   viewoneplan,
   deleteenrollStudent,
   Studentenroll_couses,
-  viewoneenrollStudent,
-  view_one_enrollcousres
+  viewone_enroll_course,
+    
 } = require("../controllers/enrollStudent");
 
 router.post("/admin/addenrollStudent",tokenverify, addenrollStudent);
@@ -19,7 +19,9 @@ router.get("/admin/allenrollStudent", allenrollStudent);
 router.get("/admin/deleteenrollStudent/:id", deleteenrollStudent);
 router.get("/admin/Studentenroll_couses",tokenverify, Studentenroll_couses);
 
-router.get("/admin/viewoneenrollStudent/:id",tokenverify, viewoneenrollStudent);
+router.get("/admin/viewone_enroll_course/:id",tokenverify, viewone_enroll_course);
+ 
+
  
 
 module.exports = router;

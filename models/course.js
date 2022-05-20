@@ -41,14 +41,14 @@ const thisSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "category",
     },
-    video_id: {
-      type: Schema.Types.ObjectId,
-      ref: "video",
-    },
-    pdf_id: {
-      type: Schema.Types.ObjectId,
-      ref: "pdffile",
-    },
+    // video_id: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "video",
+    // },
+    // pdf_id: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "pdffile",
+    // },
 
     popularity: {
       type: Number,
