@@ -434,9 +434,7 @@ exports.allcoursebyrecent = async (req, res) => {
     .sort({ createdAt: 1 })
     .populate("teacher")
     .populate("category_id")
-    .populate("video_id")
-    .populate("pdf_id")
-    .sort({ sortorder: 1 })
+      .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
