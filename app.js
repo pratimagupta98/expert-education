@@ -27,6 +27,7 @@ const plan = require("./routes/plan");
 const enrollStudent = require("./routes/enrollStudent");
 const transection = require("./routes/transection");
 const membership = require("./routes/membership");
+const user_wallet = require("./routes/user_wallet");
 
  
 var app = express();
@@ -60,6 +61,7 @@ app.use("/api", plan);
 app.use("/api", enrollStudent);
 app.use("/api", transection);
 app.use("/api", membership);
+app.use("/api", user_wallet);
 
 
  const fs = require("fs");

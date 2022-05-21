@@ -43,6 +43,10 @@ const UserSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "user",
     },
+    walletId :{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user_wallet",
+    },
   }
   // { timestamps: true }
 );
