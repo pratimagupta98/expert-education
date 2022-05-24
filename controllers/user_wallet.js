@@ -48,7 +48,7 @@ exports.req_amount = async (req, res) => {
   newUserwallet
       .save()
       .then((data) => resp.successr(res, data))
-      .catch((error) => resp.errorr(res, error));
+      // .catch((error) => resp.errorr(res, error));
   
 
       let wolwt1= await User.findOne({_id:req.userId}).sort({createdAt:-1})
@@ -68,19 +68,8 @@ exports.req_amount = async (req, res) => {
         //{ $set: {status:"success"} },
         { new: true }
       
-      )
-      res.status(200).json({
-            status: true,
-            msg: "success",
-            data: qur,
-          })
-        
-        }else{
-          res.status(400).json({
-            status: true,
-            msg: "error",
-            error:error
-          })
+      ).catch((error) => resp.errorr(res, error));
+    
       }
 
     }
