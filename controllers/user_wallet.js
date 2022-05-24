@@ -10,6 +10,32 @@ exports.req_amount = async (req, res) => {
       status,
     
   } = req.body;
+  let wolwt= await Userwallet.findOne({userId:req.userId})
+  console.log("11",wolwt)
+  if(wolwt){
+    let wolId=wolwt._id
+    let amt=wolwt.amount
+    console.log("old amt",amt)
+  
+  let qur=  await Userwallet.findOneAndUpdate(
+      { _id: wolId },
+      
+      {$set: {usd:parseInt(req.body.usd),inr:parseInt(req.body.inr),status:"Pending"}} ,
+    
+    //{ $set: {status:"success"} },
+    { new: true }
+  
+  );
+  res.status(200).json({
+    status: true,
+    msg: "success",
+    data: qur,
+    // data: wolwt,
+  
+  })
+  }
+
+  else{
 
   const newUserwallet = new Userwallet({
     userId: req.userId,
@@ -44,6 +70,7 @@ exports.req_amount = async (req, res) => {
       
       )
       }
+    }
 };
 
 
@@ -83,7 +110,7 @@ exports.wallet_amount = async (req, res) => {
     const {status,usd,inr} = req.body
 
     const getdata = await Userwallet.findOne({userId:req.userId}).sort({
-      createdAt: -1,
+      createdAt: 1,
     })
     console.log(getdata)
  
@@ -91,6 +118,7 @@ exports.wallet_amount = async (req, res) => {
       let oldamt = getdata.amount
       console.log("amount",oldamt)
        reqamt = getdata.usd
+        // if(reqsmt !==0)
 
       console.log("reqamt",reqamt)
 
@@ -129,7 +157,7 @@ exports.wallet_amount = async (req, res) => {
 
  
 exports.req_amt_list = async (req, res) => {
-  await Userwallet.find({status:"Pending"})
+  await Userwallet.find({status:"Pending"}).populate("userId")
       
     .sort({ createdAt: -1 })
     .then((data) => resp.successr(res, data))
