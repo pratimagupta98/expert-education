@@ -39,8 +39,8 @@ exports.req_amount = async (req, res) => {
 
   const newUserwallet = new Userwallet({
     userId: req.userId,
-    usd: usd,
-    inr:inr,
+    usd: parseInt(usd),
+    inr:parseInt(inr),
     status: status,
      
   });
