@@ -8,13 +8,19 @@ const UserWalletSchema = new Schema(
          type: Schema.Types.ObjectId,
       ref: "user",
     },
-    reqInramount: {
-     type : Number
+    usd: {
+     type : Number,
+     default:0
+     },
+     inr:{
+       type:Number,
+       default:0
      },
 
   status : {
     type: String,
     default:"Pending"
+    //Confirm,Pending
   },
   amount:{
       type:Number,

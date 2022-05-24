@@ -3,13 +3,15 @@ const router = express.Router();
 const { tokenverify } = require("../functions/tokenverify");
 
 const {
-    reqInr_amount,
-    wallet_amount
+    req_amount,
+    wallet_amount,
+    admin_cnfm_amt
   
 } = require("../controllers/user_wallet");
 
-router.post("/admin/reqInr_amount",tokenverify, reqInr_amount);
+router.post("/admin/req_amount",tokenverify, req_amount);
 router.get("/admin/wallet_amount",tokenverify, wallet_amount);
+router.get("/admin/admin_cnfm_amt",tokenverify, admin_cnfm_amt);
 
  
 

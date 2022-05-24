@@ -2,17 +2,19 @@ const Userwallet = require("../models/user_wallet");
  const resp = require("../helpers/apiResponse");
  const User = require("../models/user");
 
-exports.reqInr_amount = async (req, res) => {
+exports.req_amount = async (req, res) => {
   const {
     userId,
-    reqInramount,
+    usd,
+    inr,
       status,
     
   } = req.body;
 
   const newUserwallet = new Userwallet({
     userId: req.userId,
-    reqInramount: reqInramount,
+    usd: usd,
+    inr:inr,
     status: status,
      
   });
@@ -76,3 +78,53 @@ exports.wallet_amount = async (req, res) => {
     }
   };
   
+
+  exports.admin_cnfm_amt = async (req, res) => {
+    const {status,usd,inr} = req.body
+
+    const getdata = await Userwallet.findOne({userId:req.userId}).sort({
+      createdAt: -1,
+    })
+    console.log(getdata)
+ 
+    if(getdata){
+      let oldamt = getdata.amount
+      console.log("amount",oldamt)
+       reqamt = getdata.usd
+
+      console.log("reqamt",reqamt)
+
+      currntamt = oldamt + reqamt
+      console.log(currntamt)
+    }
+ 
+    const findandUpdateEntry = await Userwallet.findOneAndUpdate(
+    
+      { _id: req.userId },
+      
+      { $set: {amount:currntamt,status:"Confirm"} },
+      
+    //     { amount: currntamt },
+         
+    // { $set: {status:"success"} },
+    { new: true }
+  )
+ 
+  .then((data)=>{
+    res.status(200).json({
+        status : true,
+        msg : "success",
+        data : data,
+        amount: currntamt, 
+    })
+}).catch((error)=>{
+    res.status(400).json({
+        status : false,
+        error : "error",
+        error : error
+    })
+})
+
+}
+
+ 
