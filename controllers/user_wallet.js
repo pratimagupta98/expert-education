@@ -108,9 +108,9 @@ exports.wallet_amount = async (req, res) => {
 
   exports.admin_cnfm_amt = async (req, res) => {
     const {status,usd,inr} = req.body
-
-    const getdata = await Userwallet.findOne({userId:req.userId}).sort({
-      createdAt: 1,
+    let currntamt=0;
+    const getdata = await Userwallet.findOne({_id:req.params.id}).sort({
+      createdAt: -1,
     })
     console.log(getdata)
  
@@ -118,17 +118,25 @@ exports.wallet_amount = async (req, res) => {
       let oldamt = getdata.amount
       console.log("amount",oldamt)
        reqamt = getdata.usd
-        // if(reqsmt !==0)
+       reqinr= getdata.inr
+         if(reqamt !== 0){
+          currntamt = oldamt + reqamt
+          console.log("USD",currntamt)
+         }
+         else if(reqinr !==0 ){
+          currntamt = oldamt + reqinr/75
+          console.log("INR",currntamt)
+         }
 
-      console.log("reqamt",reqamt)
+     // console.log("reqamt",reqamt)
 
-      currntamt = oldamt + reqamt
-      console.log(currntamt)
+      // currntamt = oldamt + reqamt
+      // console.log(currntamt)
     }
  
     const findandUpdateEntry = await Userwallet.findOneAndUpdate(
     
-      { userId: req.userId },
+      { _id: req.params.id },
       
       { $set: {amount:currntamt,status:"Confirm"} },
       
