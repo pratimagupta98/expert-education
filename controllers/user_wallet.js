@@ -163,3 +163,9 @@ exports.req_amt_list = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.dlt_amtlist = async (req, res) => {
+  await Userwallet.deleteOne({ _id: req.params.id })
+    .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
