@@ -69,7 +69,20 @@ exports.req_amount = async (req, res) => {
         { new: true }
       
       )
+      res.status(200).json({
+            status: true,
+            msg: "success",
+            data: qur,
+          })
+        
+        }else{
+          res.status(400).json({
+            status: true,
+            msg: "error",
+            error:error
+          })
       }
+
     }
 };
 
@@ -107,7 +120,7 @@ exports.wallet_amount = async (req, res) => {
   
 
   exports.admin_cnfm_amt = async (req, res) => {
-    const {status,usd,inr} = req.body
+     
     let currntamt=0;
     const getdata = await Userwallet.findOne({_id:req.params.id}).sort({
       createdAt: -1,
