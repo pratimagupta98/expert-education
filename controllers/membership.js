@@ -3,9 +3,9 @@ const resp = require("../helpers/apiResponse");
 
 exports.addmembership = async (req, res) => {
   
- const {userid,plan_Id} =req.body
+ const { plan_Id} =req.body
   const newMembership = new Membership({
-    userid: req.userId,
+    // userid: req.userId,
     plan_Id: req.params.id,
   });
   // const findexist = await Membership.findOne({$and:[{userid:req.userId},{plan_Id:req.params.id }]});

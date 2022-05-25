@@ -10,7 +10,7 @@ exports.addkycform = async (req, res) => {
     dob,
     nationality,
     aadhar_num,
-    aadharImg,
+    // aadharImg,
     photo,
     front,
     back,
@@ -39,14 +39,14 @@ exports.addkycform = async (req, res) => {
         //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
       }
     }
-    if (req.files.frount) {
+    if (req.files.front) {
       const geturl = await uploadFile(
-        req.files.frount[0]?.path,
-        req.files.frount[0]?.filename,
+        req.files.front[0]?.path,
+        req.files.front[0]?.filename,
         "jpg"
       );
       if (geturl) {
-        newKycform.frount = geturl.Location;
+        newKycform.front = geturl.Location;
         //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
       }
     }

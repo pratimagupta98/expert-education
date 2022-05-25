@@ -44,7 +44,7 @@ const fileFilter = (req, file, cb) => {
 let uploads = multer({ storage: storage });
 
 let multipleUpload = uploads.fields([
-  { name: "frount", maxCount: 1 },
+  { name: "front", maxCount: 1 },
   { name: "back", maxCount: 1 },
   { name: "photo", maxCount: 1 },
 
