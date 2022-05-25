@@ -12,7 +12,7 @@ exports.addkycform = async (req, res) => {
     aadhar_num,
     aadharImg,
     photo,
-    frount,
+    front,
     back,
   } = req.body;
 
@@ -22,7 +22,7 @@ exports.addkycform = async (req, res) => {
     dob: dob,
     nationality: nationality,
     aadhar_num: aadhar_num,
-    frount: frount,
+    front: front,
     back: back,
     photo: photo,
     //  pan_img:pan_img

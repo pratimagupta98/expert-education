@@ -48,7 +48,7 @@ const thisSchema = new Schema(
     photo: {
       type: Array,
     },
-    frount: {
+    front: {
       type: Array,
     },
     back: {

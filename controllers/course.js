@@ -539,7 +539,7 @@ exports.allcoursefree = async (req, res) => {
     //.populate("video_id")
     .populate([{ path: "videolist" }])
     .populate([{ path: "pdflist" }])
-    .populate("pdf_id")
+ //   .populate("pdf_id")
     .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
