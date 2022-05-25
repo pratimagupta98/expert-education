@@ -10,35 +10,35 @@ exports.req_amount = async (req, res) => {
     status,
     
   } = req.body;
-  // let wolwt= await Userwallet.findOne({userId:req.userId})
-  // console.log("11",wolwt)
-  // if(wolwt){
-  //   let wolId=wolwt._id
-  //   let amt=wolwt.amount
-  //   console.log("old amt",amt)
+  let wolwt= await Userwallet.findOne({userId:req.userId})
+  console.log("11",wolwt)
+  if(wolwt){
+    let wolId=wolwt._id
+    let amt=wolwt.amount
+    console.log("old amt",amt)
   
-  // let qur=  await Userwallet.findOneAndUpdate(
-  //     { _id: wolId },
+  let qur=  await Userwallet.findOneAndUpdate(
+      { _id: wolId },
       
-  //     {$set: {usd:parseInt(req.body.usd),inr:parseInt(req.body.inr),status:"Pending"}} ,
+      {$set: {usd:req.body.usd,inr:req.body.inr,status:"Pending"}} ,
     
-  //   //{ $set: {status:"success"} },
-  //   { new: true }
+    //{ $set: {status:"success"} },
+    { new: true }
   
-  // )
+  )
 
-  // console.log(qur)
-  // res.status(200).json({
-  //   status: true,
-  //   msg: "success",
-  //   data: qur,
-  //   // data: wolwt,
+  console.log(qur)
+  res.status(200).json({
+    status: true,
+    msg: "success",
+    data: qur,
+    // data: wolwt,
   
-  // }) 
-  // }
+  }) 
+  }
   
 
-  // else{
+  else{
 
   const newUserwallet = new Userwallet({
     userId: req.userId,
@@ -77,7 +77,7 @@ exports.req_amount = async (req, res) => {
       }
 
     }
-//};
+};
 
 
 exports.wallet_amount = async (req, res) => {

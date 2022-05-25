@@ -59,6 +59,7 @@ const thisSchema = new Schema(
     },
     posterimg: { type: Array },
   },
+  
 
   { timestamps: true }
 );
