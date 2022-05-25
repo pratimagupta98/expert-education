@@ -183,3 +183,11 @@ exports.dlt_amtlist = async (req, res) => {
     .then((data) => resp.deleter(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.amt_cnfmlist = async (req, res) => {
+  await Userwallet.find({status:"Confirm"}).populate("userId")
+      
+    .sort({ createdAt: -1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
