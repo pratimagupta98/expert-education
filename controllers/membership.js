@@ -2,13 +2,14 @@ const Membership = require("../models/membership");
 const resp = require("../helpers/apiResponse");
 
 exports.addmembership = async (req, res) => {
-  const { userid, plan_Id } = req.body;
-
+  
+ const {userid,plan_Id} =req.body
   const newMembership = new Membership({
     userid: req.userId,
     plan_Id: req.params.id,
   });
-  const findexist = await Membership.findOne({ plan_Id: plan_Id });
+  const findexist = await Membership.findOne({$and:[{userid:req.userId},{plan_Id:req.params.id }]});
+  console.log(findexist)
   if (findexist) {
     resp.alreadyr(res);
   } else {
@@ -29,3 +30,7 @@ exports.getmembershiplist = async (req, res) => {
   };
 
    
+// exports.addmembership = async(req,res)=>{
+//  const {userid,plan_Id} = req.body
+//  console.log(req.body)
+// }
