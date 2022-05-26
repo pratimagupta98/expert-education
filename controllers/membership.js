@@ -5,7 +5,7 @@ exports.addmembership = async (req, res) => {
   
  const { plan_Id} =req.body
   const newMembership = new Membership({
-     userid: req.userId,
+    userId: req.userId,
     plan_Id: req.params.id,
 
   });
@@ -22,7 +22,7 @@ exports.addmembership = async (req, res) => {
 };
 
 exports.getmembershiplist = async (req, res) => {
-    await Membership.find({userid:req.userId})
+    await Membership.find({userId:req.userId})
       .populate("userid")
       .populate("plan_Id")
       .sort({ sortorder: 1 })

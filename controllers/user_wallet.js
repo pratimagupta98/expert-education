@@ -191,3 +191,11 @@ exports.amt_cnfmlist = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.user_transaction_list = async (req, res) => {
+  await Userwallet.find({$and: [{ userId: req.userId }, { status: "Confirm" }],}).populate("userId")
+      
+    .sort({ createdAt: -1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

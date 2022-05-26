@@ -5,7 +5,7 @@ const MembershipSchema = new Schema(
   {
 
      
-    userid: { type: Schema.Types.ObjectId, ref: "user" },
+    userId: { type: Schema.Types.ObjectId, ref: "user" },
     
      plan_Id: {
     type: Schema.Types.ObjectId,

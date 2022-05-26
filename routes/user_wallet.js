@@ -8,7 +8,8 @@ const {
     admin_cnfm_amt,
     req_amt_list,
     dlt_amtlist,
-    amt_cnfmlist
+    amt_cnfmlist,
+    user_transaction_list
 } = require("../controllers/user_wallet");
 
 router.post("/admin/req_amount",tokenverify, req_amount);
@@ -18,6 +19,8 @@ router.get("/admin/req_amt_list", req_amt_list);
 router.get("/admin/dlt_amtlist/:id", dlt_amtlist);
 
 router.get("/admin/amt_cnfmlist", amt_cnfmlist);
+router.get("/admin/user_transaction_list",tokenverify, user_transaction_list);
+
 
 module.exports = router;
  
