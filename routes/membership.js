@@ -4,7 +4,7 @@ const { tokenverify } = require("../functions/tokenverify");
 
 const { addmembership,getmembershiplist } = require("../controllers/membership");
 
-router.post("/user/addmembership/:userId/:id", addmembership);
+router.post("/user/addmembership/:id/:userId", addmembership);
 //router.post("/admin/editCat/:id", editCat);
 //router.get("/admin/viewoneCat/:id", viewoneCat);
 router.get("/user/getmembershiplist",tokenverify, getmembershiplist);
