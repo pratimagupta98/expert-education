@@ -16,6 +16,28 @@ exports.addenrollStudent = async (req, res) => {
   } else {
     resp.successr(res, "you have no any plan");
   }
+
+  if (plan == "Free") {
+    console.log("0", plan);
+    let p0 = await enrollStudent.countDocuments({
+     $and:[{ student_Id: req.body.student_Id},{course_Id :course_Id
+    }]});
+    console.log(p0)
+   let  type  = p0.course_type
+   console.log("Type",type)
+    
+      const newenrollStudent = new enrollStudent({
+        plan_Id: plan_Id,
+        student_Id:req.userId,
+        course_Id: course_Id,
+      });
+
+      newenrollStudent
+        .save()
+        .then((data) => resp.successr(res, data))
+        .catch((error) => resp.errorr(res, error));
+    }
+
   if (plan == "Plan 1") {
     console.log("1", plan);
     let p1 = await enrollStudent.countDocuments({

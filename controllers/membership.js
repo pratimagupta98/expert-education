@@ -5,7 +5,7 @@ exports.addmembership = async (req, res) => {
   
  const { plan_Id} =req.body
   const newMembership = new Membership({
-    userId: req.userId,
+    userId: req.params.userId,
     plan_Id: req.params.id,
 
   });
