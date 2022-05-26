@@ -19,13 +19,17 @@ exports.addenrollStudent = async (req, res) => {
 
   if (plan == "Free") {
     console.log("0", plan);
-    let p0 = await enrollStudent.countDocuments({
-     $and:[{ student_Id: req.body.student_Id},{course_Id :course_Id
+    let p0 = await Course.find({
+     $and:[{ student_Id: req.body.student_Id},{course_Id :req.body.course_Id
     }]});
-    console.log(p0)
-   let  type  = p0.course_type
-   console.log("Type",type)
-    
+    console.log("p0....",p0)
+    if (p) {
+      var plan = p0.map(function (value) {
+        return value.course_type;
+      })
+      console.log("PLAN",plan)
+    }
+  
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
         student_Id:req.userId,
