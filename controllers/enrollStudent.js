@@ -19,27 +19,28 @@ exports.addenrollStudent = async (req, res) => {
 
   if (plan == "Free") {
     console.log("0", plan);
-    let p0 = await Course.find({
-     $and:[{ student_Id: req.body.student_Id},{course_Id :req.body.course_Id
-    }]});
-    console.log("p0....",p0)
-    if (p) {
-      var plan = p0.map(function (value) {
-        return value.course_type;
-      })
-      console.log("PLAN",plan)
-    }
-  
+    let p0 = await Course.findOne({
+    _id :req.body.course_Id
+    });
+    console.log(p0)
+   let typfr=  p0.course_type == "Free"
+    console.log("p0....",typfr)
+    if (typfr == true) {
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
         student_Id:req.userId,
         course_Id: course_Id,
       });
-
       newenrollStudent
-        .save()
-        .then((data) => resp.successr(res, data))
-        .catch((error) => resp.errorr(res, error));
+      .save()
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+    }else{
+res.status(400).json({
+  status:false,
+  msg :"Course not free"
+})
+    }     
     }
 
   if (plan == "Plan 1") {
