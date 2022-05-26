@@ -12,17 +12,18 @@ exports.addenrollStudent = async (req, res) => {
     var plan = p.map(function (value) {
       return value.plantitle;
     });
-    console.log(plan);
+    console.log("PLAN",plan);
   } else {
     resp.successr(res, "you have no any plan");
   }
 
   if (plan == "Free") {
     console.log("0", plan);
+    console.log(plan)
     let p0 = await Course.findOne({
     _id :req.body.course_Id
     });
-    console.log(p0)
+    console.log("p0",p0)
    let typfr=  p0.course_type == "Free"
     console.log("p0....",typfr)
     if (typfr == true) {
@@ -46,10 +47,10 @@ res.status(400).json({
   if (plan == "Plan 1") {
     console.log("1", plan);
     let p1 = await enrollStudent.countDocuments({
-      student_Id: req.body.student_Id,
+      student_Id: req.userId,
     });
 
-    console.log(p1);
+    console.log("AAAA",p1);
     if (p1 >= 1) {
       console.log(p);
       resp.successr(res, "you canot enrolles more then one course");
@@ -69,15 +70,17 @@ res.status(400).json({
   if (plan == "Plan 2") {
     console.log("2", plan);
     let p2 = await enrollStudent.countDocuments({
-      student_Id: req.body.student_Id,
+      student_Id: req.userId,
     });
+
+    console.log("STRING",p2)
     if (p2 >= 2) {
       console.log(p2);
       resp.successr(res, "you cant enrolles more then two course");
     } else {
       let coursebook = await enrollStudent.findOne({
         $and: [
-          { student_Id: req.body.student_Id },
+          { student_Id:req.userId },
           { course_Id: req.body.course_Id },
         ],
       });
@@ -100,37 +103,41 @@ res.status(400).json({
   if (plan == "Plan 3") {
     console.log("3", plan);
     let p3 = await enrollStudent.countDocuments({
-      student_Id: req.body.student_Id,
+      student_Id: req.userId,
     });
+    console.log("STRINNG",p3)
     if (p3 >= 5) {
       console.log(p3);
       resp.successr(res, "you cant enrolles more then five  course");
-    } else {
+    }
+   else {
       let coursebook = await enrollStudent.findOne({
         $and: [
-          { student_Id: req.body.student_Id },
+          { student_Id: req.userId },
           { course_Id: req.body.course_Id },
         ],
       });
+    
       if (coursebook) {
         resp.successr(res, "you dont enrolles again this course");
-      }
-      const newenrollStudent = new enrollStudent({
-        plan_Id: plan_Id,
-        student_Id: req.userId,
-        course_Id: course_Id,
-      });
+      }else {
+        const newenrollStudent = new enrollStudent({
+          plan_Id: plan_Id,
+          student_Id: req.userId,
+          course_Id: course_Id,
+        });
 
-      newenrollStudent
-        .save()
-        .then((data) => resp.successr(res, data))
-        .catch((error) => resp.errorr(res, error));
-      //   } else {
-      //     console.log("error");
-      //   }
+        newenrollStudent
+          .save()
+          .then((data) => resp.successr(res, data))
+          .catch((error) => resp.errorr(res, error));
+      }
+
     }
   }
-};
+
+}
+ 
 
 exports.editenrollStudent = async (req, res) => {
   await enrollStudent
