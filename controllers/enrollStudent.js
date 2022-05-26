@@ -203,7 +203,7 @@ exports.deleteenrollStudent = async (req, res) => {
 
 
 exports.Studentenroll_couses = async (req, res) => {
-  await enrollStudent.find()
+  await enrollStudent.find({student_Id:req.userId})
     .sort({ popularity: 1 })
     .populate("student_Id")
     .populate("plan_Id")
