@@ -30,7 +30,11 @@ exports.getmembershiplist = async (req, res) => {
       .catch((error) => resp.errorr(res, error));
   };
 
-   
+  exports.viewone_mem_plan = async (req, res) => {
+    await Membership.findOne({$and:[ {userId:req.userId},{_id: req.params.id }]})
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+  };
 // exports.addmembership = async(req,res)=>{
 //  const {userid,plan_Id} = req.body
 //  console.log(req.body)
