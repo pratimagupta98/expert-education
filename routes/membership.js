@@ -8,7 +8,7 @@ router.post("/user/addmembership/:id/:userId", addmembership);
 //router.post("/admin/editCat/:id", editCat);
 //router.get("/admin/viewoneCat/:id", viewoneCat);
 router.get("/user/getmembershiplist",tokenverify, getmembershiplist);
-router.get("/user/viewone_mem_plan/:id",tokenverify, viewone_mem_plan);
+router.get("/user/viewone_mem_plan",tokenverify, viewone_mem_plan);
 
 module.exports = router;
 

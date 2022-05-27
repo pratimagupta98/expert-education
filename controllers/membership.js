@@ -40,7 +40,7 @@ exports.getmembershiplist = async (req, res) => {
   };
 
   exports.viewone_mem_plan = async (req, res) => {
-    await Membership.findOne({$and:[ {userId:req.userId},{_id: req.params.id }]})
+    await Membership.findOne({userId:req.userId}).sort({ createdAt: -1 })
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   };
