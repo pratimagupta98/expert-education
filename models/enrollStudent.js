@@ -9,12 +9,8 @@ const enrollStudentSchema = new Schema({
     required: true,
   },
   course_Id: {
-    type: [
-      {
-        type: Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
         ref: "course",
-      },
-    ],
     //  validate: [arrayLimit, "{PATH} exceeds the limit of 1"],
   },
   teacher: {
