@@ -12,7 +12,16 @@ exports.addmembership = async (req, res) => {
   const findexist = await Membership.findOne({$and:[{userId:req.params.userId},{plan_Id:req.params.id }]});
   console.log(findexist)
   if (findexist) {
-    resp.alreadyr(res);
+    await Membership.findOneAndUpdate({
+      $and :[
+       
+        {plan_Id: req.params.id}
+      ]
+    },
+    {new :true}
+    )
+     resp.alreadyr(res);
+
   } else {
     newMembership
       .save()
