@@ -32,7 +32,7 @@ exports.addmembership = async (req, res) => {
 
 exports.getmembershiplist = async (req, res) => {
     await Membership.find({userId:req.userId})
-      .populate("userid")
+      .populate("userId")
       .populate("plan_Id")
       .sort({ sortorder: 1 })
       .then((data) => resp.successr(res, data))
@@ -40,7 +40,7 @@ exports.getmembershiplist = async (req, res) => {
   };
 
   exports.viewone_mem_plan = async (req, res) => {
-    await Membership.findOne({userId:req.userId}).sort({ createdAt: -1 })
+    await Membership.findOne({userId:req.userId}).sort({ createdAt: -1 }).populate("userId") .populate("plan_Id")
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   };
