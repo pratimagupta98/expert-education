@@ -55,6 +55,15 @@ res.status(400).json({
       console.log(p);
       resp.successr(res, "you canot enrolles more then one course");
     } else {
+      let coursebook = await enrollStudent.findOne({
+        $and: [
+          { student_Id:req.userId },
+          { course_Id: req.body.course_Id },
+        ],
+      });
+      if (coursebook) {
+        resp.alreadyr(res, "you dont enrolles again this course");
+      } else{
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
         student_Id:req.userId,
@@ -66,6 +75,7 @@ res.status(400).json({
         .then((data) => resp.successr(res, data))
         .catch((error) => resp.errorr(res, error));
     }
+  }
   }
   if (plan == "Plan 2") {
     console.log("2", plan);
@@ -85,7 +95,7 @@ res.status(400).json({
         ],
       });
       if (coursebook) {
-        resp.successr(res, "you dont enrolles again this course");
+        resp.alreadyr(res, "you dont enrolles again this course");
       } else {
         const newenrollStudent = new enrollStudent({
           plan_Id: plan_Id,
@@ -119,7 +129,7 @@ res.status(400).json({
       });
     
       if (coursebook) {
-        resp.successr(res, "you dont enrolles again this course");
+        resp.alreadyr(res, "you dont enrolles again this course");
       }else {
         const newenrollStudent = new enrollStudent({
           plan_Id: plan_Id,
