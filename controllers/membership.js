@@ -28,7 +28,7 @@ exports.addmembership = async (req, res) => {
     if(amt-planamt <=0 ){
       res.status( 401).json({
         status:false,
-        msg:"Insufficient balance"
+        message:"Insufficient balance"
       })
     }else{
 let dedmucat=  await Userwallet.findOneAndUpdate(
@@ -57,7 +57,7 @@ let dedmucat=  await Userwallet.findOneAndUpdate(
     if(amt-planamt <=0 ){
       res.status( 401).json({
         status:false,
-        msg:"Insufficient balance"
+        message:"Insufficient balance"
       })
     }else{
 let dedmucat=  await Userwallet.findOneAndUpdate(
