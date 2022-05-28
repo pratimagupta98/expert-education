@@ -31,14 +31,14 @@ exports.addmembership = async (req, res) => {
         message:"Insufficient balance"
       })
     }else{
-let dedmucat=  await Userwallet.findOneAndUpdate(
-    {userId : req.params.userId},{
-      $set : {amount:amt-planamt}
-    },
+// let dedmucat=  await Userwallet.findOneAndUpdate(
+//     {userId : req.params.userId},{
+//       $set : {amount:amt-planamt}
+//     },
   
-  {new :true}
-  ).sort({createdAt:-1})
-  console.log("Deducted",dedmucat)
+//   {new :true}
+//   ).sort({createdAt:-1})
+//   console.log("Deducted",dedmucat)
     await Membership.findOneAndUpdate({
       _id:findexist._id
     },{$set:{plan_Id:req.params.id}},
