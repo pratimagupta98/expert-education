@@ -14,23 +14,20 @@ exports.addmembership = async (req, res) => {
   });
 
   
-  const findexist = await Membership.findOne({$and:[{userId:req.params.userId},{plan_Id:req.params.id }]}).populate("plan_Id");
+  const findexist = await Membership.findOne({$and:[{userId:req.params.userId},{plan_Id:req.params.id }]}).sort({createdAt:-1}).populate("plan_Id");
   console.log(findexist)
   
   if (findexist) {
-    const getdetails = await Userwallet.findOne({userId : req.params.userId}).sort({createdAt:-1})
-    console.log("Value",getdetails)
-    let amt = getdetails.amount
-    console.log("Wallet Amt",amt) 
-    const getamt =  await Plan.findOne({_id: req.params.id})
-    let planamt =getamt.amount
-    console.log("PLAN amt",planamt)
-    if(amt-planamt <=0 ){
-      res.status( 401).json({
-        status:false,
-        message:"Insufficient balance"
-      })
-    }else{
+  
+//     const getamt =  await Plan.findOne({_id: req.params.id})
+//     let planamt =getamt.amount
+//     console.log("PLAN amt",planamt)
+//     if(amt-planamt <=0 ){
+//       resp.status( 401).json({
+//         status:false,
+//         msg:"Insufficient balance"
+//       })
+//     }else{
 // let dedmucat=  await Userwallet.findOneAndUpdate(
 //     {userId : req.params.userId},{
 //       $set : {amount:amt-planamt}
@@ -39,15 +36,27 @@ exports.addmembership = async (req, res) => {
 //   {new :true}
 //   ).sort({createdAt:-1})
 //   console.log("Deducted",dedmucat)
-    await Membership.findOneAndUpdate({
-      _id:findexist._id
-    },{$set:{plan_Id:req.params.id}},
-    {new :true}
-    ).sort({createdAt:-1})
+//     }
+//     await Membership.findOneAndUpdate({
+//       _id:findexist._id
+//     },{$set:{plan_Id:req.params.id}},
+//     {new :true}
+//     ).sort({createdAt:-1})
      resp.alreadyr(res);
-  }
+
   } else {
+    
+ 
+   
     const getdetails = await Userwallet.findOne({userId : req.params.userId}).sort({createdAt:-1})
+    if(getdetails == null){
+    res.status(401).json({
+      status : false,
+      message :"You Don't Have Wallet"
+    })
+    }else{
+      const getdetails = await Userwallet.findOne({userId : req.params.userId}).sort({createdAt:-1})
+    
     console.log("Value",getdetails)
     let amt = getdetails.amount
     console.log("Wallet Amt",amt) 
@@ -55,25 +64,39 @@ exports.addmembership = async (req, res) => {
     let planamt =getamt.amount
     console.log("PLAN amt",planamt)
     if(amt-planamt <=0 ){
-      res.status( 401).json({
-        status:false,
-        message:"Insufficient balance"
-      })
-    }else{
-let dedmucat=  await Userwallet.findOneAndUpdate(
-    {userId : req.params.userId},{
-      $set : {amount:amt-planamt}
-    },
+            res.status( 401).json({
+              status:false,
+              message:"Insufficient balance"
+            })
+          }else{
+      let dedmucat=  await Userwallet.findOneAndUpdate(
+          {userId : req.params.userId},{
+            $set : {amount:amt-planamt}
+          },
+        
+        {new :true}
+        ).sort({createdAt:-1})
+
+  console.log("Deducted",dedmucat)
   
+let qur = await Membership.findOne({userId:req.params.userId}).sort({createdAt:-1})
+if(qur){
+  await Membership.findOneAndUpdate({
+    userId:req.params.userId
+  },{$set:{plan_Id:req.params.id}},
   {new :true}
   ).sort({createdAt:-1})
-  console.log("Deducted",dedmucat)
+  .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+}else{
     newMembership
       .save()
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
+}
   }
 }
+  }
 };
 
 exports.getmembershiplist = async (req, res) => {
