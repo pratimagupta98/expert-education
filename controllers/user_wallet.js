@@ -204,7 +204,9 @@ exports.wallet_amount = async (req, res) => {
 
  
 exports.req_amt_list = async (req, res) => {
-  await Userwallet.find({status:"Pending"}).populate("userId")
+  await Userwallet.find({status:"Pending"}).populate("userId").sort({
+    createdAt: -1,
+  })
       
     .sort({ createdAt: -1 })
     .then((data) => resp.successr(res, data))
