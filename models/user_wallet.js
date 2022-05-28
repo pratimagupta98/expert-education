@@ -25,7 +25,8 @@ const UserWalletSchema = new Schema(
   amount:{
       type:Number,
       default:0
-  }
+  },
+  transectionId: { type: String, generated: true },
 },
   { timestamps: true }
 );

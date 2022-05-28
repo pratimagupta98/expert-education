@@ -8,8 +8,14 @@ exports.req_amount = async (req, res) => {
     usd,
     inr,
     status,
-    
+    transectionId
   } = req.body;
+
+  let length = 12;
+  let transectionid = (
+    "0".repeat(length) + Math.floor(Math.random() * 10 ** length)
+  ).slice(-length);
+
   let wolwt= await Userwallet.findOne({userId:req.userId}).sort({createdAt:-1})
   console.log("11",wolwt)
   if(wolwt){
@@ -22,6 +28,7 @@ exports.req_amount = async (req, res) => {
     usd: usd,
     inr:inr,
     amount:amt,
+    transectionId:transectionid,
     status: status,
      
   });
