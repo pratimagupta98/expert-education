@@ -53,7 +53,7 @@ res.status(400).json({
     console.log("AAAA",p1);
     if (p1 >= 1) {
       console.log(p);
-      resp.successr(res, "you canot enrolles more then one course");
+      resp.successr(res, "you can't enrolles more then one course");
     } else {
       let coursebook = await enrollStudent.findOne({
         $and: [
@@ -62,7 +62,7 @@ res.status(400).json({
         ],
       });
       if (coursebook) {
-        resp.alreadyr(res, "you dont enrolles again this course");
+        resp.alreadyr(res, "you don't enrolles again this course");
       } else{
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
@@ -86,7 +86,7 @@ res.status(400).json({
     console.log("STRING",p2)
     if (p2 >= 2) {
       console.log(p2);
-      resp.successr(res, "you cant enrolles more then two course");
+      resp.successr(res, "you can't enrolles more then two course");
     } else {
       let coursebook = await enrollStudent.findOne({
         $and: [
@@ -95,7 +95,7 @@ res.status(400).json({
         ],
       });
       if (coursebook) {
-        resp.alreadyr(res, "you dont enrolles again this course");
+        resp.alreadyr(res, "you don't enrolles again this course");
       } else {
         const newenrollStudent = new enrollStudent({
           plan_Id: plan_Id,
@@ -118,7 +118,7 @@ res.status(400).json({
     console.log("STRINNG",p3)
     if (p3 >= 5) {
       console.log(p3);
-      resp.successr(res, "you cant enrolles more then five  course");
+      resp.successr(res, "you can't enrolles more then five  course");
     }
    else {
       let coursebook = await enrollStudent.findOne({
@@ -129,7 +129,7 @@ res.status(400).json({
       });
     
       if (coursebook) {
-        resp.alreadyr(res, "you dont enrolles again this course");
+        resp.alreadyr(res, "you don't enrolles again this course");
       }else {
         const newenrollStudent = new enrollStudent({
           plan_Id: plan_Id,

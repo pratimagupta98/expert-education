@@ -12,6 +12,8 @@ const MembershipSchema = new Schema(
     ref: "plan",
     required: true,
   },
+  
+ 
 },
   { timestamps: true }
 );

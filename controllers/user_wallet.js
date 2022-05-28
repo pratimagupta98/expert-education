@@ -10,32 +10,68 @@ exports.req_amount = async (req, res) => {
     status,
     
   } = req.body;
-  let wolwt= await Userwallet.findOne({userId:req.userId})
+  let wolwt= await Userwallet.findOne({userId:req.userId}).sort({createdAt:-1})
   console.log("11",wolwt)
   if(wolwt){
     let wolId=wolwt._id
     let amt=wolwt.amount
     console.log("old amt",amt)
-  
-  let qur=  await Userwallet.findOneAndUpdate(
-      { _id: wolId },
-      
-      {$set: {usd:req.body.usd,inr:req.body.inr,status:"Pending"}} ,
-    
-    //{ $set: {status:"success"} },
-    { new: true }
-  
-  )
 
-  console.log(qur)
-  res.status(200).json({
-    status: true,
-    msg: "success",
-    data: qur,
-    // data: wolwt,
+   const newUserwallet = new Userwallet({
+    userId: req.userId,
+    usd: usd,
+    inr:inr,
+    amount:amt,
+    status: status,
+     
+  });
   
-  }) 
-  }
+  newUserwallet
+      .save()
+      .then((data) => resp.successr(res, data))
+      //  .catch((error) => resp.errorr(res, error));
+  
+
+      let wolwt1= await User.findOne({_id:req.userId}).sort({createdAt:-1})
+      console.log('cccc',wolwt1)
+      if(wolwt1)
+      {
+    
+        let wolwt= await Userwallet.findOne({userId:req.userId}) 
+        let wolId=wolwt._id
+        console.log(wolId)
+        console.log("ttttt",wolwt)
+      let qur=  await User.findOneAndUpdate(
+          { _id: req.userId },
+          
+          {$set: {walletId:wolId}} ,
+        
+        //{ $set: {status:"success"} },
+        { new: true }
+      
+      )  
+      }
+
+    }
+  // let qur=  await Userwallet.findOneAndUpdate(
+  //     { _id: wolId },
+      
+  //     {$set: {usd:req.body.usd,inr:req.body.inr,status:"Pending"}} ,
+    
+  //   //{ $set: {status:"success"} },
+  //   { new: true }
+  
+  // )
+
+  // console.log(qur)
+  // res.status(200).json({
+  //   status: true,
+  //   msg: "success",
+  //   data: qur,
+  //   // data: wolwt,
+  
+  // }) 
+  // }
   
 
   else{
@@ -72,16 +108,13 @@ exports.req_amount = async (req, res) => {
         { new: true }
       
       )  
-     
-    
       }
 
     }
 };
 
-
 exports.wallet_amount = async (req, res) => {
-    const getdata = await Userwallet.findOne({userId:req.userId})
+    const getdata = await Userwallet.findOne({userId:req.userId}).sort({createdAt:-1})
     .populate("userId")
     console.log(getdata)
    if(getdata){
