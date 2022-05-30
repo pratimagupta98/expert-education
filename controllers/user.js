@@ -328,12 +328,72 @@ exports.updatebatch = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+// exports.editusertoken = async (req, res) => {
+//   await User.findOneAndUpdate(
+//     { _id: req.userId },
+//     { $set: req.body },
+//     { new: true }
+//   )
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// };
+
+
 exports.editusertoken = async (req, res) => {
-  await User.findOneAndUpdate(
-    { _id: req.userId },
-    { $set: req.body },
-    { new: true }
-  )
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
+   const {fullname,email,mobile,password,cnfmPassword,status,user_type,batge_id}=req.body
+
+   const salt = await bcrypt.genSalt(10);
+   const hashPassword = await bcrypt.hash(password, salt);
+
+   data = {};
+   if (fullname) {
+     data.fullname = fullname;
+   }
+   if (email) {
+     data.email = email;
+   }
+   if (mobile) {
+     data.mobile = mobile;
+   }
+   if (password) {
+     data.password = hashPassword;
+   }
+   if (cnfmPassword) {
+     data.cnfmPassword = cnfmPassword;
+   }
+   if (status) {
+     data.status = status;
+   }
+   if (user_type) {
+     data.user_type = user_type;
+   }
+   if (batge_id) {
+     data.batge_id = batge_id;
+   }
+    
+   if (req.files) {
+     console.log(req.files);
+     if (req.files.userimg) {
+       const geturl = await uploadFile(
+         req.files.userimg[0]?.path,
+         req.files.userimg[0]?.filename,
+         "jpg"
+       );
+       if (geturl) {
+         data.userimg = geturl.Location;
+         //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+       }
+     }
+
+    }
+    await User.findOneAndUpdate(
+      {
+        _id: req.userId,
+      },
+      { $set: data },
+      { new: true }
+    )
+  
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+  };

@@ -25,7 +25,7 @@ exports.addkycform = async (req, res) => {
     front: front,
     back: back,
     photo: photo,
-    //  pan_img:pan_img
+     
   });
   if (req.files) {
     if (req.files.back) {
