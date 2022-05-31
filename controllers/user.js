@@ -137,8 +137,7 @@ exports.edituserbytoken = async (req, res) => {
 
     userimg,
     status,
-    user_type,
-    batge_id,
+ 
   } = req.body;
   if (password) {
     const salt = await bcrypt.genSalt(10);
@@ -166,12 +165,7 @@ exports.edituserbytoken = async (req, res) => {
   if (status) {
     data.status = status;
   }
-  if (user_type) {
-    data.user_type = user_type;
-  }
-  if (batge_id) {
-    data.batge_id = batge_id;
-  }
+ 
 
   if (req.files) {
     console.log(req.files);
