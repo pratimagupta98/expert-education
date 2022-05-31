@@ -134,9 +134,10 @@ exports.edituserbytoken = async (req, res) => {
     email,
     mobile,
     password,
-
+    
     userimg,
     status,
+    
  
   } = req.body;
   if (password) {
@@ -153,9 +154,7 @@ exports.edituserbytoken = async (req, res) => {
   if (mobile) {
     data.mobile = mobile;
   }
-  if (mobile) {
-    data.mobile = mobile;
-  }
+ 
   if (password) {
     const salt = await bcrypt.genSalt(10);
     let hashPassword = await bcrypt.hash(password, salt);
