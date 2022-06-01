@@ -28,6 +28,7 @@ const enrollStudent = require("./routes/enrollStudent");
 const transection = require("./routes/transection");
 const membership = require("./routes/membership");
 const user_wallet = require("./routes/user_wallet");
+const withdrawal = require("./routes/withdrawal");
 
  
 var app = express();
@@ -62,8 +63,9 @@ app.use("/api", enrollStudent);
 app.use("/api", transection);
 app.use("/api", membership);
 app.use("/api", user_wallet);
+app.use("/api", withdrawal);
 
-
+ 
  const fs = require("fs");
 const AWS = require("aws-sdk");
 
