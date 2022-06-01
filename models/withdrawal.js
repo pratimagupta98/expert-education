@@ -20,6 +20,16 @@ const withdrawalSchema = new Schema(
  amount : {
      type : Number
  },
+ crpto_id:{
+   type:String
+ },
+ usdt_amt:{
+  type : Number
+ },
+ status:{
+   type: String,
+   default:"Pending"
+ }
   },
   { timestamps: true }
 );
