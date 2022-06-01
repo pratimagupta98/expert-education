@@ -21,7 +21,7 @@ exports.withdrawal = async(req,res)=>{
 
 exports.withdrawal_list = async (req, res) => {
     await Withdrawal.find()
-      .sort({ sortorder: 1 })
+      .sort({ sortorder: 1 }).populate("userId")
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   };
