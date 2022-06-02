@@ -8,13 +8,8 @@ const withdrawalSchema = new Schema(
         type: Schema.Types.ObjectId,
      ref: "user",
    },
-    bank_name: {
-      type: String,
-    },
-    account_no : {
-        type:Number
-    },
-    ifsc_code : {
+    
+   upi_Id : {
         type : String
     },
  amount : {

@@ -3,13 +3,17 @@ const resp = require("../helpers/apiResponse");
   
 
 exports.withdrawal = async(req,res)=>{
-    const { bank_name,account_no,ifsc_code,amount,status}  = req.body
+    const { upi_Id,amount,status}  = req.body
 
+
+    let length = 12;
+    let transectionid = (
+      "0".repeat(length) + Math.floor(Math.random() * 10 ** length)
+    ).slice(-length);
     const newWithdrawal = new Withdrawal({
         userId:req.userId,
-        bank_name :bank_name,
-        account_no:account_no,
-        ifsc_code:ifsc_code,
+        transaction_Id:transectionid,
+        upi_Id:upi_Id,
         amount:amount,
         status:status
     })
@@ -41,3 +45,25 @@ exports.withdrawal_list = async (req, res) => {
       .then((data) => resp.successr(res, data))
         .catch((error) => resp.errorr(res, error));
 }
+
+
+exports.pending_withdrwal = async (req, res) => {
+  await  Withdrawal.find({status:"Pending"}).populate("userId")
+      
+    .sort({ createdAt: -1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+exports.confrm_withdrawal = async (req, res) => {
+  await  Withdrawal.find({status:"Confirm"}).populate("userId")
+      
+    .sort({ createdAt: -1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+exports.dltwithdrwal = async (req, res) => {
+  await Withdrawal.deleteOne({ _id: req.params.id })
+    .then((data) => resp.deleter(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

@@ -26,6 +26,9 @@ const UserWalletSchema = new Schema(
       type:Number,
       default:0
   },
+  screenshot:{
+    type: Array,
+  },
   transectionId: { type: String, generated: true },
 },
   { timestamps: true }

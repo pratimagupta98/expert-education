@@ -1,9 +1,11 @@
 const Userwallet = require("../models/user_wallet");
  const resp = require("../helpers/apiResponse");
  const User = require("../models/user");
+ const { uploadFile } = require("../helpers/awsuploader");
 
 exports.req_amount = async (req, res) => {
   const {
+    screenshot,
     userId,
     usd,
     inr,
@@ -30,9 +32,22 @@ exports.req_amount = async (req, res) => {
     amount:amt,
     transectionId:transectionid,
     status: status,
-     
+     screenshot:screenshot
   });
-  
+  if (req.files) {
+    console.log(req.files);
+    if (req.files.screenshot) {
+      const geturl = await uploadFile(
+        req.files.screenshot[0]?.path,
+        req.files.screenshot[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        newUserwallet.screenshot = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+  }
   newUserwallet
       .save()
       .then((data) => resp.successr(res, data))
@@ -219,6 +234,7 @@ exports.req_amt_list = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
 
 exports.dlt_amtlist = async (req, res) => {
   await Userwallet.deleteOne({ _id: req.params.id })
