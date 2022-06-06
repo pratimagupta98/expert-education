@@ -43,6 +43,9 @@ const UserSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "user",
     },
+    referral_code:{
+      type:String
+    },
     walletId :{
       type: mongoose.Schema.Types.ObjectId,
       ref: "user_wallet",

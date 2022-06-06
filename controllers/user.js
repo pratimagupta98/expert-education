@@ -22,6 +22,18 @@ exports.signup = async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
+  create_random_string(6);
+  function create_random_string(string_length) {
+    (random_string = ""),
+      (characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
+    for (var i, i = 0; i < string_length; i++) {
+      random_string += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return random_string;
+  }
 
   const newuser = new User({
     fullname: fullname,
@@ -33,6 +45,7 @@ exports.signup = async (req, res) => {
     status: status,
     user_type: user_type,
     batge_id: batge_id,
+    referral_code:random_string 
   });
 
   const findexist = await User.findOne({

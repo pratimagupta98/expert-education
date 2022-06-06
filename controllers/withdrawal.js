@@ -62,6 +62,20 @@ exports.confrm_withdrawal = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+exports.cnfrm_withdrawal = async (req, res) => {
+ 
+      await Withdrawal.findOneAndUpdate(
+    
+      { _id: req.params.id },
+      
+      { $set: {status:"Confirm"} },
+      {new : true}
+      
+  )
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
 exports.dltwithdrwal = async (req, res) => {
   await Withdrawal.deleteOne({ _id: req.params.id })
     .then((data) => resp.deleter(res, data))
