@@ -10,7 +10,8 @@ const {
     pending_withdrwal,
     confrm_withdrawal,
     cnfrm_withdrawal,
-    dltwithdrwal
+    dltwithdrwal,
+    withdrawal_listbytoken
 } = require("../controllers/withdrawal");
 
 router.post("/user/withdrawal",tokenverify, withdrawal);
@@ -21,5 +22,6 @@ router.get("/admin/confrm_withdrawal", confrm_withdrawal);
 router.get("/admin/cnfrm_withdrawal/:id", cnfrm_withdrawal);
 
 router.get("/user/dltwithdrwal/:id", dltwithdrwal);
+router.get("/user/withdrawal_listbytoken",tokenverify, withdrawal_listbytoken);
 
 module.exports = router;

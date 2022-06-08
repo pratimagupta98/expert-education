@@ -408,3 +408,113 @@ exports.editusertoken = async (req, res) => {
       .then((data) => resp.successr(res, data))
       .catch((error) => resp.errorr(res, error));
   };
+
+
+  
+// exports.verify_referal = async (req, res) => {
+//   const {referral_code}   = req.body
+//    const findone = await User.findOne({verify_user: req.params.id }) 
+//   // console.log(findone)
+   
+//       // console.log("coupon valid");
+//       if(findone){
+//        res.status(200).json({
+//          status: true,
+//          msg: "coupon valid",
+//          data:findone,
+// //discount_amount: findone?.amount,
+//        });
+//      }  else {
+//       res.status(400).json({
+//         status: false,
+//         msg: "error",
+//         error: "error",
+//       });
+//     }
+// }
+
+exports.affilate_level1 = async (req, res) => {
+  const {
+    fullname,
+    email,
+    mobile,
+    password,
+    cnfmPassword,
+    userimg,
+    status,
+    code,
+     verify_code,
+    
+  } = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+  create_random_string(6);
+  function create_random_string(string_length) {
+    (random_string = ""),
+      (characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
+    for (var i, i = 0; i < string_length; i++) {
+      random_string += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return random_string;
+  }
+
+  const newuser = new User({
+    fullname: fullname,
+    email: email,
+    mobile: mobile,
+    password: hashPassword,
+    cnfmPassword: hashPassword,
+    userimg: userimg,
+    status: status,
+    user_type: user_type,
+    batge_id: batge_id,
+    referral_code:random_string ,
+
+  });
+
+  const findexist = await User.findOne({
+    $or: [{ email: email }, { mobile: mobile }],
+  });
+  if (findexist) {
+    resp.alreadyr(res);
+  } else {
+    if (req.files) {
+      console.log(req.files);
+      if (req.files.userimg) {
+        const geturl = await uploadFile(
+          req.files.userimg[0]?.path,
+          req.files.userimg[0]?.filename,
+          "jpg"
+        );
+        if (geturl) {
+          newuser.userimg = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
+    }
+    newuser
+      .save()
+      .then((result) => {
+        const token = jwt.sign(
+          {
+            userId: result._id,
+          },
+          key,
+          {
+            expiresIn: 86400000,
+          }
+        );
+        res.header("user-token", token).status(200).json({
+          status: true,
+          token: token,
+          msg: "success",
+          user: result,
+        });
+      })
+      .catch((error) => resp.errorr(res, error));
+  }
+};

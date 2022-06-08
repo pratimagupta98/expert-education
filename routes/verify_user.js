@@ -6,7 +6,7 @@ const {
   
 } = require("../controllers/verify_user");
 
-//router.post("/admin/verify_user", verify_user);
+router.post("/admin/verify_user", verify_user);
  
 
 module.exports = router;

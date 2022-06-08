@@ -53,6 +53,14 @@ type : String
       type: mongoose.Schema.Types.ObjectId,
       ref: "user_wallet",
     },
+    refer_fromid: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+ },
+ refer_userid: {
+  type: Schema.Types.ObjectId,
+  ref: "user",
+},
   }
   // { timestamps: true }
 );

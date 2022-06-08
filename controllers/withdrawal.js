@@ -83,3 +83,11 @@ exports.dltwithdrwal = async (req, res) => {
     .then((data) => resp.deleter(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.withdrawal_listbytoken = async (req, res) => {
+  await  Withdrawal.find({userId:req.userId}).populate("userId")
+      
+    .sort({ createdAt: -1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

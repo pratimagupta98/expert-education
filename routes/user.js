@@ -55,7 +55,8 @@ const {
   deletebatch,
   updatebatch,
   editusertoken,
-  viewonebatchUser
+  viewonebatchUser,
+  verify_referal
 } = require("../controllers/user");
 
 router.post("/user/signup", multipleUpload, signup);
@@ -85,6 +86,11 @@ router.post("/user/updatebatch/:id", updatebatch);
 router.get("/user/deletebatch/:id", deletebatch);
 router.get("/user/viewonebatch/:id", viewonebatch);
 router.get("/user/viewonebatchUser", tokenverify,viewonebatchUser);
+
+
+
+// router.post("/admin/verify_referal/:id",verify_referal
+// );
 
 module.exports = router;
 
