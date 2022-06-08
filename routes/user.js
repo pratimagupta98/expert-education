@@ -56,10 +56,13 @@ const {
   updatebatch,
   editusertoken,
   viewonebatchUser,
-  verify_referal
+  verify_referal,
+  affilate_level1
 } = require("../controllers/user");
 
 router.post("/user/signup", multipleUpload, signup);
+router.post("/user/affilate_level1",multipleUpload,   affilate_level1);
+
 router.post("/user/login", login);
 //router.post("/user/adminlogin", adminlogin);
 

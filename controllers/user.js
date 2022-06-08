@@ -247,7 +247,7 @@ exports.edituser = async (req, res) => {
 
 exports.allusers = async (req, res) => {
   //await User.remove();
-  await User.find()
+  await User.find().populate("refer_fromid")
     .sort({ createdAt: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
@@ -435,6 +435,8 @@ exports.editusertoken = async (req, res) => {
 
 exports.affilate_level1 = async (req, res) => {
   const {
+    refer_fromid,
+     
     fullname,
     email,
     mobile,
@@ -461,8 +463,15 @@ exports.affilate_level1 = async (req, res) => {
     }
     return random_string;
   }
+  const findone = await User.findOne({ refer_fromid: req.body.id });
+  if(findone){
+    console.log("STRING",findone)
+  }
+
 
   const newuser = new User({
+    refer_fromid:refer_fromid,
+    
     fullname: fullname,
     email: email,
     mobile: mobile,
@@ -470,10 +479,8 @@ exports.affilate_level1 = async (req, res) => {
     cnfmPassword: hashPassword,
     userimg: userimg,
     status: status,
-    user_type: user_type,
-    batge_id: batge_id,
     referral_code:random_string ,
-
+    //verifycode:verifycode
   });
 
   const findexist = await User.findOne({
