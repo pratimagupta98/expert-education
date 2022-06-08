@@ -29,6 +29,7 @@ const transection = require("./routes/transection");
 const membership = require("./routes/membership");
 const user_wallet = require("./routes/user_wallet");
 const withdrawal = require("./routes/withdrawal");
+const verify_user = require("./routes/verify_user");
 
  
 var app = express();
@@ -64,6 +65,7 @@ app.use("/api", transection);
 app.use("/api", membership);
 app.use("/api", user_wallet);
 app.use("/api", withdrawal);
+app.use("/api", verify_user);
 
  
  const fs = require("fs");

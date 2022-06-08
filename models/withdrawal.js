@@ -10,17 +10,26 @@ const withdrawalSchema = new Schema(
    },
     
    upi_Id : {
-        type : String
+        type : String,
+        default:0
     },
  amount : {
      type : Number
  },
  crpto_id:{
-   type:String
+   type:String,
+   default:0
  },
- usdt_amt:{
-  type : Number
- },
+
+ 
+ usd: {
+  type : Number,
+  default:0
+  },
+  inr:{
+    type:Number,
+    default:0
+  },
  status:{
    type: String,
    default:"Pending"

@@ -3,7 +3,7 @@ const resp = require("../helpers/apiResponse");
   
 
 exports.withdrawal = async(req,res)=>{
-    const { upi_Id,amount,status}  = req.body
+    const { upi_Id,crpto_id,usd,inr,status}  = req.body
 
 
     let length = 12;
@@ -12,9 +12,11 @@ exports.withdrawal = async(req,res)=>{
     ).slice(-length);
     const newWithdrawal = new Withdrawal({
         userId:req.userId,
+        crpto_id:crpto_id,
         transaction_Id:transectionid,
         upi_Id:upi_Id,
-        amount:amount,
+        usd:usd,
+        inr:inr,
         status:status
     })
 

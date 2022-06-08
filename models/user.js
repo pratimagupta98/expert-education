@@ -46,7 +46,7 @@ const UserSchema = new Schema(
     referral_code:{
       type:String
     },
-    code :{
+    verifycode :{
 type : String
     },
     walletId :{
