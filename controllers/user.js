@@ -16,6 +16,7 @@ exports.signup = async (req, res) => {
     cnfmPassword,
     userimg,
     status,
+    code,
     user_type,
     batge_id,
   } = req.body;
@@ -45,7 +46,8 @@ exports.signup = async (req, res) => {
     status: status,
     user_type: user_type,
     batge_id: batge_id,
-    referral_code:random_string 
+    referral_code:random_string ,
+
   });
 
   const findexist = await User.findOne({

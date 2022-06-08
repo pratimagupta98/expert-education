@@ -88,7 +88,7 @@ exports.adminlogin = async (req, res) => {
         status: true,
         token: token,
         msg: "success",
-        Admin: Admin,
+        Admin: admin,
       });
     } else {
       res.status(400).json({
