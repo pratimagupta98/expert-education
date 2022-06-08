@@ -19,6 +19,8 @@ exports.signup = async (req, res) => {
     code,
     user_type,
     batge_id,
+    verify_code,
+    
   } = req.body;
 
   const salt = await bcrypt.genSalt(10);
