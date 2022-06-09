@@ -332,7 +332,7 @@ exports.edituser = async (req, res) => {
 exports.allusers = async (req, res) => {
   //await User.remove();
   await User.find().populate("refer_fromid")
-    .sort({ createdAt: 1 })
+    .sort({ createdAt: 1 }).populate("refer_fromid")
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
