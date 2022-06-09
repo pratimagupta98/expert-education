@@ -20,7 +20,7 @@ exports.signup = async (req, res) => {
     user_type,
     batge_id,
     verify_code,
-    
+    refer_fromid
   } = req.body;
 
   const salt = await bcrypt.genSalt(10);
@@ -48,6 +48,7 @@ exports.signup = async (req, res) => {
     status: status,
     user_type: user_type,
     batge_id: batge_id,
+    refer_fromid:refer_fromid,
     referral_code:random_string ,
 
   });
@@ -91,9 +92,92 @@ exports.signup = async (req, res) => {
           user: result,
         });
       })
-      .catch((error) => resp.errorr(res, error));
-  }
-};
+    } 
+    const findone = await User.findOne({ _id: req.body.refer_fromid });
+      if(findone){
+      console.log("STRING",findone)
+      let  Code = findone?.referral_code
+      console.log("RefereCode",Code)
+
+      create_random_string(6);
+      function create_random_string(string_length) {
+        (random_string = ""),
+          (characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
+        for (var i, i = 0; i < string_length; i++) {
+          random_string += characters.charAt(
+            Math.floor(Math.random() * characters.length)
+          );
+        }
+        return random_string;
+      }
+      if(req.body.verifycode ==  Code ){
+        const newuser = new User({
+          fullname: fullname,
+          email: email,
+          mobile: mobile,
+          password: hashPassword,
+          cnfmPassword: hashPassword,
+          userimg: userimg,
+          status: status,
+          user_type: user_type,
+          batge_id: batge_id,
+          refer_fromid:refer_fromid,
+          referral_code:random_string ,
+      
+        })
+        const findexist = await User.findOne({
+          $or: [{ email: email }, { mobile: mobile }],
+        });
+        if (findexist) {
+          resp.alreadyr(res);
+        } else {
+          if (req.files) {
+            console.log(req.files);
+            if (req.files.userimg) {
+              const geturl = await uploadFile(
+                req.files.userimg[0]?.path,
+                req.files.userimg[0]?.filename,
+                "jpg"
+              );
+              if (geturl) {
+                newuser.userimg = geturl.Location;
+                //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+              }
+            }
+          }
+          newuser
+            .save()
+            .then((result) => {
+              const token = jwt.sign(
+                {
+                  userId: result._id,
+                },
+                key,
+                {
+                  expiresIn: 86400000,
+                }
+              );
+              res.header("user-token", token).status(200).json({
+                status: true,
+                token: token,
+                msg: "success",
+                user: result,
+              });
+            })
+          } 
+      }
+      // else{
+      //   res.status(400).json({
+      //     status:false,
+      //     msg:"wrong referal code"
+      //   })
+      // }
+}
+}
+
+
+
 
 exports.login = async (req, res) => {
   const { mobile, email, password } = req.body;
@@ -433,95 +517,127 @@ exports.editusertoken = async (req, res) => {
 //     }
 // }
 
-exports.affilate_level1 = async (req, res) => {
-  const {
-    refer_fromid,
+// exports.checkverify_code = async (req, res) => {
+//   const {
+//     refer_fromid,
      
-    fullname,
-    email,
-    mobile,
-    password,
-    cnfmPassword,
-    userimg,
-    status,
-    code,
-     verify_code,
+//     fullname,
+//     email,
+//     mobile,
+//     password,
+//     cnfmPassword,
+//     userimg,
+//     status,
+//     code,
+//     verifyCode,
     
-  } = req.body;
+//   } = req.body;
 
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
-  create_random_string(6);
-  function create_random_string(string_length) {
-    (random_string = ""),
-      (characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
-    for (var i, i = 0; i < string_length; i++) {
-      random_string += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-    }
-    return random_string;
-  }
-  const findone = await User.findOne({ refer_fromid: req.body.id });
-  if(findone){
-    console.log("STRING",findone)
-  }
-
-
-  const newuser = new User({
-    refer_fromid:refer_fromid,
+//   const salt = await bcrypt.genSalt(10);
+//   const hashPassword = await bcrypt.hash(password, salt);
+//   create_random_string(6);
+//   function create_random_string(string_length) {
+//     (random_string = ""),
+//       (characters =
+//         "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
+//     for (var i, i = 0; i < string_length; i++) {
+//       random_string += characters.charAt(
+//         Math.floor(Math.random() * characters.length)
+//       );
+//     }
+//     return random_string;
+//   }
+//   const findone = await User.findOne({ _id: req.body.refer_fromid });
+//   if(findone){
+//     console.log("STRING",findone)
+//     let  Code = findone?.referral_code
+//     console.log("RefereCode",Code)
+   
+// if(req.body.verifycode ==  Code ){
+//   const newuser = new User({
+//     refer_fromid:refer_fromid,
     
-    fullname: fullname,
-    email: email,
-    mobile: mobile,
-    password: hashPassword,
-    cnfmPassword: hashPassword,
-    userimg: userimg,
-    status: status,
-    referral_code:random_string ,
-    //verifycode:verifycode
-  });
+//     fullname: fullname,
+//     email: email,
+//     mobile: mobile,
+//     password: hashPassword,
+//     cnfmPassword: hashPassword,
+//     userimg: userimg,
+//     status: status,
+//     referral_code:random_string ,
+//     //verifycode:verifycode
+//   });
 
-  const findexist = await User.findOne({
-    $or: [{ email: email }, { mobile: mobile }],
-  });
-  if (findexist) {
-    resp.alreadyr(res);
-  } else {
-    if (req.files) {
-      console.log(req.files);
-      if (req.files.userimg) {
-        const geturl = await uploadFile(
-          req.files.userimg[0]?.path,
-          req.files.userimg[0]?.filename,
-          "jpg"
-        );
-        if (geturl) {
-          newuser.userimg = geturl.Location;
-          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-        }
+//   const findexist = await User.findOne({
+//     $or: [{ email: email }, { mobile: mobile }],
+//   });
+//   if (findexist) {
+//     resp.alreadyr(res);
+//   } else {
+//     if (req.files) {
+//       console.log(req.files);
+//       if (req.files.userimg) {
+//         const geturl = await uploadFile(
+//           req.files.userimg[0]?.path,
+//           req.files.userimg[0]?.filename,
+//           "jpg"
+//         );
+//         if (geturl) {
+//           newuser.userimg = geturl.Location;
+//           //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+//         }
+//       }
+//     }
+//     }
+//     newuser
+//       .save()
+//       .then((result) => {
+//         const token = jwt.sign(
+//           {
+//             userId: result._id,
+//           },
+//           key,
+//           {
+//             expiresIn: 86400000,
+//           }
+//         );
+//         res.header("user-token", token).status(200).json({
+//           status: true,
+//           token: token,
+//           msg: "success",
+//           user: result,
+//         });
+//       })
+//       .catch((error) => resp.errorr(res, error))
+//   }else{
+//     res.status(400).json({
+//       status:false,
+//       msg:"wrong referal code",
+//       error:"errorr"
+//     })
+//   }
+// };
+// }
+
+exports.checkverify_code = async (req, res) => {
+  const {refer_fromid,verifyCode} = req.body;
+  const findone = await User.findOne({ _id: req.body.refer_fromid });
+    if(findone){
+      console.log("STRING",findone)
+      let  Code = findone?.referral_code
+      console.log("RefereCode",Code)
+
+
+      if(req.body.verifycode ==  Code ){
+        res.status(200).json({
+          status:true,
+          msg:"Verified"
+        })
+      }else{
+        res.status(400).json({
+          status:false,
+          msg:"wrong referal code"
+        })
       }
     }
-    newuser
-      .save()
-      .then((result) => {
-        const token = jwt.sign(
-          {
-            userId: result._id,
-          },
-          key,
-          {
-            expiresIn: 86400000,
-          }
-        );
-        res.header("user-token", token).status(200).json({
-          status: true,
-          token: token,
-          msg: "success",
-          user: result,
-        });
-      })
-      .catch((error) => resp.errorr(res, error));
-  }
-};
+}

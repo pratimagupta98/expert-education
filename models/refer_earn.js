@@ -7,37 +7,20 @@ const thisSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "user",
     },
-    refer_userid_level1: {
-        type: Schema.Types.ObjectId,
-        ref: "user",
-    },
-    refer_level1_amt:{
-      type :Number
-    },
-    refer_userid_level2 :{
+    refer_to_id:{
       type: Schema.Types.ObjectId,
       ref: "user",
     },
-    refer_level_amt2:{
-      type :Number
-    },
-    refer_userid_level3:{
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
-    refer_level_amt3:{
-      type: Schema.Types.ObjectId,
-      ref: "user",
+    refer_amount:{
+      type:Number
     },
 
-    status: {
+
+   refer_reedam_status: {
       type: String,
      //redeem code
     },
-    total_refer_amt: {
-      type: Number,
-       
-    }
+    
   },
   { timestamps: true }
 );

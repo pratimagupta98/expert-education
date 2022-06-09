@@ -57,11 +57,11 @@ const {
   editusertoken,
   viewonebatchUser,
   verify_referal,
-  affilate_level1
+  checkverify_code
 } = require("../controllers/user");
 
 router.post("/user/signup", multipleUpload, signup);
-router.post("/user/affilate_level1",multipleUpload,   affilate_level1);
+router.post("/user/checkverify_code",multipleUpload,checkverify_code);
 
 router.post("/user/login", login);
 //router.post("/user/adminlogin", adminlogin);
