@@ -52,7 +52,7 @@ exports.addmembership = async (req, res) => {
     if(getdetails == null){
     res.status(401).json({
       status : false,
-      message :"You Don't Have Wallet"
+      message :"Insufficient balance"
     })
     }else{
       const getdetails = await Userwallet.findOne({userId : req.params.userId}).sort({createdAt:-1})

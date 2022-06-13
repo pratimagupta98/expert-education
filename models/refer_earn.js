@@ -14,7 +14,9 @@ const thisSchema = new Schema(
     refer_amount:{
       type:Number
     },
-
+    verify_code:{
+type:String
+    },
 
     refer_redeem_status: {
       type: String,

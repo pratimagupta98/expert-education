@@ -31,7 +31,8 @@ const user_wallet = require("./routes/user_wallet");
 const withdrawal = require("./routes/withdrawal");
 const verify_user = require("./routes/verify_user");
 
- 
+const refer_earn = require("./routes/refer_earn");
+
 var app = express();
 
 // view engine setup
@@ -66,6 +67,7 @@ app.use("/api", membership);
 app.use("/api", user_wallet);
 app.use("/api", withdrawal);
 app.use("/api", verify_user);
+app.use("/api", refer_earn);
 
  
  const fs = require("fs");
