@@ -117,3 +117,12 @@ exports.getmembershiplist = async (req, res) => {
 //  const {userid,plan_Id} = req.body
 //  console.log(req.body)
 // }
+
+exports.admin_membershiplist = async (req, res) => {
+  await Membership.find()
+    .populate("userId")
+    .populate("plan_Id")
+    .sort({ sortorder: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

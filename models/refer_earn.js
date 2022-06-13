@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const thisSchema = new Schema(
   {
-    refer_fromid: {
+    refer_from_id: {
         type: Schema.Types.ObjectId,
         ref: "user",
     },
@@ -16,7 +16,7 @@ const thisSchema = new Schema(
     },
 
 
-   refer_reedam_status: {
+    refer_redeem_status: {
       type: String,
      //redeem code
     },

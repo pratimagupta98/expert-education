@@ -46,7 +46,7 @@ const UserSchema = new Schema(
     referral_code:{
       type:String
     },
-    verifycode :{
+    verify_code :{
 type : String
     },
     walletId :{
@@ -61,6 +61,9 @@ type : String
   type: Schema.Types.ObjectId,
   ref: "user",
 },
+refer_amount:{
+  type:Number
+}
   }
   // { timestamps: true }
 );

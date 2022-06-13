@@ -7,7 +7,66 @@ const { uploadFile } = require("../helpers/awsuploader");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
 
+
+
+
+
 exports.signup = async (req, res) => {
+  const {
+    fullname,
+    email,
+    mobile,
+    password,
+    cnfmPassword,
+    kyc_form,
+    status,
+    user_type,
+  } = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  const newuser = new User({
+    fullname: fullname,
+    email: email,
+    mobile: mobile,
+    password: hashPassword,
+    cnfmPassword: hashPassword,
+    kyc_form: kyc_form,
+    status: status,
+    user_type: user_type,
+  });
+
+  const findexist = await User.findOne({
+    $or: [{ email: email }, { mobile: mobile }],
+  });
+  if (findexist) {
+    resp.alreadyr(res);
+  } else {
+    newuser
+      .save()
+      .then((result) => {
+        const token = jwt.sign(
+          {
+            userId: result._id,
+          },
+          key,
+          {
+            expiresIn: 86400000,
+          }
+        );
+        res.header("user-token", token).status(200).json({
+          status: true,
+          "token": token,
+          msg: "success",
+          user: result,
+        });
+      })
+      .catch((error) => resp.errorr(res, error));
+  }
+};
+
+exports.signupp = async (req, res) => {
   const {
     fullname,
     email,
@@ -20,7 +79,8 @@ exports.signup = async (req, res) => {
     user_type,
     batge_id,
     verify_code,
-    refer_fromid
+    refer_fromid,
+    refer_amount
   } = req.body;
 
   const salt = await bcrypt.genSalt(10);
@@ -49,7 +109,9 @@ exports.signup = async (req, res) => {
     user_type: user_type,
     batge_id: batge_id,
     refer_fromid:refer_fromid,
+    verify_code:verify_code,
     referral_code:random_string ,
+    refer_amount:refer_amount
 
   });
 
@@ -111,7 +173,7 @@ exports.signup = async (req, res) => {
         }
         return random_string;
       }
-      if(req.body.verifycode ==  Code ){
+      if(req.body.verify_code ==  Code ){
         const newuser = new User({
           fullname: fullname,
           email: email,
@@ -124,13 +186,18 @@ exports.signup = async (req, res) => {
           batge_id: batge_id,
           refer_fromid:refer_fromid,
           referral_code:random_string ,
+          refer_amount:refer_amount,
+          verify_code:verify_code
       
         })
+        
         const findexist = await User.findOne({
           $or: [{ email: email }, { mobile: mobile }],
         });
         if (findexist) {
-          resp.alreadyr(res);
+         res.status(400).json({
+           msg:"already"
+         })
         } else {
           if (req.files) {
             console.log(req.files);
@@ -166,16 +233,15 @@ exports.signup = async (req, res) => {
               });
             })
           } 
+          
+      } else{
+        res.status(400).json({
+          status:false,
+          msg:"wrong referal code"
+        })
       }
-      // else{
-      //   res.status(400).json({
-      //     status:false,
-      //     msg:"wrong referal code"
-      //   })
-      // }
+} 
 }
-}
-
 
 
 
