@@ -14,7 +14,7 @@ exports.addenrollStudent = async (req, res) => {
     });
     console.log("PLAN",plan);
   } else {
-    resp.successr(res, "you have no any plan");
+    resp.errorr(res, "you have no any plan");
   }
 
   if (plan == "Free") {
@@ -53,7 +53,7 @@ res.status(400).json({
     console.log("AAAA",p1);
     if (p1 >= 1) {
       console.log(p);
-      resp.successr(res, "you can't enrolles more then one course");
+      resp.errorr(res, "you can't enrolles more then one course");
     } else {
       let coursebook = await enrollStudent.findOne({
         $and: [
@@ -86,7 +86,7 @@ res.status(400).json({
     console.log("STRING",p2)
     if (p2 >= 2) {
       console.log(p2);
-      resp.successr(res, "you can't enrolles more then two course");
+      resp.errorr(res, "you can't enrolles more then two course");
     } else {
       let coursebook = await enrollStudent.findOne({
         $and: [
@@ -118,7 +118,7 @@ res.status(400).json({
     console.log("STRINNG",p3)
     if (p3 >= 5) {
       console.log(p3);
-      resp.successr(res, "you can't enrolles more then five  course");
+      resp.errorr(res, "you can't enrolles more then five  course");
     }
    else {
       let coursebook = await enrollStudent.findOne({
