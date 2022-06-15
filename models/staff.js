@@ -41,7 +41,7 @@ const thisSchema = new Schema(
       //     "https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659651_960_720.png",
     },
     approvedstatus: {
-      type: Boolean,
+      type: String,
       //type: String,
       default: false,
     },

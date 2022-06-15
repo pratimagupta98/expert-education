@@ -9,7 +9,6 @@ exports.addmembership = async (req, res) => {
   const newMembership = new Membership({
     userId: req.params.userId,
     plan_Id: req.params.id,
-  
      
   });
 
@@ -55,6 +54,8 @@ exports.addmembership = async (req, res) => {
       message :"Insufficient balance"
     })
     }else{
+             
+
       const getdetails = await Userwallet.findOne({userId : req.params.userId}).sort({createdAt:-1})
     
     console.log("Value",getdetails)
