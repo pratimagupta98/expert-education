@@ -54,6 +54,7 @@ const {
   changepassstaffUser,
   myprofileStaff,
   not_approved_staff,
+  cnfm_approved_teacher
 } = require("../controllers/staff");
 
 //paths
@@ -79,5 +80,10 @@ router.get("/admin/approved_staff", approved_staff);
 router.get("/admin/not_approved_staff", not_approved_staff);
 router.get("/admin/countstaff", countstaff);
 router.get("/user/myprofileStaff", verifyToken, myprofileStaff);
+router.get("/admin/cnfm_approved_teacher/:id", cnfm_approved_teacher);
+
+
+
 module.exports = router;
 //console
+ 

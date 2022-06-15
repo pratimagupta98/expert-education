@@ -433,3 +433,22 @@ exports.countenrollStudent = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
+exports.cnfm_approved_teacher = async (req, res) => {
+     
+  const findandUpdateEntry = await Staff.findOneAndUpdate(
+  
+    { _id: req.params.id },
+    
+    { $set:{approvedstatus:"Approved"} },
+    
+  //     { amount: currntamt },
+       
+  // { $set: {status:"success"} },
+  { new: true }
+)
+.then((data) => resp.successr(res, data))
+.catch((error) => resp.errorr(res, error));
+ 
+}
