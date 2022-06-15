@@ -43,7 +43,7 @@ const thisSchema = new Schema(
     approvedstatus: {
       type: String,
       //type: String,
-      default: false,
+     default: "Pending",
     },
   },
   { timestamps: true }
