@@ -51,19 +51,22 @@ res.status(400).json({
     });
 
     console.log("AAAA",p1);
+    let coursebook = await enrollStudent.findOne({
+      $and: [
+        { student_Id:req.userId },
+        { course_Id: req.body.course_Id },
+      ],
+    });
+    if (coursebook) {
+      resp.alreadyr(res, "you don't enrolles again this course");
+    } else{
+
     if (p1 >= 1) {
       console.log(p);
       resp.errorr(res, "you can't enrolles more then one course");
-    } else {
-      let coursebook = await enrollStudent.findOne({
-        $and: [
-          { student_Id:req.userId },
-          { course_Id: req.body.course_Id },
-        ],
-      });
-      if (coursebook) {
-        resp.alreadyr(res, "you don't enrolles again this course");
-      } else{
+    } 
+
+      else{
       const newenrollStudent = new enrollStudent({
         plan_Id: plan_Id,
         student_Id:req.userId,

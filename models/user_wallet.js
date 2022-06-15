@@ -12,10 +12,10 @@ const UserWalletSchema = new Schema(
      type : Number,
      default:0
      },
-     inr:{
-       type:Number,
-       default:0
-     },
+     inr: {
+      type : Number,
+      default:0
+      },
 
   status : {
     type: String,
