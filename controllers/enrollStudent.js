@@ -8,12 +8,14 @@ exports.addenrollStudent = async (req, res) => {
 
   let p = await Plan.find({ _id: req.body.plan_Id });
   console.log(p);
-  if (p) {
+  if(p =="" || p== null){
+    resp.errorr(res, "you have no any plan");
+  }else{
+    if (p) {
     var plan = p.map(function (value) {
       return value.plantitle;
     });
-    console.log(plan);
-  }  
+    
 
   if (plan == "Free") {
     console.log("0", plan);
@@ -74,7 +76,7 @@ res.status(400).json({
       newenrollStudent
         .save()
         .then((data) => resp.successr(res, data))
-        .catch((error) => resp.errorr(res, error));
+       .catch((error) => resp.errorr(res, error));
     }
   }
   }
@@ -107,7 +109,7 @@ res.status(400).json({
         newenrollStudent
           .save()
           .then((data) => resp.successr(res, data))
-          .catch((error) => resp.errorr(res, error));
+         .catch((error) => resp.errorr(res, error));
       }
     }
   }
@@ -142,15 +144,22 @@ res.status(400).json({
         newenrollStudent
           .save()
           .then((data) => resp.successr(res, data))
-          .catch((error) => resp.errorr(res, error));
+          
+           //.catch((error) => resp.errorr(res, error));
       }
 
     }
   }
-  else {
-    resp.errorr(res, "you have no any plan");
   }
+  // else {
+  //   resp.errorr(res, "you have no any plan");
+  // }
+} 
+ 
 }
+
+  
+
  
 
 exports.editenrollStudent = async (req, res) => {
