@@ -12,10 +12,8 @@ exports.addenrollStudent = async (req, res) => {
     var plan = p.map(function (value) {
       return value.plantitle;
     });
-    console.log("PLAN",plan);
-  } else {
-    resp.errorr(res, "you have no any plan");
-  }
+    console.log(plan);
+  }  
 
   if (plan == "Free") {
     console.log("0", plan);
@@ -113,6 +111,7 @@ res.status(400).json({
       }
     }
   }
+ 
   if (plan == "Plan 3") {
     console.log("3", plan);
     let p3 = await enrollStudent.countDocuments({
@@ -127,7 +126,7 @@ res.status(400).json({
       let coursebook = await enrollStudent.findOne({
         $and: [
           { student_Id: req.userId },
-          { course_Id: req.body.course_Id },
+          { course_Id: req.body.course_Id }
         ],
       });
     
@@ -148,7 +147,9 @@ res.status(400).json({
 
     }
   }
-
+  else {
+    resp.successr(res, "you have no any plan");
+  }
 }
  
 
