@@ -148,7 +148,7 @@ res.status(400).json({
     }
   }
   else {
-    resp.successr(res, "you have no any plan");
+    resp.errorr(res, "you have no any plan");
   }
 }
  
