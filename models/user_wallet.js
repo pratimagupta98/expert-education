@@ -27,7 +27,7 @@ const UserWalletSchema = new Schema(
       default:0
   },
   screenshot:{
-    type: Array,
+    type: String,
   },
   transectionId: { type: String, generated: true },
 },

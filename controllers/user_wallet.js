@@ -2,6 +2,7 @@ const Userwallet = require("../models/user_wallet");
  const resp = require("../helpers/apiResponse");
  const User = require("../models/user");
  const { uploadFile } = require("../helpers/awsuploader");
+ const fs = require("fs");
 
 exports.req_amount = async (req, res) => {
   const {
@@ -42,6 +43,7 @@ exports.req_amount = async (req, res) => {
         req.files.screenshot[0]?.filename,
         "jpg"
       );
+    
       if (geturl) {
         newUserwallet.screenshot = geturl.Location;
         //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
