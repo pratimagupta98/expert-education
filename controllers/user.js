@@ -49,77 +49,35 @@ exports.signup = async (req, res) => {
     user_type: user_type,
   });
 
-
   const findexist = await User.findOne({
-         $or: [{ email: email }, { mobile: mobile }],
-       });
+    $or: [{ email: email }, { mobile: mobile }],
+  });
   if (findexist) {
     resp.alreadyr(res);
   } else {
-    if (req.files) {
-      console.log(req.files);
-      if (req.files.userimg) {
-        const geturl = await uploadFile(
-          req.files.userimg[0]?.path,
-          req.files.userimg[0]?.filename,
-          "jpg"
+    newuser
+      .save()
+      .then((result) => {
+        const token = jwt.sign(
+          {
+            userId: result._id,
+          },
+          key,
+          {
+            expiresIn: 86400000,
+          }
         );
-        if (geturl) {
-          newuser.userimg = geturl.Location;
-          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-        }
-      }
-      newuser
-            .save()
-            .then((result) => {
-              const token = jwt.sign(
-                {
-                  userId: result._id,
-                },
-                key,
-                {
-                  expiresIn: 86400000,
-                }
-              );
         res.header("user-token", token).status(200).json({
           status: true,
-                    "token": token,
-                    msg: "success",
-                    user: result,
+          "token": token,
+          msg: "success",
+          user: result,
         });
       })
       .catch((error) => resp.errorr(res, error));
   }
-}
-//   const findexist = await User.findOne({
-//     $or: [{ email: email }, { mobile: mobile }],
-//   });
-//   if (findexist) {
-//     resp.alreadyr(res);
-//   } else {
-//     newuser
-//       .save()
-//       .then((result) => {
-//         const token = jwt.sign(
-//           {
-//             userId: result._id,
-//           },
-//           key,
-//           {
-//             expiresIn: 86400000,
-//           }
-//         );
-//         res.header("user-token", token).status(200).json({
-//           status: true,
-//           "token": token,
-//           msg: "success",
-//           user: result,
-//         });
-//       })
-//       .catch((error) => resp.errorr(res, error));
-//   }
-// };
-}
+};
+
 exports.signupp = async (req, res) => {
   const {
     fullname,
