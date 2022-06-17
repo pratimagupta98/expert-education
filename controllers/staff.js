@@ -441,7 +441,7 @@ exports.cnfm_approved_teacher = async (req, res) => {
   
     { _id: req.params.id },
     
-    { $set:{approvedstatus:"Approved"} },
+    { $set:{approvedstatus:"true"} },
     
   //     { amount: currntamt },
        
