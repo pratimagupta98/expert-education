@@ -10,7 +10,7 @@ exports.req_amount = async (req, res) => {
     usd,
     inr,
     status,
-    transectionId
+    //transectionId
   } = req.body;
 
   let length = 12;
@@ -28,7 +28,7 @@ exports.req_amount = async (req, res) => {
    const newUserwallet = new Userwallet({
     userId: req.userId,
     usd: usd,
-    inr:inr,
+    inr:req.body.inr,
     amount:amt,
     transectionId:transectionid,
     status: status,

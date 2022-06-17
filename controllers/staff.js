@@ -404,14 +404,14 @@ exports.deletestaff = async (req, res) => {
 };
 
 exports.approved_staff = async (req, res) => {
-  await Staff.find({ approvedstatus: "Approved" })
+  await Staff.find({ approvedstatus: "true" })
     .sort({ createdAt: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
 
 exports.not_approved_staff = async (req, res) => {
-  await Staff.find({ approvedstatus: "Pending" })
+  await Staff.find({ approvedstatus: "false" })
     .sort({ createdAt: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
