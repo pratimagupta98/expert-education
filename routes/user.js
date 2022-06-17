@@ -57,7 +57,8 @@ const {
   editusertoken,
   viewonebatchUser,
   verify_referal,
-  checkverify_code
+  checkverify_code,
+   
 } = require("../controllers/user");
 
 router.post("/user/signup", multipleUpload, signup);
@@ -89,7 +90,7 @@ router.post("/user/updatebatch/:id", updatebatch);
 router.get("/user/deletebatch/:id", deletebatch);
 router.get("/user/viewonebatch/:id", viewonebatch);
 router.get("/user/viewonebatchUser", tokenverify,viewonebatchUser);
-
+ 
 
 
 // router.post("/admin/verify_referal/:id",verify_referal

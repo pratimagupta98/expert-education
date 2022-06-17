@@ -61,6 +61,11 @@ type : String
   type: Schema.Types.ObjectId,
   ref: "user",
 },
+user_status:{
+  type :String,
+  default:"true"
+
+},
 refer_amount:{
   type:Number
 }

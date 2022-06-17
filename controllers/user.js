@@ -7,10 +7,6 @@ const { uploadFile } = require("../helpers/awsuploader");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
 
-
-
-
-
 exports.signup = async (req, res) => {
   const {
     fullname,
@@ -21,6 +17,7 @@ exports.signup = async (req, res) => {
     kyc_form,
     status,
     user_type,
+    user_status
   } = req.body;
 
   const salt = await bcrypt.genSalt(10);
@@ -47,6 +44,7 @@ exports.signup = async (req, res) => {
     status: status,
     referral_code:random_string ,
     user_type: user_type,
+    user_status:user_status,
   });
 
   const findexist = await User.findOne({
@@ -719,3 +717,7 @@ exports.checkverify_code = async (req, res) => {
       }
     }
 }
+
+
+
+ 
