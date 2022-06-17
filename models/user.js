@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema(
   {
     userimg: {
-      type: Array,
+      type: String,
     },
     fullname: {
       type: String,
