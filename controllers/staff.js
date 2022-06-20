@@ -218,7 +218,7 @@ exports.stafflogin = async (req, res) => {
   });
   if (staff) {
     //console.log(staff);
-    if (staff.approvedstatus == true) {
+    if (staff.approvedstatus == "true") {
       const validPass = await bcrypt.compare(password, staff.password);
       if (validPass) {
         const token = jwt.sign(
