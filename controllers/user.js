@@ -261,7 +261,15 @@ exports.login = async (req, res) => {
     $or: [{ mobile: mobile }, { email: email }],
   });
   console.log("user", user);
-  if (user) {
+  if (user ) {
+    if(user =="true"){
+    }else {
+      res.status(400).json({
+        status: false,
+        msg: "You Are Deactive",
+        error: "error",
+      });
+    }
     const validPass = await bcrypt.compare(password, user.password);
     if (validPass) {
       const token = jwt.sign(
@@ -279,7 +287,8 @@ exports.login = async (req, res) => {
         msg: "success",
         user: user,
       });
-    } else {
+    }
+     else {
       res.status(400).json({
         status: false,
         msg: "Incorrect Password",
