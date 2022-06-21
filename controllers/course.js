@@ -365,20 +365,37 @@ exports.editcoursebystaff = async (req, res) => {
   }
 };
 
-exports.viewonecourse = async (req, res) => {
-  await Course.findOne({
-    $or: [{ teacher: req.staffId }, { _id: req.params.id }],
-  })
-    //_id: req.params.id }
+// exports.viewonecourse = async (req, res) => {
+//   await Course.findOne({
+//     $or: [{ teacher: req.staffId }, { _id: req.params.id }],
+//   })
+//     //_id: req.params.id }
 
-    .populate("teacher")
-    .populate("category_id")
-    //.populate("video_id")
-   // .populate("pdf_id")
-    .populate([{ path: "videolist" }])
-    .populate([{ path: "pdflist" }])
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
+//     .populate("teacher")
+//     .populate("category_id")
+//     //.populate("video_id")
+//    // .populate("pdf_id")
+//     .populate([{ path: "videolist" }])
+//     .populate([{ path: "pdflist" }])
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// };
+exports.viewonecourse =async (req, res) => {
+  const findone = await Course.findOne({$or: [{ teacher: req.staffId }, { _id: req.params.id }],}).populate([{ path: "videolist" }]).populate([{ path: "pdflist" }])
+
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      message: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
 };
 
 exports.viewonecoursep = async (req, res) => {
