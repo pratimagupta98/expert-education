@@ -2,6 +2,7 @@ const enrollStudent = require("../models/enrollStudent");
 const Plan = require("../models/plan");
 const resp = require("../helpers/apiResponse");
 const Course = require("../models/course");
+const { findOne } = require("../models/course");
 
 exports.addenrollStudent = async (req, res) => {
   const { plan_Id, course_Id, student_Id } = req.body;
@@ -277,4 +278,23 @@ exports.Studentenroll_couses = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+exports.enrollstudent_techaer = async (req, res) => {
+  const getcourse = await Course.findOne({_id :req.body.course_Id})
    
+   console.log(getcourse)
+   
+ // await enrollStudent.find()
+    // .populate("plan_Id")
+    // .populate("course_Id")
+    // .populate("student_Id")
+    // .populate({
+    //   path: "course_Id",
+    //   populate: {
+    //     path: "teacher",
+    //   }
+    // })
+    //  .sort({ sortorder: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+

@@ -10,8 +10,6 @@
         refer_amount,
         verify_code,
         refer_redeem_status,
-        
-       
     } = req.body;
   
     const newReferEarn = new ReferEarn({

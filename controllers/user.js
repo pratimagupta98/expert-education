@@ -396,10 +396,127 @@ exports.changepassidUser = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+// exports.edituser = async (req, res) => {
+
+//   const {
+//     fullname,
+//     email,
+//     mobile,
+//     password,
+//     userimg,
+//     status,
+    
+ 
+//   } = req.body;
+//   //console.log("uuuuu",req.body)
+//   if (password) {
+//     const salt = await bcrypt.genSalt(10);
+//     let hashPassword = await bcrypt.hash(password, salt);
+//   }
+//   data = {};
+//   if (fullname) {
+//     data.fullname = fullname;
+//   }
+//   if (email) {
+//     data.email = email;
+//   }
+//   if (mobile) {
+//     data.mobile = mobile;
+//   }
+ 
+//   if (password) {
+//     const salt = await bcrypt.genSalt(10);
+//     let hashPassword = await bcrypt.hash(password, salt);
+//     data.password = hashPassword;
+//   }
+
+//   if (status) {
+//     data.status = status;
+//   }
+ 
+
+//   if (req.files) {
+//     console.log(req.files);
+//     if (req.files.userimg) {
+//       const geturl = await uploadFile(
+//         req.files.userimg[0]?.path,
+//         req.files.userimg[0]?.filename,
+//         "jpg"
+//       );
+//       if (geturl) {
+//         data.userimg = geturl.Location;
+//         //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+//       }
+//     }
+//   }
+//   if(data){
+//     console.log(data)
+//   await User.findOneAndUpdate(
+//     { _id: req.params.id },
+//     { $set: data },
+//     { new: true }
+//   )
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// }
+// }
+
 exports.edituser = async (req, res) => {
+  const {
+    fullname,
+    email,
+    mobile,
+    password,
+    
+    userimg,
+    status,
+    
+ 
+  } = req.body;
+  console.log("uuuuu",req.body)
+  if (password) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
+  }
+  data = {};
+  if (fullname) {
+    data.fullname = fullname;
+  }
+  if (email) {
+    data.email = email;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+ 
+  if (password) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
+    data.password = hashPassword;
+  }
+
+  if (status) {
+    data.status = status;
+  }
+ 
+
+  if (req.files) {
+    console.log(req.files);
+    if (req.files.userimg) {
+      const geturl = await uploadFile(
+        req.files.userimg[0]?.path,
+        req.files.userimg[0]?.filename,
+        "jpg"
+      );
+      if (geturl) {
+        data.userimg = geturl.Location;
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+      }
+    }
+  }
   await User.findOneAndUpdate(
     { _id: req.params.id },
-    { $set: req.body },
+    { $set: data },
     { new: true }
   )
     .then((data) => resp.successr(res, data))
