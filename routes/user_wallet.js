@@ -45,7 +45,7 @@ const fileFilter = (req, file, cb) => {
 
 let uploads = multer({ storage: storage });
 
-let multipleUpload = uploads.fields([{ name: "screenshot", maxCount: 1 }]);
+ let multipleUpload = uploads.fields([{ name: "screenshot", maxCount: 1 }]);
 
 
 router.post("/admin/req_amount",multipleUpload,tokenverify, req_amount);
