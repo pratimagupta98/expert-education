@@ -278,23 +278,35 @@ exports.Studentenroll_couses = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.enrollstudent_techaer = async (req, res) => {
-  const getcourse = await Course.findOne({_id :req.body.course_Id})
+// exports.enrollstudent_techaer = async (req, res) => {
+//   const getcourse = await enrollStudent.countDocuments({course_Id :req.body.course_Id})
    
-   console.log(getcourse)
+//    console.log(getcourse)
    
- // await enrollStudent.find()
-    // .populate("plan_Id")
-    // .populate("course_Id")
-    // .populate("student_Id")
+//  // await enrollStudent.find()
+//     // .populate("plan_Id")
+//     // .populate("course_Id")
+//     // .populate("student_Id")
     // .populate({
     //   path: "course_Id",
     //   populate: {
     //     path: "teacher",
     //   }
     // })
-    //  .sort({ sortorder: 1 })
+//     //  .sort({ sortorder: 1 })
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// };
+
+exports.enrollstudent_incourse = async (req, res) => {
+  await enrollStudent.find({course_Id :req.params.id}).populate({
+    path: "course_Id",
+    populate: {
+      path: "teacher",
+    }
+  })
+
+    .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
-
