@@ -299,7 +299,7 @@ exports.Studentenroll_couses = async (req, res) => {
 // };
 
 exports.enrollstudent_incourse = async (req, res) => {
-  await enrollStudent.find({course_Id :req.params.id}).populate({
+  await enrollStudent.countDocuments({course_Id :req.params.id}).populate({
     path: "course_Id",
     populate: {
       path: "teacher",
