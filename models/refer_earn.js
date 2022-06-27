@@ -11,9 +11,7 @@ const thisSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "user",
     },
-    refer_amount:{
-      type:Number
-    },
+   
     verify_code:{
 type:String
     },

@@ -7,7 +7,7 @@
     const {
         refer_from_id,
         refer_to_id,
-        refer_amount,
+         
         verify_code,
         refer_redeem_status,
         plan
@@ -16,7 +16,7 @@
     const newReferEarn = new ReferEarn({
         refer_from_id: refer_from_id,
         refer_to_id: refer_to_id,
-        refer_amount:refer_amount,
+        
         verify_code:verify_code,
         refer_redeem_status: refer_redeem_status,
         plan:plan
