@@ -10,7 +10,7 @@
          
         verify_code,
         refer_redeem_status,
-        plan
+      
     } = req.body;
   
     const newReferEarn = new ReferEarn({
@@ -19,7 +19,7 @@
         
         verify_code:verify_code,
         refer_redeem_status: refer_redeem_status,
-        plan:plan
+         
        
     });
     
@@ -65,7 +65,7 @@
        }
  
        exports.allrefer_earn = async (req, res) => {
-        await ReferEarn.find().populate("refer_from_id").populate("refer_to_id").populate("plan")
+        await ReferEarn.find().populate("refer_from_id").populate("refer_to_id") 
           .sort({ sortorder: 1 })
           .then((data) => resp.successr(res, data))
           .catch((error) => resp.errorr(res, error));
