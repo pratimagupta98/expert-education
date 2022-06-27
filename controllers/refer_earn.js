@@ -7,7 +7,6 @@
     const {
         refer_from_id,
         refer_to_id,
-         
         verify_code,
         refer_redeem_status,
       
