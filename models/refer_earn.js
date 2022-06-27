@@ -22,6 +22,10 @@ type:String
       type: String,
      //redeem code
     },
+    plan:{
+      type: Schema.Types.ObjectId,
+      ref: "plan",
+    }
     
   },
   { timestamps: true }
