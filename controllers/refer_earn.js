@@ -64,7 +64,18 @@
        }
  
        exports.allrefer_earn = async (req, res) => {
-        await ReferEarn.find().populate("refer_from_id").populate("refer_to_id") 
+        await ReferEarn.find().populate("refer_from_id").populate("refer_to_id").populate("membership").populate({
+          path: "membership",
+          populate: {
+            path: "userId",
+          }
+        })
+        .populate({
+          path: "membership",
+          populate: {
+            path: "plan_Id",
+          }
+        })
           .sort({ sortorder: 1 })
           .then((data) => resp.successr(res, data))
           .catch((error) => resp.errorr(res, error));
