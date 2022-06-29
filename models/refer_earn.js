@@ -18,7 +18,7 @@ type:String
 
     status: {
       type: String,
-     //redeem code
+     default: "Pending"
     },
     membership:{
       type: Schema.Types.ObjectId,
