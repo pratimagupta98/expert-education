@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const commision = new Schema(
   {
-    refer_earn: {
+    referearn: {
         type: Schema.Types.ObjectId,
         ref: "refer_earn",
     },

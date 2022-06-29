@@ -32,7 +32,7 @@ const withdrawal = require("./routes/withdrawal");
 const verify_user = require("./routes/verify_user");
 
 const refer_earn = require("./routes/refer_earn");
-const commision = require("./routes/commision");
+const add_commision = require("./routes/add_commision");
 
 
 
@@ -71,7 +71,7 @@ app.use("/api", user_wallet);
 app.use("/api", withdrawal);
 app.use("/api", verify_user);
 app.use("/api", refer_earn);
-app.use("/api", commision);
+app.use("/api", add_commision);
 
  
  const fs = require("fs");
