@@ -16,7 +16,7 @@ const thisSchema = new Schema(
 type:String
     },
 
-    refer_redeem_status: {
+    status: {
       type: String,
      //redeem code
     },

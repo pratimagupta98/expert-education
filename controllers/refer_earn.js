@@ -9,7 +9,7 @@
         refer_to_id,
         verify_code,
         membership,
-        refer_redeem_status,
+        status,
       
     } = req.body;
   
@@ -17,7 +17,7 @@
         refer_from_id: refer_from_id,
         refer_to_id: refer_to_id,
         verify_code:verify_code,
-        refer_redeem_status: refer_redeem_status,
+        status: status,
         membership:membership
        
     });
@@ -64,7 +64,7 @@
        }
  
        exports.allrefer_earn = async (req, res) => {
-        await ReferEarn.find().populate("refer_from_id").populate("refer_to_id").populate("membership").populate({
+        await ReferEarn.find({status:"Pending"}).populate("refer_from_id").populate("refer_to_id").populate("membership").populate({
           path: "membership",
           populate: {
             path: "userId",
@@ -80,3 +80,5 @@
           .then((data) => resp.successr(res, data))
           .catch((error) => resp.errorr(res, error));
       };
+
+ 
