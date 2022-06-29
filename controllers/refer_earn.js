@@ -8,6 +8,7 @@
         refer_from_id,
         refer_to_id,
         verify_code,
+        membership,
         refer_redeem_status,
       
     } = req.body;
@@ -15,10 +16,9 @@
     const newReferEarn = new ReferEarn({
         refer_from_id: refer_from_id,
         refer_to_id: refer_to_id,
-        
         verify_code:verify_code,
         refer_redeem_status: refer_redeem_status,
-         
+        membership:membership
        
     });
     

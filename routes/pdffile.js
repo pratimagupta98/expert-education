@@ -32,7 +32,7 @@ const {
 } = require("../controllers/pdffile");
 
 router.post(
-  "/admin/addpdf",
+  "/admin/addpdf",verifyToken,
   upload.fields([
     {
       name: "pdf_file",

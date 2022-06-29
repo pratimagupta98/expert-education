@@ -9,20 +9,23 @@ exports.add_commision = async (req, res) => {
         refer_earn,
         amount
     } = req.body;
-
-    const newReferEarn = new Commission({
+    console.log(req.body)
+    const getmembership = await ReferEarn.findOne({ id: req.body.refer_earn });
+    if(getmembership){
+        console.log(getmembership)
+        refer_to =getmembership.refer_to_id
+        console.log("STRING",refer_to)
+    }
+    const newCommission = new Commission({
         refer_earn: refer_earn,
         amount: amount,
     });
 
-    const getmembership = await ReferEarn.findOne({ refer_to_id: req.body.refer_earn });
-    if(getmembership){
-        console.log(getmembership)
-    }
-    if(findone){
-    console.log("STRING",findone)
-    let  Code = findone?.referral_code
-    console.log("RefereCode",Code)
+    
+    // if(findone){
+    // console.log("STRING",findone)
+    // let  Code = findone?.referral_code
+    // console.log("RefereCode",Code)
      
-}
+//}
 }

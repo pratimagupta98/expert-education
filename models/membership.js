@@ -12,7 +12,10 @@ const MembershipSchema = new Schema(
     ref: "plan",
     required: true,
   },
-  
+  status:{
+    type :String
+    //true,false
+  }
  
 },
   { timestamps: true }

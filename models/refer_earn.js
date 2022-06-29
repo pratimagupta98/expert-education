@@ -20,7 +20,10 @@ type:String
       type: String,
      //redeem code
     },
-   
+    membership:{
+      type: Schema.Types.ObjectId,
+      ref: "membership",
+    }
     
   },
   { timestamps: true }

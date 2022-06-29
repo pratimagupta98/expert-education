@@ -5,10 +5,11 @@ const Userwallet = require("../models/user_wallet");
 const Plan = require("../models/plan");
 exports.addmembership = async (req, res) => {
   
- const { plan_Id} =req.body
+ const { plan_Id,status} =req.body
   const newMembership = new Membership({
     userId: req.params.userId,
     plan_Id: req.params.id,
+    status:status,
      
   });
 

@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require("fs");
 const multer = require("multer");
 const { adminToken } = require("../functions/admintoken");
+const { verifyToken } = require("../functions/stafftoken");
 
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
@@ -33,7 +34,7 @@ const {
 
 router.post(
   "/admin/addvideo",
-  adminToken,
+  verifyToken,
   upload.fields([
     {
       name: "video_file",
