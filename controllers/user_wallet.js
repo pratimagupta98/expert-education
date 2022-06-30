@@ -3,6 +3,7 @@ const Userwallet = require("../models/user_wallet");
  const User = require("../models/user");
  const { uploadFile } = require("../helpers/awsuploader");
  const fs = require("fs");
+const { Console } = require("console");
 
 exports.req_amount = async (req, res) => {
   const {
@@ -38,7 +39,7 @@ exports.req_amount = async (req, res) => {
   if (req.files) {
     console.log(req.files);
     if (req.files.screenshot) {
-      const geturl = await uploadFile(
+       const geturl = await uploadFile(
         req.files.screenshot[0]?.path,
         req.files.screenshot[0]?.filename,
         "jpg"
@@ -196,6 +197,7 @@ exports.wallet_amount = async (req, res) => {
       // currntamt = oldamt + reqamt
       // console.log(currntamt)
     }
+  
  
     const findandUpdateEntry = await Userwallet.findOneAndUpdate(
     

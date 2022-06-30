@@ -6,9 +6,12 @@ const {
     allrefer_earn,
   viewoneplan,
   deleteplan,
-  editplan,
+  commission_add,
+
 } = require("../controllers/refer_earn");
 
 router.post("/user/addrefer_earn", addrefer_earn);
 router.get("/admin/allrefer_earn", allrefer_earn);
+router.post("/admin/commission_add/:id", commission_add);
+
   module.exports = router;

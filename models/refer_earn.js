@@ -23,6 +23,9 @@ type:String
     membership:{
       type: Schema.Types.ObjectId,
       ref: "membership",
+    },
+    amt:{
+      type :Number
     }
     
   },
