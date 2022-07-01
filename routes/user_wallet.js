@@ -16,17 +16,13 @@ const {
  
 const multer = require("multer");
 const fs = require("fs");
- 
+
 //cjdhjd
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
 }
-const fileBuffer = fs.readFileSync('foo.jpg')
-  const base64Image =fileBuffer.toString('base64')
-  console.log("image",base64Image) 
 
 const storage = multer.diskStorage({
-  
   destination: function (req, file, cb) {
     cb(null, "./uploads");
   },
@@ -34,7 +30,6 @@ const storage = multer.diskStorage({
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, file.fieldname + "-" + uniqueSuffix);
   },
-  
 });
 
 const fileFilter = (req, file, cb) => {
