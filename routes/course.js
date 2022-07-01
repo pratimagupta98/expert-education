@@ -12,6 +12,7 @@ if (!fs.existsSync("./uploads")) {
   const fileBuffer = fs.readFileSync('./uploads')
   const base64Image =fileBuffer.toString('base64')
   console.log("image",base64Image) 
+  
 }
  
 
