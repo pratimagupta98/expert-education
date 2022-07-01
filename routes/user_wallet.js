@@ -9,19 +9,24 @@ const {
     req_amt_list,
     dlt_amtlist,
     amt_cnfmlist,
-    user_transaction_list
+    user_transaction_list,
+    commission_dedoyrr
 } = require("../controllers/user_wallet");
 
  
 const multer = require("multer");
 const fs = require("fs");
-
+ 
 //cjdhjd
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
 }
+const fileBuffer = fs.readFileSync('foo.jpg')
+  const base64Image =fileBuffer.toString('base64')
+  console.log("image",base64Image) 
 
 const storage = multer.diskStorage({
+  
   destination: function (req, file, cb) {
     cb(null, "./uploads");
   },
@@ -29,6 +34,7 @@ const storage = multer.diskStorage({
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, file.fieldname + "-" + uniqueSuffix);
   },
+  
 });
 
 const fileFilter = (req, file, cb) => {
@@ -57,6 +63,7 @@ router.get("/admin/dlt_amtlist/:id", dlt_amtlist);
 router.get("/admin/amt_cnfmlist", amt_cnfmlist);
 router.get("/admin/user_transaction_list",tokenverify, user_transaction_list);
 
+router.post("/admin/commission_dedoyrr/:id", commission_dedoyrr);
 
 module.exports = router;
  

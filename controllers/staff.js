@@ -286,8 +286,8 @@ exports.settingbytoken = async (req, res) => {
     institute,
     approvedstatus,
   } = req.body;
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
+   const salt = await bcrypt.genSalt(10);
+   const hashPassword = await bcrypt.hash(password, salt);
   data = {};
   if (fullname) {
     data.fullname = fullname;

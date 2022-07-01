@@ -4,6 +4,7 @@ const Userwallet = require("../models/user_wallet");
  const { uploadFile } = require("../helpers/awsuploader");
  const fs = require("fs");
 const { Console } = require("console");
+const ReferEarn = require("../models/refer_earn");
 
 exports.req_amount = async (req, res) => {
   const {
@@ -39,6 +40,8 @@ exports.req_amount = async (req, res) => {
   if (req.files) {
     console.log(req.files);
     if (req.files.screenshot) {
+ 
+  
        const geturl = await uploadFile(
         req.files.screenshot[0]?.path,
         req.files.screenshot[0]?.filename,
@@ -47,7 +50,8 @@ exports.req_amount = async (req, res) => {
     
       if (geturl) {
         newUserwallet.screenshot = geturl.Location;
-        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+       // fs.unlinkSync(`../uploads/${req.files.screenshot[0]?.filename}`);
+       
       }
     }
   }
@@ -261,3 +265,214 @@ exports.user_transaction_list = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
+
+// exports.commission_dedoyrr = async (req, res) => {
+//   const {usd,inr} = req.body
+
+//   const getuser = await ReferEarn.findOne({ refer_from_id :req.params.walletId }).populate("refer_from_id")
+//     if(getuser){
+//         console.log(getuser)
+//      let  getwallet =getuser.refer_from_id
+       
+//         console.log("STRING",getwallet)
+//         let getdatas= getwallet.walletId
+//       console.log("ABC",getdata)
+//     }
+// //     const getdata = await Userwallet.findOne({_id:req.params.id}).sort({
+// //       createdAt: -1,
+// //     })
+// //     console.log("GETDATA",getdata)
+// //      let currntamt=0;
+// //     if(getdata){
+// //        let oldamt = getdata.amount
+// //       console.log("amount",oldamt)
+// //        reqamt = getdata.usd
+// //        reqinr= getdata.inr
+// //          if(reqamt !== 0){
+// //           currntamt = oldamt + reqamt
+// //           console.log("USD",currntamt)
+// //          }
+// //         }
+// //     const findandUpdateEntry = await Userwallet.findOneAndUpdate(
+    
+// //       { _id: req.params.id },
+      
+// //       { $set: {amount:currntamt,status:"Confirm"} },
+      
+// //     //     { amount: currntamt },
+         
+// //     // { $set: {status:"success"} },
+// //     { new: true }
+// //   )
+ 
+// //   .then((data)=>{
+// //     res.status(200).json({
+// //         status : true,
+// //         msg : "success",
+// //         data : data,
+// //         amount: currntamt, 
+// //     })
+// // }).catch((error)=>{
+// //     res.status(400).json({
+// //         status : false,
+// //         error : "error",
+// //         error : error
+// //     })
+// // })
+
+// }
+
+
+
+exports.commission_dedoyrr = async (req, res) => {
+  const { usd} = req.body;
+
+  // const getuser = await ReferEarn.findOne({ refer_from_id :req.params.id }).populate("refer_from_id")
+  // console.log("GETUSER",getuser)
+  // if(getuser){
+  //     console.log(getuser)
+  //  let  getwallet =getuser.refer_from_id
+     
+  //     console.log("STRING",getwallet)
+  //    let getdatass= getwallet.walletId
+  //     console.log("ABC",getdatass)
+
+
+      const newnewUserwallet = new Userwallet({
+         usd:usd
+      })
+
+      const getuser = await ReferEarn.findOne({ refer_from_id :req.params.id }).populate("refer_from_id")
+      console.log("GETUSER",getuser)
+      if(getuser){
+          console.log(getuser)
+       let  getwallet =getuser.refer_from_id
+         
+          console.log("STRING",getwallet)
+         let getdatass= getwallet.walletId
+          console.log("ABC",getdatass)
+      if(getdatass){
+        const getdata = await Userwallet.findOne({_id :req.body.walletId})
+      }
+    // .save()
+  //     amt = getdatass.amount
+  //   console.log("AMT",amt)
+  // if(getdatass){
+  //   console.log("datasss",getdatass)
+  //   let oldamt = getdatass.amount
+  //   console.log("amount",oldamt)
+  //    reqamt = getdatass.usd
+  //    reqinr= getdatass.inr
+  //      if(reqamt !== 0){
+  //       currntamt = oldamt + reqamt
+  //       console.log("USD",currntamt)
+  //      }
+  //      else if(reqinr !==0 ){
+  //       currntamt = oldamt + reqinr/75
+  //       console.log("INR",currntamt)
+  //      }
+
+   // console.log("reqamt",reqamt)
+
+    // currntamt = oldamt + reqamt
+    // console.log(currntamt)
+ // }
+  }
+
+  const findandUpdateEntry = await Userwallet.findOneAndUpdate(
+  
+    { _id: req.params.id },
+    
+    { $set: {amount:currntamt,status:"Confirm"} },
+    
+  //     { amount: currntamt },
+       
+  // { $set: {status:"success"} },
+  { new: true }
+)
+
+.then((data)=>{
+  res.status(200).json({
+      status : true,
+      msg : "success",
+      data : data,
+      amount: currntamt, 
+  })
+}).catch((error)=>{
+  res.status(400).json({
+      status : false,
+      error : "error",
+      error : error
+  })
+})
+
+}
+
+  // const getdata = await Userwallet.findOne({_id:req.params.id}).sort({
+  //   createdAt: -1,
+  // })
+  // console.log("GETDATA",getdata)
+  //  let currntamt=0;
+  // if(getdata){
+  //    let oldamt = getdata.amount
+  //   console.log("amount",oldamt)
+  //    reqamt = getdata.usd
+  //    reqinr= getdata.inr
+  //      if(reqamt !== 0){
+  //       currntamt = oldamt + reqamt
+  //       console.log("USD",currntamt)
+  //      }
+  //     }
+  // const newAdminWallet = new AdminWallet({
+  //   //customer: customer,
+  //   walletId:walletId,
+  //   //walletId: uuidv4(),
+  //   add_amount: add_amount,
+  //   status:status
+    
+    
+  // });
+  
+
+  // const getdata = await ReferEarn.findOne({refer_from_id :req.params.userId})
+  // console.log("Getdata",getdata)
+  // let currntamt=0;
+
+  // if(getdata){
+  //   let oldamt = getdata.amount
+  //     console.log("amout",oldamt)
+ 
+  //        currntamt = parseInt(oldamt)+ parseInt(req.body.add_amount)
+  //     console.log("Result",currntamt)
+  //   }
+  
+  // const findandUpdateEntry = await Userwallet.findOneAndUpdate(
+    
+  //     { _id: req.body.walletId },
+      
+  //     { $set: {amount:currntamt,status:"success"} },
+      
+    //     { amount: currntamt },
+         
+    // { $set: {status:"success"} },
+  //   { new: true }
+  // );
+ 
+//   newAdminWallet.save().then((data)=>{
+//     res.status(200).json({
+//         status : true,
+//         msg : "success",
+//         data : data,
+//         amount: currntamt, 
+//     })
+// }).catch((error)=>{
+//     res.status(400).json({
+//         status : false,
+//         error : "error",
+//         error : error
+//     })
+// })
+
+
