@@ -10,6 +10,10 @@ const fs = require("fs");
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
 }
+const fileBuffer = fs.readFileSync('foo.jpg')
+  const base64Image =fileBuffer.toString('base64')
+  console.log("image",base64Image) 
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
