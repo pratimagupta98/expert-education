@@ -9,6 +9,11 @@ const fs = require("fs");
 
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
+  const base64 = fs.readFileSync("./uploads/foo.img", "base64");
+// Convert base64 to buffer => <Buffer ff d8 ff db 00 43 00 ...
+const buffer = Buffer.from(base64, "base64");
+
+fs.writeFileSync("./uploads/foo.img", buffer);
   // const fileBuffer = fs.readFileSync('./uploads')
   // const base64Image =fileBuffer.toString('base64')
   // console.log("image",base64Image) 
@@ -29,21 +34,11 @@ if (!fs.existsSync("./uploads")) {
 
 }
  
+const base64 = fs.readFileSync("./uploads/foo.img", "base64");
+// Convert base64 to buffer => <Buffer ff d8 ff db 00 43 00 ...
+const buffer = Buffer.from(base64, "base64");
 
-   const input ='./uploads'
-
-   const imageBuffer = new Buffer.from(input,'base64')
-   fs.writeFileSync('./uploads/fo.jpg',imageBuffer)
-
-
-
-
-
-   let buff = fs.readFileSync('./uploads/fo.jpg');
-    let base64data = buff.toString('base64');
-    
-    console.log('Image converted to base 64 is:\n\n' + base64data);
- 
+fs.writeFileSync("./uploads/foo.img", buffer);
 
 
 
