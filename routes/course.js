@@ -9,10 +9,26 @@ const fs = require("fs");
 
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
-  const fileBuffer = fs.readFileSync('./uploads')
-  const base64Image =fileBuffer.toString('base64')
-  console.log("image",base64Image) 
+  // const fileBuffer = fs.readFileSync('./uploads')
+  // const base64Image =fileBuffer.toString('base64')
+  // console.log("image",base64Image) 
   
+
+  // var base64str = base64_encode('demo.png');
+  // console.log(base64str);
+    
+  // function base64_encode(file) {
+  //     return "data:image/gif;base64,"+fs.readFileSync(file, 'base64');
+  // }
+  
+   ;
+
+ 
+   let buff = fs.readFileSync('stack-abuse-logo.png');
+   let base64data = buff.toString('base64');
+   
+   console.log('Image converted to base 64 is:\n\n' + base64data);
+
 }
  
 
