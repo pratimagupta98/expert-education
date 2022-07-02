@@ -24,10 +24,12 @@ type:String
       type: Schema.Types.ObjectId,
       ref: "membership",
     },
-    amt:{
+    amount:{
       type :Number
+    },
+    usd:{
+      type:Number
     }
-    
   },
   { timestamps: true }
 );

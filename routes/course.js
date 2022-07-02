@@ -15,12 +15,7 @@ const buffer = Buffer.from(base64, "base64");
 
 fs.writeFileSync("./uploads/foo.img", buffer);
 }
-
- var filename = "package.json"
- let binaryData =  fs.readFileSync(filename)
-
- var base64String = Buffer.from(binaryData).toString("base64")
- console.log(base64String)
+ 
  
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

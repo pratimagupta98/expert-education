@@ -84,92 +84,66 @@
 
 
       
-      // exports.commission_add = async (req, res) => {
-      //   const{amt} = req.body
-      //   console.log(req.body)
      
-      //   let currntamt=0;
-      //   const getdata = await ReferEarn.findOne({_id:req.body.refer_from_id}).sort({
-      //     createdAt: -1,
-      //   })
-      //   console.log(getdata)
-      
-      //   if(getdata){
-      //     abc= getdata.walletId
-      //     console.log(abc)
-      //     let oldamt = getdata.amount
-      //     console.log("amount",oldamt)
-      //      reqamt = getdata.usd
-      //      reqinr= getdata.inr
-      //        if(reqamt !== 0){
-      //         currntamt = oldamt + reqamt
-      //         console.log("USD",currntamt)
-      //        }
-      //        else if(reqinr !==0 ){
-      //         currntamt = oldamt + reqinr/75
-      //         console.log("INR",currntamt)
-      //        }
-      
-      //    // console.log("reqamt",reqamt)
-      
-      //     // currntamt = oldamt + reqamt
-      //     // console.log(currntamt)
-      //   }
-      
-      //   const findandUpdateEntry = await ReferEarn.findOneAndUpdate(
+
+      exports.commission_add = async (req, res) => {
+        const {usd} = req.body
+        const newUserwallet = new Userwallet({
+          usd:usd,
+        });
         
-      //     { _id: req.params.id },
-          
-      //     { $set: {amount:currntamt,status:"Confirm"} },
-          
-      //   //     { amount: currntamt },
+        // const getuser = await ReferEarn.findOne({ refer_from_id :req.params.id }).populate("refer_from_id")
+      
+        //   if(getuser){
+        //       console.log(getuser)
+        //    let  getwallet =getuser.refer_from_id
              
-      //   // { $set: {status:"success"} },
-      //   { new: true }
-      // )
-      
-      // .then((data)=>{
-      //   res.status(200).json({
-      //       status : true,
-      //       msg : "success",
-      //       data : data,
-      //       amount: currntamt, 
-      //   })
-      // }).catch((error)=>{
-      //   res.status(400).json({
-      //       status : false,
-      //       error : "error",
-      //       error : error
-      //   })
-      // })
-      
-      // }
-      
-
-      // exports.commission_add = async(req,res)=>{
+        //       console.log("STRING",getwallet)
+        //      let getdata= getwallet.walletId
+        //       console.log("ABC",getdata)
+        //   }
+          const getdata = await Userwallet.findOne({userId:req.params.id}).sort({
+            createdAt: -1})
+          console.log("GETDATA",getdata)
+                                                                                                        
+          if(getdata){
+            let oldamt = getdata.amount
+              console.log("amout",oldamt)
+             
+                 currntamt = parseInt(oldamt)+parseInt(req.body.usd)
+              console.log("Result",currntamt)
+            }
+          
+          const findandUpdateEntry = await Userwallet.findOneAndUpdate(
+            
+              { userId: req.params.id },
+              
+              { $set: {amount:currntamt} },
+              
+            //     { amount: currntamt },
+                 
+            // { $set: {status:"success"} },
+            { new: true }
+          );
+         console.log("updated",findandUpdateEntry)
+          newUserwallet.save().then((data)=>{
+            res.status(200).json({
+                status : true,
+                msg : "success",
+                data : data,
+                amount: currntamt, 
+               // datas:findandUpdateEntry
+            })
+        }).catch((error)=>{
+            res.status(400).json({
+                status : false,
+                error : "error",
+                error : error
+            })
+        })
         
+        }
 
-      //  }
-
-
-
-exports.commission_add = async (req, res) => {
-  const {usd,inr} = req.body
-
-  const getuser = await ReferEarn.findOne({ refer_from_id :req.params.id }).populate("refer_from_id")
-    if(getuser){
-        console.log(getuser)
-     let  getwallet =getuser.refer_from_id
-       
-        console.log("STRING",getwallet)
-       let getdata= getwallet.walletId
-        console.log("ABC",getdata)
-    }
-    const getdata = await Userwallet.findOne({_id:req.params.id}).sort({
-      createdAt: -1,
-
-    })
-    console.log("GETDATA",getdata)
     // const getd = await Userwallet.findOne({walletId :req.params.getdata})
     // console.log("aaaaa",getd)
 
@@ -197,21 +171,21 @@ exports.commission_add = async (req, res) => {
   //   { new: true }
   // )
  
-  .then((data)=>{
-    res.status(200).json({
-        status : true,
-        msg : "success",
-        data : data,
-        amount: currntamt, 
-    })
-}).catch((error)=>{
-    res.status(400).json({
-        status : false,
-        error : "error",
-        error : error
-    })
-})
+//   .then((data)=>{
+//     res.status(200).json({
+//         status : true,
+//         msg : "success",
+//         data : data,
+//         amount: currntamt, 
+//     })
+// }).catch((error)=>{
+//     res.status(400).json({
+//         status : false,
+//         error : "error",
+//         error : error
+//     })
+// })
 
-}
+// }
 
 
