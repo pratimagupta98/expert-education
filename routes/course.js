@@ -14,35 +14,32 @@ if (!fs.existsSync("./uploads")) {
 const buffer = Buffer.from(base64, "base64");
 
 fs.writeFileSync("./uploads/foo.img", buffer);
-  // const fileBuffer = fs.readFileSync('./uploads')
-  // const base64Image =fileBuffer.toString('base64')
-  // console.log("image",base64Image) 
-  
-
-  // var base64str = base64_encode('demo.png');
-  // console.log(base64str);
-    
-  // function base64_encode(file) {
-  //     return "data:image/gif;base64,"+fs.readFileSync(file, 'base64');
-  // }
-  
-   
-  //  let buff = fs.readFileSync('stack-abuse-logo.png');
-  //  let base64data = buff.toString('base64');
-   
-  //  console.log('Image converted to base 64 is:\n\n' + base64data);
-
 }
+
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+  // read binary data
+  var bitmap = fs.readFileSync(file);
+  // convert binary data to base64 encoded string
+  return  Buffer.from(bitmap).toString('base64');
+}
+
+// function to create file from base64 encoded string
+function base64_decode(base64str, file) {
+  // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
+  var bitmap =  Buffer.from(base64str, 'base64');
+  // write buffer to file
+  fs.writeFileSync(file, bitmap);
+  console.log('******** File created from base64 encoded string ********');
+}
+
+// convert image to base64 encoded string
+var base64str = base64_encode('./uploads/foo.img');
+console.log(base64str);
+// convert base64 string back to image 
+base64_decode(base64str, './uploads/foo.img');
  
-const base64 = fs.readFileSync("./uploads/foo.img", "base64");
-// Convert base64 to buffer => <Buffer ff d8 ff db 00 43 00 ...
-const buffer = Buffer.from(base64, "base64");
-
-fs.writeFileSync("./uploads/foo.img", buffer);
-
-
-
-
+ 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
