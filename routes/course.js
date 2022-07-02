@@ -16,29 +16,11 @@ const buffer = Buffer.from(base64, "base64");
 fs.writeFileSync("./uploads/foo.img", buffer);
 }
 
-// function to encode file data to base64 encoded string
-function base64_encode(file) {
-  // read binary data
-  var bitmap = fs.readFileSync(file);
-  // convert binary data to base64 encoded string
-  return  Buffer.from(bitmap).toString('base64');
-}
+ var filename = "package.json"
+ let binaryData =  fs.readFileSync(filename)
 
-// function to create file from base64 encoded string
-function base64_decode(base64str, file) {
-  // create buffer object from base64 encoded string, it is important to tell the constructor that the string is base64 encoded
-  var bitmap =  Buffer.from(base64str, 'base64');
-  // write buffer to file
-  fs.writeFileSync(file, bitmap);
-  console.log('******** File created from base64 encoded string ********');
-}
-
-// convert image to base64 encoded string
-var base64str = base64_encode('./uploads/foo.img');
-console.log(base64str);
-// convert base64 string back to image 
-base64_decode(base64str, './uploads/foo.img');
- 
+ var base64String = Buffer.from(binaryData).toString("base64")
+ console.log(base64String)
  
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -54,7 +36,7 @@ const upload = multer({ storage: storage });
 
 const {
   addcourse,
-  addcoursebyadmin,
+  addcoursebyadmin,                                 
   editcourse,
   viewonecourse,
   viewonecoursep,
