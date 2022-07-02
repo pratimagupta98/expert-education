@@ -24,18 +24,18 @@ if (!fs.existsSync("./uploads")) {
    ;
 
  
-   let buff = fs.readFileSync('stack-abuse-logo.png');
-   let base64data = buff.toString('base64');
+  //  let buff = fs.readFileSync('stack-abuse-logo.png');
+  //  let base64data = buff.toString('base64');
    
-   console.log('Image converted to base 64 is:\n\n' + base64data);
+  //  console.log('Image converted to base 64 is:\n\n' + base64data);
 
 }
  
 
-  // const input =`image.png`
+   const input ='./uploads'
 
-  // const imageBuffer = new Buffer.from(input,'base64')
-  // fs.writeFileSync('./uploads/fo.jpg',imageBuffer)
+   const imageBuffer = new Buffer.from(input,'base64')
+   fs.writeFileSync('./uploads/fo.jpg',imageBuffer)
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
