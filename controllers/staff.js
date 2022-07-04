@@ -304,6 +304,9 @@ exports.settingbytoken = async (req, res) => {
   if (password) {
     data.password = hashPassword;
   }
+  if(cnfmPassword){
+data.cnfmPassword =hashPassword
+  }
   if (gender) {
     data.gender = gender;
   }

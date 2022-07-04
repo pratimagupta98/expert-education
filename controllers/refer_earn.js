@@ -131,8 +131,10 @@
                 status : true,
                 msg : "success",
                 data : data,
-                amount: currntamt, 
-               // datas:findandUpdateEntry
+                current_amt: currntamt, 
+                wallet_amt:getdata.amount,
+                userId :findandUpdateEntry.userId,
+               
             })
         }).catch((error)=>{
             res.status(400).json({
