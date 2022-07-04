@@ -230,6 +230,26 @@ exports.allenrollStudent = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+exports.enrollStudentbytoken = async (req, res) => {
+ // const staff = await Course.findOne({_id:req.body.course_Id})
+  await enrollStudent
+    .find({staffId:req.staffId})
+    .populate("plan_Id")
+    .populate("course_Id")
+    .populate("student_Id")
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "teacher",
+      }
+    })
+    
+    .sort({ sortorder: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
 exports.deleteenrollStudent = async (req, res) => {
   await enrollStudent.remove();
   await enrollStudent

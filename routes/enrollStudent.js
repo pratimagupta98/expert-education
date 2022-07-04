@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { tokenverify } = require("../functions/tokenverify");
+const { verifyToken } = require("../functions/stafftoken");
 
 const {
   addenrollStudent,
@@ -9,14 +10,16 @@ const {
   deleteenrollStudent,
   Studentenroll_couses,
   viewone_enroll_course,
-  enrollstudent_incourse
-    
+  enrollstudent_incourse,
+  enrollStudentbytoken
 } = require("../controllers/enrollStudent");
 
 router.post("/admin/addenrollStudent",tokenverify, addenrollStudent);
 //router.post("/admin/editCat/:id", editCat);
 // router.get("/admin/viewoneplan/:id", viewoneplan);
 router.get("/admin/allenrollStudent", allenrollStudent);
+router.get("/admin/enrollStudentbytoken",verifyToken, enrollStudentbytoken);
+
 router.get("/admin/deleteenrollStudent/:id", deleteenrollStudent);
 router.get("/admin/Studentenroll_couses",tokenverify, Studentenroll_couses);
 
