@@ -7,6 +7,11 @@ const { verifyToken } = require("../functions/stafftoken");
 
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
+  var base64Data = req.rawBody.replace(/^data:image\/png;base64,/, "");
+
+require("fs").writeFile("out.png", base64Data, 'base64', function(err) {
+  console.log(err);
+});
 }
 
 const storage = multer.diskStorage({

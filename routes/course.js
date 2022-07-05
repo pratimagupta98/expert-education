@@ -6,21 +6,36 @@ const { verifyToken } = require("../functions/stafftoken");
 const multer = require("multer");
 const {} = require("multer");
 const fs = require("fs");
-// const encode = require('node-base64-image').encode
-// const decode = require('node-base64-image').decode
+ const encode = require('node-base64-image').encode
+const decode = require('node-base64-image').decode
 
 
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
-  const base64 = fs.readFileSync("./uploads/foo.img", "base64");
+  const base64 = fs.readFileSync("./uploads", "base64");
 // Convert base64 to buffer => <Buffer ff d8 ff db 00 43 00 ...
 const buffer = Buffer.from(base64, "base64");
 
 fs.writeFileSync("./uploads/foo.img", buffer);
+const contents = fs.readFileSync('./uploads', {encoding: 'base64'});
+
 }
- 
- 
-const storage = multer.diskStorage({
+//  async function processing(){
+//   const url = './uploads';
+// const options = {
+//   string: true,
+//   headers: {
+//     "User-Agent": "my-app"
+//   }
+// };
+// // writing to file named 'example.jpg'
+// const image = await encode(url, options);
+// console.log(image)
+// await decode(image, { fname: './uploads/example', ext: 'jpg' });
+// fs.writeFileSync("base64.txt",image)
+//  }
+ //processing()
+ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
   },
