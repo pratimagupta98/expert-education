@@ -6,9 +6,7 @@ const { verifyToken } = require("../functions/stafftoken");
 const multer = require("multer");
 const {} = require("multer");
 const fs = require("fs");
- const encode = require('node-base64-image').encode
-const decode = require('node-base64-image').decode
-
+  
 
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
