@@ -234,7 +234,9 @@ exports.enrollStudentbytoken = async (req, res) => {
 //  const getenroll = await Course.findOne({teacher:req.params.id})
 //  console.log(getenroll)
 // if(getenroll){
-  const getuser = await Course.findOne({ teacher: req.staffId });
+  const getuser = await Course.findOne({ teacher:req.staffId   });
+
+  //$or: [{ teacher: req.staffId }, { course_Id: req.params.course_Id }]
 if(getuser){
   console.log("STRING",getuser)
 const getenroll = await enrollStudent.find({  status: "Enroll" })
