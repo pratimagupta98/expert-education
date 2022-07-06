@@ -44,7 +44,7 @@ const {
   countteacher,
   countteacherAprove,
   countUser,
-  //countUserEnroll,
+  countUserEnroll,
   councours,
    
 } = require("../controllers/admin");
@@ -56,7 +56,7 @@ router.get("/admin/deleteAdmin", adminToken, deleteAdmin);
 router.get("/admin/countteacher", countteacher);
 router.get("/admin/countteacherAprove", countteacherAprove);
 router.get("/admin/countUser", countUser);
-//router.get("/admin/countUserEnroll", countUserEnroll);
+router.get("/admin/countUserEnroll", countUserEnroll);
 router.get("/admin/councours", councours);
 router.get("/admin/getAdmin", getAdmin);
  
