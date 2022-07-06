@@ -1,6 +1,8 @@
 const Admin = require("../models/admin");
 const resp = require("../helpers/apiResponse");
 const Staff = require("../models/staff");
+const enrollStudent = require("../models/enrollStudent");
+
 const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
 const { uploadFile } = require("../helpers/awsuploader");
@@ -213,7 +215,7 @@ exports.countUser = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 exports.countUserEnroll = async (req, res) => {
-  await User.countDocuments({ status: "Enroll" })
+  await enrollStudent.countDocuments({ status: "Enroll" })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };

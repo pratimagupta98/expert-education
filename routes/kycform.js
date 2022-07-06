@@ -59,7 +59,7 @@ router.post("/user/addkycform", multipleUpload, tokenverify, addkycform);
 router.post("/user/editkycform", tokenverify, multipleUpload, editkycform);
 router.get("/user/viewonekycform/:id", tokenverify, viewonekycform);
 router.get("/user/allkycform", tokenverify, allkycform);
-router.get("/user/deletekycform", tokenverify, deletekycform);
+router.get("/admin/deletekycform/:id", deletekycform);
 router.get("/admin/getkycform", getkycform);
 
 

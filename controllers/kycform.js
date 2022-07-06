@@ -186,7 +186,7 @@ exports.allkycform = async (req, res) => {
 };
 
 exports.deletekycform = async (req, res) => {
-  await Kycform.deleteOne({ userid: req.userId })
+  await Kycform.deleteOne({ _id: req.params.id })
     .then((data) => resp.deleter(res, data))
     .catch((error) => resp.errorr(res, error));
 };

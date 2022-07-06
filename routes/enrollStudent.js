@@ -19,7 +19,7 @@ router.post("/admin/addenrollStudent",tokenverify, addenrollStudent);
 // router.get("/admin/viewoneplan/:id", viewoneplan);
 router.get("/admin/allenrollStudent", allenrollStudent);
 router.get("/admin/enrollStudentbytoken",verifyToken, enrollStudentbytoken);
-
+  
 router.get("/admin/deleteenrollStudent/:id", deleteenrollStudent);
 router.get("/admin/Studentenroll_couses",tokenverify, Studentenroll_couses);
 
