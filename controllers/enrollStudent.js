@@ -259,9 +259,9 @@ const getenroll = await enrollStudent.find({  status: "Enroll" })
 };
 }
 
-// exports.enrollStudentbytoken = async (req,res) =>{
-//   const geten = await enrollStudent.find({teacher:})
-// }
+exports.enroll_token = async (req,res) =>{
+  const geten = await enrollStudent.find({teacher:c})
+}
 
 exports.deleteenrollStudent = async (req, res) => {
   await enrollStudent.remove();
