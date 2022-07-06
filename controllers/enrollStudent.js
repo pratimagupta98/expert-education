@@ -5,7 +5,7 @@ const Course = require("../models/course");
 const { findOne } = require("../models/course");
 
 exports.addenrollStudent = async (req, res) => {
-  const { plan_Id, course_Id, student_Id } = req.body;
+  const { plan_Id, course_Id, student_Id,status } = req.body;
 
   let p = await Plan.find({ _id: req.body.plan_Id });
   console.log(p);
@@ -231,9 +231,15 @@ exports.allenrollStudent = async (req, res) => {
 };
 
 exports.enrollStudentbytoken = async (req, res) => {
- // const staff = await Course.findOne({_id:req.body.course_Id})
-  await enrollStudent
-    .find({staffId:req.staffId})
+//  const getenroll = await Course.findOne({teacher:req.params.id})
+//  console.log(getenroll)
+// if(getenroll){
+  const getuser = await Course.findOne({ teacher: req.staffId });
+if(getuser){
+  console.log("STRING",getuser)
+const getenroll = await enrollStudent.find({  status: "Enroll" })
+  // await enrollStudent
+  //   .find({staffId:req.staffId})
     .populate("plan_Id")
     .populate("course_Id")
     .populate("student_Id")
@@ -243,12 +249,17 @@ exports.enrollStudentbytoken = async (req, res) => {
         path: "teacher",
       }
     })
-    
+  
     .sort({ sortorder: 1 })
+  
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+}
 
+// exports.enrollStudentbytoken = async (req,res) =>{
+//   const geten = await enrollStudent.find({teacher:})
+// }
 
 exports.deleteenrollStudent = async (req, res) => {
   await enrollStudent.remove();

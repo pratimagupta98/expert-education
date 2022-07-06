@@ -23,9 +23,13 @@ const enrollStudentSchema = new Schema({
     ref: "user",
   },
   
-  
+  status: {
+    type: String,
+    default:"Enroll"
+   },
 
 },
+ 
 { timestamps: true }
 );
 // function arrayLimit(val) {
