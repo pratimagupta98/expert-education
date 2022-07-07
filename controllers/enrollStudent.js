@@ -330,7 +330,15 @@ exports.allenrollStudent = async (req, res) => {
   exports.enrollStudentbytoken = async (req, res) => {
     await enrollStudent
       .find({ $or :[{teacher: req.staffId},{student_Id: req.userId }]})
-     
+      .populate("plan_Id")
+          .populate("course_Id")
+          .populate("student_Id")
+          .populate({
+             path: "course_Id",
+             populate: {
+               path: "teacher",
+             }
+           })
       
       .sort({ sortorder: 1 })
       .then((data) => resp.successr(res, data))
