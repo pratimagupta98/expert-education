@@ -23,10 +23,7 @@ const enrollStudentSchema = new Schema({
     ref: "user",
   },
   
-  status: {
-    type: String,
-    default:"Enroll"
-   },
+  
 
 },
  

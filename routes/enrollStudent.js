@@ -11,7 +11,8 @@ const {
   Studentenroll_couses,
   viewone_enroll_course,
   enrollstudent_incourse,
-  enrollStudentbytoken
+  enrollStudentbytoken,
+  //enroll_token
 } = require("../controllers/enrollStudent");
 
 router.post("/admin/addenrollStudent",tokenverify, addenrollStudent);
@@ -26,6 +27,7 @@ router.get("/admin/Studentenroll_couses",tokenverify, Studentenroll_couses);
 router.get("/admin/viewone_enroll_course/:id",tokenverify, viewone_enroll_course);
 router.get("/admin/enrollstudent_incourse/:id",enrollstudent_incourse);
 
+//router.get("/admin/enroll_token",verifyToken,enroll_token);
 
  
 

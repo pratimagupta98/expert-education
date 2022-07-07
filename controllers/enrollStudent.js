@@ -3,9 +3,11 @@ const Plan = require("../models/plan");
 const resp = require("../helpers/apiResponse");
 const Course = require("../models/course");
 const { findOne } = require("../models/course");
+const User = require("../models/user");
+
 
 exports.addenrollStudent = async (req, res) => {
-  const { plan_Id, course_Id, student_Id,status } = req.body;
+  const { plan_Id, course_Id,teacher, student_Id,status } = req.body;
 
   let p = await Plan.find({ _id: req.body.plan_Id });
   console.log(p);
@@ -32,11 +34,26 @@ exports.addenrollStudent = async (req, res) => {
         plan_Id: plan_Id,
         student_Id:req.userId,
         course_Id: course_Id,
+        teacher:teacher
       });
       newenrollStudent
       .save()
       .then((data) => resp.successr(res, data))
-      .catch((error) => resp.errorr(res, error));
+      .catch((error) => resp.errorr(res, error))
+
+      let getdata= await User.findOne({_id:req.userId})
+      console.log("DATA",getdata)
+      if(getdata){
+      let update=  await User.findOneAndUpdate(
+        { _id: req.userId },
+        
+        {$set: {status:"Enroll"}} ,
+      
+      //{ $set: {status:"success"} },
+      { new: true }
+    
+    );
+      }
     }else{
 res.status(400).json({
   status:false,
@@ -72,12 +89,26 @@ res.status(400).json({
         plan_Id: plan_Id,
         student_Id:req.userId,
         course_Id: course_Id,
+        teacher:teacher
       });
 
       newenrollStudent
         .save()
         .then((data) => resp.successr(res, data))
-       .catch((error) => resp.errorr(res, error));
+       .catch((error) => resp.errorr(res, error))
+       let getdata= await User.findOne({_id:req.userId})
+       console.log("DATA",getdata)
+       if(getdata){
+       let update=  await User.findOneAndUpdate(
+         { _id: req.userId },
+         
+         {$set: {status:"Enroll"}} ,
+       
+       //{ $set: {status:"success"} },
+       { new: true }
+     
+     );
+       }
     }
   }
   }
@@ -105,12 +136,26 @@ res.status(400).json({
           plan_Id: plan_Id,
           student_Id: req.userId,
           course_Id: course_Id,
+          teacher:teacher
         });
 
         newenrollStudent
           .save()
           .then((data) => resp.successr(res, data))
-         .catch((error) => resp.errorr(res, error));
+         .catch((error) => resp.errorr(res, error))
+         let getdata= await User.findOne({_id:req.userId})
+         console.log("DATA",getdata)
+         if(getdata){
+         let update=  await User.findOneAndUpdate(
+           { _id: req.userId },
+           
+           {$set: {status:"Enroll"}} ,
+         
+         //{ $set: {status:"success"} },
+         { new: true }
+       
+       );
+         }
       }
     }
   }
@@ -140,11 +185,25 @@ res.status(400).json({
           plan_Id: plan_Id,
           student_Id: req.userId,
           course_Id: course_Id,
+          teacher:teacher
         });
 
         newenrollStudent
           .save()
           .then((data) => resp.successr(res, data))
+          let getdata= await User.findOne({_id:req.userId})
+          console.log("DATA",getdata)
+          if(getdata){
+          let update=  await User.findOneAndUpdate(
+            { _id: req.userId },
+            
+            {$set: {status:"Enroll"}} ,
+          
+          //{ $set: {status:"success"} },
+          { new: true }
+        
+        );
+          }
           
            //.catch((error) => resp.errorr(res, error));
       }
@@ -230,38 +289,56 @@ exports.allenrollStudent = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.enrollStudentbytoken = async (req, res) => {
-//  const getenroll = await Course.findOne({teacher:req.params.id})
-//  console.log(getenroll)
-// if(getenroll){
-  const getuser = await Course.findOne({ teacher:req.staffId   });
+// exports.enrollStudentbytoken = async (req, res) => {
+// //  const getenroll = await Course.findOne({teacher:req.params.id})
+// //  console.log(getenroll)
+// // if(getenroll){
+//   const getuser = await Course.findOne({ teacher:req.staffId   });
 
-  //$or: [{ teacher: req.staffId }, { course_Id: req.params.course_Id }]
-if(getuser){
-  console.log("STRING",getuser)
-const getenroll = await enrollStudent.find({  status: "Enroll" })
-  // await enrollStudent
-  //   .find({staffId:req.staffId})
-    .populate("plan_Id")
-    .populate("course_Id")
-    .populate("student_Id")
-    .populate({
-      path: "course_Id",
-      populate: {
-        path: "teacher",
-      }
-    })
+//   //$or: [{ teacher: req.staffId }, { course_Id: req.params.course_Id }]
+// if(getuser){
+//   console.log("STRING",getuser)
+// const getenroll = await enrollStudent.find({  status: "Enroll" })
+//   // await enrollStudent
+//   //   .find({staffId:req.staffId})
+//     .populate("plan_Id")
+//     .populate("course_Id")
+//     .populate("student_Id")
+//     .populate({
+//       path: "course_Id",
+//       populate: {
+//         path: "teacher",
+//       }
+//     })
   
-    .sort({ sortorder: 1 })
+//     .sort({ sortorder: 1 })
   
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-}
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// };
+// }
 
-exports.enroll_token = async (req,res) =>{
-  const geten = await enrollStudent.find({teacher:c})
-}
+// exports.enroll_token = async (req,res) =>{
+//   const getdata  = await enrollStudent.find({teacher:req.staffId})
+//   console.log(getdata)
+//   .sort({ sortorder: 1 })
+// .then((data) => resp.successr(res, data))
+    
+//   .catch((error) => resp.errorr(res, error));
+//   }
+ 
+  exports.enrollStudentbytoken = async (req, res) => {
+    await enrollStudent
+      .find({ $or :[{teacher: req.staffId},{student_Id: req.userId }]})
+     
+      
+      .sort({ sortorder: 1 })
+      .then((data) => resp.successr(res, data))
+      
+      .catch((error) => resp.errorr(res, error));
+  };
+
+
 
 exports.deleteenrollStudent = async (req, res) => {
   await enrollStudent.remove();
