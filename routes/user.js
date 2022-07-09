@@ -58,7 +58,7 @@ const {
   viewonebatchUser,
   verify_referal,
   checkverify_code,
-   
+  allenrollStudent
 } = require("../controllers/user");
 
 router.post("/user/signup", multipleUpload, signup);
@@ -91,6 +91,7 @@ router.get("/user/deletebatch/:id", deletebatch);
 router.get("/user/viewonebatch/:id", viewonebatch);
 router.get("/user/viewonebatchUser", tokenverify,viewonebatchUser);
  
+router.get("/admin/allenrollStudent", allenrollStudent);
 
 
 // router.post("/admin/verify_referal/:id",verify_referal
