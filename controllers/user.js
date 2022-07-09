@@ -838,4 +838,10 @@ exports.checkverify_code = async (req, res) => {
 
 
 
- 
+exports.allenrollStudent = async (req, res) => {
+  await User
+    .find({status:"Enroll"})
+    .sort({ sortorder: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};

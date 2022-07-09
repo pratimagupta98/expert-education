@@ -18,7 +18,7 @@ const {
 router.post("/admin/addenrollStudent",tokenverify, addenrollStudent);
 //router.post("/admin/editCat/:id", editCat);
 // router.get("/admin/viewoneplan/:id", viewoneplan);
-router.get("/admin/allenrollStudent", allenrollStudent);
+//router.get("/admin/allenrollStudent", allenrollStudent);
 router.get("/admin/enrollStudentbytoken",verifyToken, enrollStudentbytoken);
   
 router.get("/admin/deleteenrollStudent/:id", deleteenrollStudent);

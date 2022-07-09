@@ -271,23 +271,23 @@ exports.viewone_enroll_course = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-exports.allenrollStudent = async (req, res) => {
-  await enrollStudent
-    .find({status:"Enroll"})
-    .populate("plan_Id")
-    .populate("course_Id")
-    .populate("student_Id")
-    .populate({
-      path: "course_Id",
-      populate: {
-        path: "teacher",
-      }
-    })
+// exports.allenrollStudent = async (req, res) => {
+//   await enrollStudent
+//     .find({status:"Enroll"})
+//     .populate("plan_Id")
+//     .populate("course_Id")
+//     .populate("student_Id")
+//     .populate({
+//       path: "course_Id",
+//       populate: {
+//         path: "teacher",
+//       }
+//     })
     
-    .sort({ sortorder: 1 })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
+//     .sort({ sortorder: 1 })
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// };
 
 // exports.enrollStudentbytoken = async (req, res) => {
 // //  const getenroll = await Course.findOne({teacher:req.params.id})
