@@ -273,7 +273,7 @@ exports.viewone_enroll_course = async (req, res) => {
 
 exports.allenrollStudent = async (req, res) => {
   await enrollStudent
-    .find()
+    .find({status:"Enroll"})
     .populate("plan_Id")
     .populate("course_Id")
     .populate("student_Id")
