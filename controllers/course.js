@@ -82,6 +82,30 @@ exports.addcourse = async (req, res) => {
       //     //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
       //   }
       // }
+
+
+      if(posterimg){
+        if(posterimg){
+      const base64Data   = new Buffer.from(posterimg.replace(/^data:image\/\w+;base64,/, ""),'base64')
+      detectMimeType(base64Data);
+      const type = detectMimeType(posterimg);
+         // console.log(newCourse,"@@@@@");
+         const geturl = await uploadBase64ImageFile(
+          base64Data,
+          newCourse.id,
+         type
+        );
+        console.log(geturl,"&&&&");
+        if (geturl) {
+             newCourse.posterimg = geturl.Location;
+         
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
+      }
+      
+      }
+      
+
       if (req.files.pdf_file && req.files.pdf_image) {
         for (let i = 0; i < req.files.pdf_file.length; i++) {
           const getpdfurl = await uploadFile(
@@ -190,6 +214,7 @@ exports.addcoursebyadmin = async (req, res) => {
           //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
         }
       }
+     
       if (req.files.posterimg) {
         const geturl = await uploadFile(
           req.files.posterimg[0]?.path,
@@ -197,10 +222,37 @@ exports.addcoursebyadmin = async (req, res) => {
           "jpg"
         );
         if (geturl) {
-          newCourse.posterimg = geturl.Location;
-          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-        }
-      }
+          nwCourse.posterimg = geturl.Location;
+          fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+}
+     }
+
+       
+
+if(posterimg){
+  if(posterimg){
+const base64Data   = new Buffer.from(posterimg.replace(/^data:image\/\w+;base64,/, ""),'base64')
+detectMimeType(base64Data);
+const type = detectMimeType(posterimg);
+   // console.log(newCourse,"@@@@@");
+   const geturl = await uploadBase64ImageFile(
+    base64Data,
+    newCourse.id,
+   type
+  );
+  console.log(geturl,"&&&&");
+  if (geturl) {
+       newCourse.posterimg = geturl.Location;
+   
+    //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+  }
+}
+
+}
+
+
+
+      
       // if (req.files.pdf_file && req.files.pdf_image) {
       //   for (let i = 0; i < req.files.pdf_file.length; i++) {
       //     const getpdfurl = await uploadFile(
