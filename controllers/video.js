@@ -3,6 +3,25 @@ const Video = require("../models/video");
 const resp = require("../helpers/apiResponse");
 const { uploadFile } = require("../helpers/awsuploader");
 const Course = require("../models/course");
+const { uploadBase64ImageFile } = require("../helpers/awsuploader");
+
+var signatures = {
+  JVBERi0: "application/pdf",
+  R0lGODdh: "image/gif",
+  R0lGODlh: "image/gif",
+  iVBORw0KGgo: "image/png",
+  "/9j/": "image/jpg"
+};
+
+function detectMimeType(b64) {
+  for (var s in signatures) {
+    if (b64.indexOf(s) === 0) {
+      return signatures[s];
+    }
+  }
+}
+
+
 
 exports.addvideo = async (req, res) => {
   const { videoTitle, video_file, video_image, course } = req.body;
@@ -20,31 +39,52 @@ exports.addvideo = async (req, res) => {
     resp.alreadyr(res);
   }
 
-  if (req.files.video_file && req.files.video_image) {
-    for (let i = 0; i < req.files.video_file.length; i++) {
-      const getpdfurl = await uploadFile(
-        req.files.video_file[i]?.path,
-        req.files.video_file[i]?.filename,
-        "mp4"
-      );
+  // if (req.files.video_file && req.files.video_image) {
+  //   for (let i = 0; i < req.files.video_file.length; i++) {
+  //     const getpdfurl = await uploadFile(
+  //       req.files.video_file[i]?.path,
+  //       req.files.video_file[i]?.filename,
+  //       "mp4"
+  //     );
 
-      let videoObj = new Object();
-      if (getpdfurl) {
-        newVideo.video_file = getpdfurl.Location;
-        //fs.unlinkSync(`../uploads/${req.files.video_file[i]?.filename}`);
+  //     let videoObj = new Object();
+  //     if (getpdfurl) {
+  //       newVideo.video_file = getpdfurl.Location;
+  //       //fs.unlinkSync(`../uploads/${req.files.video_file[i]?.filename}`);
+  //     }
+    //   const getimgurl = await uploadFile(
+    //     req.files.video_image[i]?.path,
+    //     req.files.video_image[i]?.filename,
+    //     "jpg"
+    //   );
+    //   if (getimgurl) {
+    //     newVideo.video_image = getimgurl.Location;
+    //     //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
+    //   }
+    // }
+
+    if (video_image) {
+      if (video_image) {
+        
+
+        const base64Data = new Buffer.from(video_image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+        detectMimeType(base64Data);
+        const type = detectMimeType(video_image);
+        // console.log(newCourse,"@@@@@");
+        const geturl = await uploadBase64ImageFile(
+          base64Data,
+          newVideo.id,
+         type
+        );
+        console.log(geturl,"&&&&");
+        if (geturl) {
+          newVideo.video_image = geturl.Location;
+         
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+        }
       }
-      const getimgurl = await uploadFile(
-        req.files.video_image[i]?.path,
-        req.files.video_image[i]?.filename,
-        "jpg"
-      );
-      if (getimgurl) {
-        newVideo.video_image = getimgurl.Location;
-        //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
-      }
+
     }
-  }
-
   newVideo
     .save()
     .then((data) => resp.successr(res, data))
