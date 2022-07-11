@@ -71,6 +71,27 @@ exports.addcourse = async (req, res) => {
           //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
         }
       }
+
+      if (posterimg) {
+        if (posterimg) {
+          
+  
+          const base64Data = new Buffer.from(posterimg.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+          detectMimeType(base64Data);
+          const type = detectMimeType(posterimg);
+          // console.log(newCourse,"@@@@@");
+          const geturl = await uploadBase64ImageFile(
+            base64Data,
+            newCourse.id,
+           type
+          );
+          console.log(geturl,"&&&&");
+          if (geturl) {
+               newCourse.posterimg = geturl.Location;
+           
+            //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+          }
+        }
       // if (req.files.posterimg) {
       //   const geturl = await uploadFile(
       //     req.files.posterimg[0]?.path,
@@ -82,30 +103,6 @@ exports.addcourse = async (req, res) => {
       //     //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
       //   }
       // }
-
-
-      if(posterimg){
-        if(posterimg){
-      const base64Data   = new Buffer.from(posterimg.replace(/^data:image\/\w+;base64,/, ""),'base64')
-      detectMimeType(base64Data);
-      const type = detectMimeType(posterimg);
-         // console.log(newCourse,"@@@@@");
-         const geturl = await uploadBase64ImageFile(
-          base64Data,
-          newCourse.id,
-         type
-        );
-        console.log(geturl,"&&&&");
-        if (geturl) {
-             newCourse.posterimg = geturl.Location;
-         
-          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-        }
-      }
-      
-      }
-      
-
       if (req.files.pdf_file && req.files.pdf_image) {
         for (let i = 0; i < req.files.pdf_file.length; i++) {
           const getpdfurl = await uploadFile(
@@ -160,7 +157,7 @@ exports.addcourse = async (req, res) => {
         .save()
         .then((data) => resp.successr(res, data))
         .catch((error) => resp.errorr(res, error));
-    } else {
+    }} else {
       newCourse
         .save()
         .then((data) => resp.successr(res, data))
@@ -214,20 +211,20 @@ exports.addcoursebyadmin = async (req, res) => {
           //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
         }
       }
-     
-      if (req.files.posterimg) {
-        const geturl = await uploadFile(
-          req.files.posterimg[0]?.path,
-          req.files.posterimg[0]?.filename,
-          "jpg"
-        );
-        if (geturl) {
-          nwCourse.posterimg = geturl.Location;
-          fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-}
-     }
+      // $$$$$$$$$$$$$$$$$
+    //  e if (req.files.posterimg) {
+    //     const geturl = await uploadFile(
+    //       req.files.posterimg[0]?.path,
+    //       req.files.posterimg[0]?.filename,
+    //       "jpg"
+    //     );
+    //     if (geturl) {
+    //       nwCourse.posterimg = geturl.Location;
+          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+//}
+     // }
 
-       
+      //$$$$$$$$$$$$$
 
 if(posterimg){
   if(posterimg){
@@ -242,12 +239,13 @@ const type = detectMimeType(posterimg);
   );
   console.log(geturl,"&&&&");
   if (geturl) {
-       newCourse.posterimg = geturl.Location;
+       newCourse.course_image = geturl.Location;
    
     //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
   }
 }
 
+  
 }
 
 

@@ -7,6 +7,23 @@ const { uploadFile } = require("../helpers/awsuploader");
 const key = "verysecretkey";
 const jwt = require("jsonwebtoken");
 
+const { uploadBase64ImageFile } = require("../helpers/awsuploader");
+var signatures = {
+  JVBERi0: "application/pdf",
+  R0lGODdh: "image/gif",
+  R0lGODlh: "image/gif",
+  iVBORw0KGgo: "image/png",
+  "/9j/": "image/jpg"
+};
+
+function detectMimeType(b64) {
+  for (var s in signatures) {
+    if (b64.indexOf(s) === 0) {
+      return signatures[s];
+    }
+  }
+}
+
 exports.signup = async (req, res) => {
   const {
     fullname,
@@ -345,20 +362,41 @@ exports.edituserbytoken = async (req, res) => {
   }
  
 
-  if (req.files) {
-    console.log(req.files);
-    if (req.files.userimg) {
-      const geturl = await uploadFile(
-        req.files.userimg[0]?.path,
-        req.files.userimg[0]?.filename,
-        "jpg"
-      );
-      if (geturl) {
-        data.userimg = geturl.Location;
-        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-      }
+  //if (req.files) {
+  //  console.log(req.files);
+  //   if (req.files.userimg) {
+  //     const geturl = await uploadFile(
+  //       req.files.userimg[0]?.path,
+  //       req.files.userimg[0]?.filename,
+  //       "jpg"
+  //     );
+  //     if (geturl) {
+  //       data.userimg = geturl.Location;
+  //       //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+  //     }
+  //   }
+  // }
+
+
+  if(userimg){
+    if(userimg){
+  const base64Data   = new Buffer.from(userimg.replace(/^data:image\/\w+;base64,/, ""),'base64')
+  detectMimeType(base64Data);
+  const type = detectMimeType(userimg);
+     // console.log(newCourse,"@@@@@");
+     const geturl = await uploadBase64ImageFile(
+      base64Data,
+      data.id,
+     type
+    );
+    console.log(geturl,"&&&&");
+    if (geturl) {
+      data.userimg = geturl.Location;
+     
+      //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
     }
   }
+}
   await User.findOneAndUpdate(
     { _id: req.userId },
     { $set: data },

@@ -122,9 +122,7 @@ exports.editAdmin = async (req, res) => {
   if (mobile) {
     data.mobile = mobile;
   }
-  if (mobile) {
-    data.mobile = mobile;
-  }
+  
   if (password) {
     data.password = hashPassword;
   }

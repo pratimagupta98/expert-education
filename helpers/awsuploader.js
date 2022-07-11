@@ -60,3 +60,4 @@ exports.uploadBase64ImageFile = (base64Data,fileName,type) => {
     }
     
 };
+

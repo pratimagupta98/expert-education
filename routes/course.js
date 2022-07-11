@@ -10,12 +10,12 @@ const fs = require("fs");
 
 if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
-  const base64 = fs.readFileSync("./uploads", "base64");
+  //const base64 = fs.readFileSync("./uploads", "base64");
 // Convert base64 to buffer => <Buffer ff d8 ff db 00 43 00 ...
-const buffer = Buffer.from(base64, "base64");
+// const buffer = Buffer.from(base64, "base64");
 
-fs.writeFileSync("./uploads/foo.img", buffer);
-const contents = fs.readFileSync('./uploads', {encoding: 'base64'});
+//fs.writeFileSync("./uploads/foo.img", buffer);
+//const contents = fs.readFileSync('./uploads', {encoding: 'base64'});
 
 }
 //  async function processing(){
