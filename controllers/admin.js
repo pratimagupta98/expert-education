@@ -123,12 +123,16 @@ exports.editAdmin = async (req, res) => {
     data.mobile = mobile;
   }
   
-  // if (password) {
-  //   data.password = hashPassword;
-  // }
-  // if(cnfmPassword){
-  //   data.cnfmPassword =hashPassword
-  // }
+  if (password) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
+    data.password = hashPassword;
+  }
+  if (cnfmPassword) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
+    data.cnfmPassword = hashPassword;
+  }
   if (req.files) {
     console.log(req.files);
     if (req.files.adminimg) {
