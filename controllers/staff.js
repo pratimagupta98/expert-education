@@ -9,6 +9,24 @@ const jwt = require("jsonwebtoken");
 const { body, validationResult } = require("express-validator");
 const staff = require("../models/staff");
 
+const { uploadBase64ImageFile } = require("../helpers/awsuploader");
+var signatures = {
+  JVBERi0: "application/pdf",
+  R0lGODdh: "image/gif",
+  R0lGODlh: "image/gif",
+  iVBORw0KGgo: "image/png",
+  "/9j/": "image/jpg"
+};
+
+function detectMimeType(b64) {
+  for (var s in signatures) {
+    if (b64.indexOf(s) === 0) {
+      return signatures[s];
+    }
+  }
+}
+
+
 exports.addstaff = async (req, res) => {
   const {
     fullname,
@@ -286,8 +304,7 @@ exports.settingbytoken = async (req, res) => {
     institute,
     approvedstatus,
   } = req.body;
-   const salt = await bcrypt.genSalt(10);
-   const hashPassword = await bcrypt.hash(password, salt);
+   
   data = {};
   if (fullname) {
     data.fullname = fullname;
@@ -295,17 +312,19 @@ exports.settingbytoken = async (req, res) => {
   if (email) {
     data.email = email;
   }
-  if (mobile) {
-    data.mobile = mobile;
-  }
+  
   if (mobile) {
     data.mobile = mobile;
   }
   if (password) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
     data.password = hashPassword;
   }
-  if(cnfmPassword){
-data.cnfmPassword =hashPassword
+  if (cnfmPassword) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
+    data.cnfmPassword = hashPassword;
   }
   if (gender) {
     data.gender = gender;
@@ -325,20 +344,25 @@ data.cnfmPassword =hashPassword
   if (approvedstatus) {
     data.approvedstatus = approvedstatus;
   }
-  if (req.files) {
-    console.log(req.files);
-    if (req.files.image) {
-      const geturl = await uploadFile(
-        req.files.image[0]?.path,
-        req.files.image[0]?.filename,
-        "jpg"
-      );
-      if (geturl) {
-        data.image = geturl.Location;
-        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-      }
+  if(image){
+    if(image){
+  const base64Data   = new Buffer.from(image.replace(/^data:image\/\w+;base64,/, ""),'base64')
+  detectMimeType(base64Data);
+  const type = detectMimeType(image);
+     // console.log(newCourse,"@@@@@");
+     const geturl = await uploadBase64ImageFile(
+      base64Data,
+      data.id,
+     type
+    );
+    console.log(geturl,"&&&&");
+    if (geturl) {
+      data.image = geturl.Location;
+     
+      //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
     }
   }
+}
   await Staff.findOneAndUpdate(
     {
       _id: req.staffId,
