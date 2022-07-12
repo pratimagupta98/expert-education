@@ -5,7 +5,22 @@ const Userwallet = require("../models/user_wallet");
  const fs = require("fs");
 const { Console } = require("console");
 const ReferEarn = require("../models/refer_earn");
+const { uploadBase64ImageFile } = require("../helpers/awsuploader");
+var signatures = {
+  JVBERi0: "application/pdf",
+  R0lGODdh: "image/gif",
+  R0lGODlh: "image/gif",
+  iVBORw0KGgo: "image/png",
+  "/9j/": "image/jpg"
+};
 
+function detectMimeType(b64) {
+  for (var s in signatures) {
+    if (b64.indexOf(s) === 0) {
+      return signatures[s];
+    }
+  }
+}
 exports.req_amount = async (req, res) => {
   const {
     screenshot,
@@ -37,23 +52,27 @@ exports.req_amount = async (req, res) => {
     status: status,
      screenshot:screenshot
   });
-  if (req.files) {
-    console.log(req.files);
-    if (req.files.screenshot) {
- 
-  
-       const geturl = await uploadFile(
-        req.files.screenshot[0]?.path,
-        req.files.screenshot[0]?.filename,
-        "jpg"
+  if (screenshot) {
+    if (screenshot) {
+      
+
+      const base64Data = new Buffer.from(screenshot.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+      detectMimeType(base64Data);
+      const type = detectMimeType(screenshot);
+      // console.log(newCourse,"@@@@@");
+      const geturl = await uploadBase64ImageFile(
+        base64Data,
+        newUserwallet.id,
+       type
       );
-    
+      console.log(geturl,"&&&&");
       if (geturl) {
         newUserwallet.screenshot = geturl.Location;
-       // fs.unlinkSync(`../uploads/${req.files.screenshot[0]?.filename}`);
        
+        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
       }
     }
+
   }
   newUserwallet
       .save()

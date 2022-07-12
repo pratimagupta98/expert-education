@@ -54,7 +54,7 @@ const {
   viewonebatch,
   deletebatch,
   updatebatch,
-  editusertoken,
+ // editusertoken,
   viewonebatchUser,
   verify_referal,
   checkverify_code,
@@ -84,7 +84,7 @@ router.get("/admin/deleteuser/:id", deleteuser);
 router.get("/admin/countuser", countuser);
 router.get("/user/allbatch", allbatch);
 router.post("/user/addbatchn", addbatchn);
-router.post("/user/editusertoken", tokenverify, editusertoken);
+//router.post("/user/editusertoken", tokenverify, editusertoken);
 router.post("/user/updatebatch/:id", updatebatch);
 
 router.get("/user/deletebatch/:id", deletebatch);

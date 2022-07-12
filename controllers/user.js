@@ -329,7 +329,7 @@ exports.edituserbytoken = async (req, res) => {
     email,
     mobile,
     password,
-    
+    cnfmPassword,
     userimg,
     status,
     
@@ -505,7 +505,7 @@ exports.edituser = async (req, res) => {
     email,
     mobile,
     password,
-    
+    cnfmPassword,
     userimg,
     status,
     
@@ -527,11 +527,12 @@ exports.edituser = async (req, res) => {
     data.mobile = mobile;
   }
  
-  if (password) {
+  if (cnfmPassword) {
     const salt = await bcrypt.genSalt(10);
     let hashPassword = await bcrypt.hash(password, salt);
-    data.password = hashPassword;
+    data.cnfmPassword = hashPassword;
   }
+
 
   if (status) {
     data.status = status;
@@ -666,64 +667,65 @@ exports.updatebatch = async (req, res) => {
 // };
 
 
-exports.editusertoken = async (req, res) => {
-   const {fullname,email,mobile,password,cnfmPassword,status,user_type,batge_id}=req.body
+// exports.editusertoken = async (req, res) => {
+//    const {fullname,email,mobile,password,cnfmPassword,status,user_type,batge_id}=req.body
 
-   const salt = await bcrypt.genSalt(10);
-   const hashPassword = await bcrypt.hash(password, salt);
+//    const salt = await bcrypt.genSalt(10);
+//    const hashPassword = await bcrypt.hash(password, salt);
 
-   data = {};
-   if (fullname) {
-     data.fullname = fullname;
-   }
-   if (email) {
-     data.email = email;
-   }
-   if (mobile) {
-     data.mobile = mobile;
-   }
-   if (password) {
-     data.password = hashPassword;
-   }
-   if (cnfmPassword) {
-     data.cnfmPassword = cnfmPassword;
-   }
-   if (status) {
-     data.status = status;
-   }
-   if (user_type) {
-     data.user_type = user_type;
-   }
-   if (batge_id) {
-     data.batge_id = batge_id;
-   }
+//    data = {};
+//    if (fullname) {
+//      data.fullname = fullname;
+//    }
+//    if (email) {
+//      data.email = email;
+//    }
+//    if (mobile) {
+//      data.mobile = mobile;
+//    }
+//    if (password) {
+//     const salt = await bcrypt.genSalt(10);
+//     let hashPassword = await bcrypt.hash(password, salt);
+//   }
+//    if (cnfmPassword) {
+//      data.cnfmPassword = cnfmPassword;
+//    }
+//    if (status) {
+//      data.status = status;
+//    }
+//    if (user_type) {
+//      data.user_type = user_type;
+//    }
+//    if (batge_id) {
+//      data.batge_id = batge_id;
+//    }
     
-   if (req.files) {
-     console.log(req.files);
-     if (req.files.userimg) {
-       const geturl = await uploadFile(
-         req.files.userimg[0]?.path,
-         req.files.userimg[0]?.filename,
-         "jpg"
-       );
-       if (geturl) {
-         data.userimg = geturl.Location;
-         //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-       }
-     }
+//    if (req.files) {
+//      console.log(req.files);
+//      if (req.files.userimg) {
+//        const geturl = await uploadFile(
+//          req.files.userimg[0]?.path,
+//          req.files.userimg[0]?.filename,
+//          "jpg"
+//        );
+//        if (geturl) {
+//          data.userimg = geturl.Location;
+//          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
+//        }
+//      }
 
-    }
-    await User.findOneAndUpdate(
-      {
-        _id: req.userId,
-      },
-      { $set: data },
-      { new: true }
-    )
+//     }
+//     await User.findOneAndUpdate(
+//       {
+//         _id: req.userId,
+//       },
+//       { $set: data },
+//       { new: true }
+//     )
   
-      .then((data) => resp.successr(res, data))
-      .catch((error) => resp.errorr(res, error));
-  };
+//       .then((data) => resp.successr(res, data))
+//       .catch((error) => resp.errorr(res, error));
+//   };
 
 
   
