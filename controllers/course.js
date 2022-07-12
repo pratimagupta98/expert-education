@@ -20,8 +20,6 @@ function detectMimeType(b64) {
     }
   }
 }
-
-
 exports.addcourse = async (req, res) => {
 
   try{
