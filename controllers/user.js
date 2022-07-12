@@ -351,10 +351,10 @@ exports.edituserbytoken = async (req, res) => {
     data.mobile = mobile;
   }
  
-  if (password) {
+  if (cnfmPassword) {
     const salt = await bcrypt.genSalt(10);
     let hashPassword = await bcrypt.hash(password, salt);
-    data.password = hashPassword;
+    data.cnfmPassword = hashPassword;
   }
 
   if (status) {
