@@ -389,6 +389,7 @@ exports.editcoursebystaff = async (req, res) => {
     long_desc,
     course_type,
     course_image,
+    posterimg
   } = req.body;
   data = {};
   if (course_title) {
@@ -409,30 +410,44 @@ exports.editcoursebystaff = async (req, res) => {
   if (course_type) {
     data.course_type = course_type;
   }
-  if (req.files) {
-    console.log(req.files);
-    if (req.files.course_image) {
-      const geturl = await uploadFile(
-        req.files.course_image[0]?.path,
-        req.files.course_image[0]?.filename,
-        "jpg"
-      );
-      if (geturl) {
-        data.course_image = geturl.Location;
-        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-      }
+  if(course_image){
+    if(course_image){
+  const base64Data   = new Buffer.from(course_image.replace(/^data:image\/\w+;base64,/, ""),'base64')
+  detectMimeType(base64Data);
+  const type = detectMimeType(course_image);
+     // console.log(newCourse,"@@@@@");
+     const geturl = await uploadBase64ImageFile(
+      base64Data,
+      data.id,
+     type
+    );
+    console.log(geturl,"&&&&");
+    if (geturl) {
+      data.course_image = geturl.Location;
+     
+      //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
     }
-    if (req.files.posterimg) {
-      const geturl = await uploadFile(
-        req.files.posterimg[0]?.path,
-        req.files.posterimg[0]?.filename,
-        "jpg"
-      );
-      if (geturl) {
-        data.posterimg = geturl.Location;
-        //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-      }
+  }
+
+  if(posterimg){
+    if(posterimg){
+  const base64Data   = new Buffer.from(posterimg.replace(/^data:image\/\w+;base64,/, ""),'base64')
+  detectMimeType(base64Data);
+  const type = detectMimeType(posterimg);
+     // console.log(newCourse,"@@@@@");
+     const geturl = await uploadBase64ImageFile(
+      base64Data,
+      data.id,
+     type
+    );
+    console.log(geturl,"&&&&");
+    if (geturl) {
+      data.posterimg = geturl.Location;
+     
+      //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
     }
+  }
+}
   }
   if (data) {
     await Course.findOneAndUpdate(
