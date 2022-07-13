@@ -37,6 +37,44 @@
         console.log("RefereCode",Code)
         
      if(req.body.verify_code ==  Code ){ 
+
+      const getdata = await Userwallet.findOne({userId:req.body.refer_from_id}).sort({
+        createdAt: -1,
+      }).populate("userId")
+      console.log("GET DATA",getdata)
+      if(getdata){
+       let  userid = getdata.userId
+       console.log("USER",userid)
+       let user_wallet = userid.walletId
+       console.log("USER WALLET",user_wallet)
+
+
+      
+        let amt=getdata.amount
+        console.log("old amt Mil Gya",amt)
+
+        if(amt){
+          let addamt = 2
+          currntamt = amt + parseInt(addamt)
+          console.log("CURRENT AMT",currntamt)
+         }
+
+         const getdatas = await Userwallet.findOne({userId:req.body.refer_from_id}).sort({
+          createdAt: -1,
+        }).populate("userId").sort({createdAt:-1})
+
+         const findandUpdateEntry = await Userwallet.findOneAndUpdate(
+    
+          {userId: req.body.refer_from_id },
+          
+          {$set: {amount:currntamt}},
+          
+      
+        { new: true }
+      ).sort({createdAt:-1})
+     console.log("Update Ho Gya",findandUpdateEntry)
+     //console.log("paisa",findandUpdateEntry.amount)
+
      newReferEarn
           .save()
          .then((data) => {
@@ -44,8 +82,10 @@
              status: true,
              msg: "success",
              data: data,
+            
            });
          })
+        
          .catch((error) => {
            res.status(200).json({
              status: false,
@@ -53,7 +93,8 @@
              error: error,
            });
          });
-     }  else {
+     }
+      }  else {
         res.status(200).json({
           status: false,
           msg: "Wrong Verify Code",
