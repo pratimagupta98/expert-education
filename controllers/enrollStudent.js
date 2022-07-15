@@ -396,6 +396,46 @@ exports.Studentenroll_couses = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+
+exports.enrlStu_techr_list = async (req, res) => {
+  await enrollStudent.find({student_Id:req.userId})
+    .sort({ popularity: 1 })
+    .populate("student_Id")
+    .populate("plan_Id")
+  
+   // .populate("course_Id")
+    // .populate([{ path: "videolist" }])
+    // .populate([{ path: "pdflist" }])
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "videolist",
+      }
+    })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "pdflist",
+      }
+    })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "teacher",
+      }
+    })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "category_id",
+      }
+    })
+    .sort({ sortorder: 1 })
+    .then((data) => resp.successr(res, data))
+    
+    .catch((error) => resp.errorr(res, error));
+};
+
 // exports.enrollstudent_techaer = async (req, res) => {
 //   const getcourse = await enrollStudent.countDocuments({course_Id :req.body.course_Id})
    
