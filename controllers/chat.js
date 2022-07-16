@@ -1,118 +1,115 @@
 const Chat = require("../models/chat");
 const Chatroom = require("../models/chatroom");
-const resp = require("../helpers/apiResponse");
-const { v4: uuidv4 } = require("uuid");
 
 exports.addchat = async (req, res) => {
-  const uniqueroom = uuidv4();
-  const { userid, msg, msgbysupport } = req.body;
+  const { msg } = req.body;
 
   const newChat = new Chat({
-    userid: userid,
+    chatroom: req.params.rid,
+    msg_sender: req.userId,
+    msg_receiver: req.params.id,
     msg: msg,
-    roomid: uniqueroom,
-    msgbysupport: msgbysupport,
   });
 
-  const newChatroom = new Chatroom({
-    userid: userid,
-    last_msg: msg,
-    new_unread_msg: 1,
-  });
-  const findchatroom = await Chatroom.findOne({ userid: userid });
-  if (findchatroom) {
-    newChat.roomid = findchatroom._id;
-    let data = {
-      new_unread_msg: parseInt(findchatroom.new_unread_msg) + 1,
-    };
-    if (!msgbysupport) {
-      data.last_msg = msg;
-    }
-    console.log(data);
-    const updatechat = await Chatroom.findOneAndUpdate(
-      { userid: userid },
-      {
-        $set: data,
-      },
-      { new: true }
-    );
-    newChat
-      .save()
-      .then((data) => resp.successr(res, data))
-      .catch((error) => resp.errorr(res, error));
+  const findexist = await Chatroom.findOneAndUpdate(
+    {
+      $or: [
+        { $and: [{ sender: req.userId }, { receiver: req.params.id }] },
+        { $and: [{ sender: req.params.id }, { receiver: req.userId }] },
+      ],
+    },
+    { $set: { last_msg: msg } },
+    { new: true }
+  );
+  newChat
+    .save()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
+
+exports.readreceipt = async (req, res) => {
+  const findandUpdateEntry = await Chat.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { read_receipt: true } },
+    { new: true }
+  );
+
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
   } else {
-    const savechat = await newChatroom.save();
-    if (savechat) {
-      newChat.roomid = savechat._id;
-      newChat
-        .save()
-        .then((data) => resp.successr(res, data))
-        .catch((error) => resp.errorr(res, error));
-    }
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.chatsinroom = async (req, res) => {
+  const findall = await Chat.find({ chatroom: req.params.id })
+    .populate("msg_sender", "Photo1 _id OnlineUsers")
+    .populate("msg_receiver", "Photo1 _id OnlineUsers");
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
   }
 };
 
 exports.allchat = async (req, res) => {
-  await Chat.find()
-    .sort({ createdAt: 1 })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.allchatwithuser = async (req, res) => {
-  await Chat.find({ userid: req.params.id })
-    .populate("userid")
-    .sort({ createdAt: 1 })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.unreadmessages = async (req, res) => {
-  await Chatroom.findOne({ userid: req.params.id })
-    .populate("userid")
-    .sort({ createdAt: 1 })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.getallchatrooms = async (req, res) => {
-  await Chatroom.find()
-    .populate("userid")
-    .sort({ updatedAt: 1 })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.markasread = async (req, res) => {
-  await Chatroom.findOneAndUpdate(
-    { userid: req.params.id },
-    {
-      $set: { new_unread_msg: 0 },
-    },
-    { new: true }
-  )
-    .populate("userid")
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
+  const findall = await Chat.find().populate("user").sort({ createdAt: -1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
 };
 
 exports.deletechat = async (req, res) => {
-  await Chat.deleteOne({ _id: req.params.id })
-    .then((data) => resp.deleter(res, data))
-    .catch((error) => resp.errorr(res, error));
+  try {
+    const deleteentry = await Chat.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
 };
-
-exports.deleteallchat = async (req, res) => {
-  await Chatroom.deleteOne({ userid: req.params.id });
-  await Chat.deleteMany({ userid: req.params.id })
-    .then((data) => resp.deleter(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-exports.clearchat = async (req, res) => {
-  await Chat.deleteMany({ userid: req.params.id })
-    .then((data) => resp.deleter(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
-
-

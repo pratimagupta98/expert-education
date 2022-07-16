@@ -33,6 +33,8 @@ const verify_user = require("./routes/verify_user");
 
 const refer_earn = require("./routes/refer_earn");
 const add_commision = require("./routes/add_commision");
+const chat = require("./routes/chat");
+//const chatroom = require("./routes/chatroom");
 
 
 
@@ -72,6 +74,10 @@ app.use("/api", withdrawal);
 app.use("/api", verify_user);
 app.use("/api", refer_earn);
 app.use("/api", add_commision);
+
+app.use("/api", chat);
+
+//app.use("/api", chatroom);
 
  
  const fs = require("fs");

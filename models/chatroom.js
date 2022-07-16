@@ -3,13 +3,15 @@ const Schema = mongoose.Schema;
 
 const thisSchema = new Schema(
   {
-    userid: { type: Schema.Types.ObjectId, ref: "user" },
+    room_id: {
+      type: String,
+      require: true,
+    },
+    sender: { type: Schema.Types.ObjectId, ref: "user" },
+    receiver: { type: Schema.Types.ObjectId, ref: "user" },
     last_msg: {
       type: String,
     },
-    new_unread_msg:{
-        type: Number,
-    }
   },
   { timestamps: true }
 );
