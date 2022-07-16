@@ -1,6 +1,6 @@
 const Agent = require("../models/agent");
 const resp = require("../helpers/apiResponse");
-
+//console
 exports.addagent = async (req, res) => {
   const { firstname, lastname, email, mobile, password, approvedstatus, role } =
     req.body;
