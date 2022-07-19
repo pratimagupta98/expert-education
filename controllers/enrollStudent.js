@@ -370,7 +370,7 @@ exports.viewone_enroll_course = async (req, res) => {
       res.status(200).json({
         status: true,
         message: "success", 
-        count: getdetails.length,
+      //  count: getdetails.length,
         //data : getdetails,
         //student :record,
         abc:uniqueCharss
