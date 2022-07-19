@@ -287,7 +287,7 @@ exports.login = async (req, res) => {
         },
         key,
         {
-          expiresIn: 86400000,
+          expiresIn: "365d",
         }
       );
       res.header("user-token", token).status(200).send({
@@ -350,7 +350,11 @@ exports.edituserbytoken = async (req, res) => {
   if (mobile) {
     data.mobile = mobile;
   }
- 
+  if (password) {
+    const salt = await bcrypt.genSalt(10);
+    let hashPassword = await bcrypt.hash(password, salt);
+    data.password = hashPassword;
+  }
   if (cnfmPassword) {
     const salt = await bcrypt.genSalt(10);
     let hashPassword = await bcrypt.hash(password, salt);

@@ -428,13 +428,13 @@ exports.Studentenroll_couses = async (req, res) => {
 };
 
 
-exports.enrlStu_techr_list = async (req, res) => {
-  await enrollStudent.find({student_Id:req.userId})
+exports.chat_techr_list = async (req, res) => {
+  const findall =await enrollStudent.find({student_Id:req.userId})
     .sort({ popularity: 1 })
     .populate("student_Id")
     .populate("plan_Id")
   
-   // .populate("course_Id")
+   .populate("teacher")
     // .populate([{ path: "videolist" }])
     // .populate([{ path: "pdflist" }])
     .populate({
@@ -461,16 +461,48 @@ exports.enrlStu_techr_list = async (req, res) => {
         path: "category_id",
       }
     })
-    .sort({ sortorder: 1 })
-    .then((data) => resp.successr(res, data))
+
+
+    let record = [];
+   
+    //  let uniqueChars = [...new Set(record)];
+     //  console.log("hfjdbf",record)
+   
+      
+        for (const element of findall) {
+           if (element.teacher) {
+            
+             record.push(element.teacher);
+             // let uniqueChars = [...new Set(record)]
+             // console.log("hfjdbf",uniqueChars)
+             
+             // console.log("EElement",element)
+             // student = element.student_Id
+             // abc = student.fullname
+             // console.log("string",abc)
+           // console.log("STUDENT",element.student_Id);  
+         }
+       }
+       let uniqueCharss = [...new Set(record)]
+       console.log("hfjdbf",uniqueCharss)
+       //let uniqueChars =[]
+       
+         res.status(200).json({
+           status: true,
+           message: "success", 
+         //  count: getdetails.length,
+           //data : getdetails,
+           //student :record,
+           teacher:uniqueCharss
+         })
     
-    .catch((error) => resp.errorr(res, error));
+    
 };
 
  exports.total_enroll_user = async (req, res) => {
 //   const getcourse = await enrollStudent.countDocuments({course_Id :req.body.course_Id})
 const getdetails = await enrollStudent
-.find({ $or :[{teacher: req.staffId},{student_Id: req.userId }]})
+.find(  {student_Id: req.userId } )
    
 //    console.log(getcourse)
    
@@ -484,12 +516,7 @@ const getdetails = await enrollStudent
         path: "teacher",
       }
     })
-    .populate({
-      path: "course_Id",
-      populate: {
-        path: "category_id",
-      }
-    })
+    
     //  .sort({ sortorder: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));

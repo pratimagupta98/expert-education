@@ -13,7 +13,7 @@ const {
   enrollstudent_incourse,
   enrollStudentbytoken,
   total_enroll_user,
-  enrlStu_techr_list
+  chat_techr_list
 } = require("../controllers/enrollStudent");
 
 router.post("/admin/addenrollStudent",tokenverify, addenrollStudent);
@@ -27,7 +27,7 @@ router.get("/admin/Studentenroll_couses",tokenverify, Studentenroll_couses);
 
 router.get("/admin/viewone_enroll_course/:id",tokenverify, viewone_enroll_course);
 router.get("/admin/enrollstudent_incourse/:id",enrollstudent_incourse);
-router.get("/admin/enrlStu_techr_list",tokenverify, enrlStu_techr_list);
+router.get("/admin/chat_techr_list",tokenverify, chat_techr_list);
 
 //router.get("/admin/enroll_token",verifyToken,enroll_token);
 router.get("/admin/total_enroll_user",verifyToken, total_enroll_user);
