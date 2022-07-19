@@ -467,25 +467,33 @@ exports.enrlStu_techr_list = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
-// exports.enrollstudent_techaer = async (req, res) => {
+ exports.total_enroll_user = async (req, res) => {
 //   const getcourse = await enrollStudent.countDocuments({course_Id :req.body.course_Id})
+const getdetails = await enrollStudent
+.find({ $or :[{teacher: req.staffId},{student_Id: req.userId }]})
    
 //    console.log(getcourse)
    
-//  // await enrollStudent.find()
-//     // .populate("plan_Id")
-//     // .populate("course_Id")
-//     // .populate("student_Id")
-    // .populate({
-    //   path: "course_Id",
-    //   populate: {
-    //     path: "teacher",
-    //   }
-    // })
-//     //  .sort({ sortorder: 1 })
-//     .then((data) => resp.successr(res, data))
-//     .catch((error) => resp.errorr(res, error));
-// };
+ // await enrollStudent.find()
+    // .populate("plan_Id")
+    // .populate("course_Id")
+    .populate("student_Id")
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "teacher",
+      }
+    })
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "category_id",
+      }
+    })
+    //  .sort({ sortorder: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
 
 exports.enrollstudent_incourse = async (req, res) => {
   await enrollStudent.countDocuments({course_Id :req.params.id}).populate({

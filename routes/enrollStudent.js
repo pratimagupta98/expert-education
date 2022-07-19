@@ -12,7 +12,7 @@ const {
   viewone_enroll_course,
   enrollstudent_incourse,
   enrollStudentbytoken,
-  //enroll_token
+  total_enroll_user,
   enrlStu_techr_list
 } = require("../controllers/enrollStudent");
 
@@ -30,6 +30,7 @@ router.get("/admin/enrollstudent_incourse/:id",enrollstudent_incourse);
 router.get("/admin/enrlStu_techr_list",tokenverify, enrlStu_techr_list);
 
 //router.get("/admin/enroll_token",verifyToken,enroll_token);
+router.get("/admin/total_enroll_user",verifyToken, total_enroll_user);
 
  
 
