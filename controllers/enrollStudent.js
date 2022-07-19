@@ -373,7 +373,7 @@ exports.viewone_enroll_course = async (req, res) => {
       //  count: getdetails.length,
         //data : getdetails,
         //student :record,
-        abc:uniqueCharss
+        student:uniqueCharss
       })
    
 
