@@ -328,7 +328,7 @@ exports.viewone_enroll_course = async (req, res) => {
 //   }
  
   exports.enrollStudentbytoken = async (req, res) => {
-    await enrollStudent
+   const getdetails = await enrollStudent
       .find({ $or :[{teacher: req.staffId},{student_Id: req.userId }]})
       .populate("plan_Id")
           .populate("course_Id")
@@ -341,9 +341,25 @@ exports.viewone_enroll_course = async (req, res) => {
            })
       
       .sort({ sortorder: 1 })
-      .then((data) => resp.successr(res, data))
+
+      // const findall = await enrollStudent.find({department: "IT"})
+     for (const element of getdetails) {
+        if (element.teacher) {
+          teacher = element.teacher
+        //  console.log("IT Department name",element.teacher);
+         }
+     } 
+      // .then((data) => resp.successr(res, data))
       
-      .catch((error) => resp.errorr(res, error));
+      // .catch((error) => resp.errorr(res, error));
+      res.status(200).json({
+        status:true,
+        Message:"success",
+        data : getdetails,
+        techer :teacher
+
+      })
+
   };
 
 
