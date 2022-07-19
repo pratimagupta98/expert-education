@@ -344,10 +344,18 @@ exports.viewone_enroll_course = async (req, res) => {
 
    //   const findall = await enrollStudent.find({student_Id:req.userId})
    let record = [];
+   
+ //  let uniqueChars = [...new Set(record)];
+  //  console.log("hfjdbf",record)
 
+   
      for (const element of getdetails) {
         if (element.student_Id) {
+         
           record.push(element.student_Id);
+          // let uniqueChars = [...new Set(record)]
+          // console.log("hfjdbf",uniqueChars)
+          
           // console.log("EElement",element)
           // student = element.student_Id
           // abc = student.fullname
@@ -355,13 +363,17 @@ exports.viewone_enroll_course = async (req, res) => {
         // console.log("STUDENT",element.student_Id);  
       }
     }
+    let uniqueCharss = [...new Set(record)]
+    console.log("hfjdbf",uniqueCharss)
+    //let uniqueChars =[]
     
       res.status(200).json({
         status: true,
         message: "success", 
         count: getdetails.length,
-        data : getdetails,
-        student :record
+        //data : getdetails,
+        //student :record,
+        abc:uniqueCharss
       })
    
 
