@@ -345,7 +345,7 @@ exports.viewone_enroll_course = async (req, res) => {
       // const findall = await enrollStudent.find({department: "IT"})
      for (const element of getdetails) {
         if (element.teacher) {
-          teacher = element.teacher
+          student = element.student_Id
         //  console.log("IT Department name",element.teacher);
          }
      } 
@@ -356,7 +356,7 @@ exports.viewone_enroll_course = async (req, res) => {
         status:true,
         Message:"success",
         data : getdetails,
-        techer :teacher
+        student :student
 
       })
 
