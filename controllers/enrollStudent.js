@@ -342,27 +342,30 @@ exports.viewone_enroll_course = async (req, res) => {
       
       .sort({ sortorder: 1 })
 
-      // const findall = await enrollStudent.find({department: "IT"})
-     for (const element of getdetails) {
-        if (element.teacher) {
-          student = element.student_Id
-        //  console.log("IT Department name",element.teacher);
-         }
-     } 
-      // .then((data) => resp.successr(res, data))
-      
-      // .catch((error) => resp.errorr(res, error));
-      res.status(200).json({
-        status:true,
-        Message:"success",
-        data : getdetails,
-        student :student
+   //   const findall = await enrollStudent.find({student_Id:req.userId})
+   let record = [];
 
+     for (const element of getdetails) {
+        if (element.student_Id) {
+          record.push(element.student_Id);
+          // console.log("EElement",element)
+          // student = element.student_Id
+          // abc = student.fullname
+          // console.log("string",abc)
+        // console.log("STUDENT",element.student_Id);  
+      }
+    }
+    
+      res.status(200).json({
+        status: true,
+        message: "success", 
+        count: getdetails.length,
+        data : getdetails,
+        student :record
       })
+   
 
   };
-
-
 
 exports.deleteenrollStudent = async (req, res) => {
   await enrollStudent.remove();
