@@ -490,7 +490,7 @@ exports.chat_techr_list = async (req, res) => {
          res.status(200).json({
            status: true,
            message: "success", 
-         //  count: getdetails.length,
+            //  count: getdetails.length,
            //data : getdetails,
            //student :record,
            teacher:uniqueCharss

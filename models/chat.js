@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const thisSchema = new Schema(
   {
-    chatroom: { type: Schema.Types.ObjectId, ref: "chatroom" },
-    msg_sender: { type: Schema.Types.ObjectId, ref: "user" },
+    roomid: { type: Schema.Types.ObjectId, ref: "chatroom" },
+    userid: { type: Schema.Types.ObjectId, ref: "user" },
     msg_receiver: { type: Schema.Types.ObjectId, ref: "user" },
     msg: {
       type: String,
     },
-    read_receipt: {
+    msgbysupport: {
       type: Boolean,
       default: false,
     },

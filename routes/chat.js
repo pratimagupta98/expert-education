@@ -1,21 +1,22 @@
+const express = require("express");
+const router = express.Router();
+const { tokenverify } = require("../functions/tokenverify");
+const { verifyToken } = require("../functions/stafftoken");
 
- const express = require("express");
- const router = express.Router();
- const { verifyToken } = require("../functions/tokenverify");
- 
- const {
-   addchat,
-   readreceipt,
-   allchat,
-   chatsinroom,
-   deletechat,
- } = require("../controllers/chat");
- 
-// router.post("/user/addchat/:id/:rid", verifyToken, addchat);
- router.get("/user/readreceipt", readreceipt);
- router.get("/user/allchat", allchat);
- router.get("/user/chatroom/:id", chatsinroom);
- router.get("/user/deletechat", deletechat);
- 
- module.exports = router;
- 
+const {
+  addchat,
+  unreadmessages,
+  markasread,
+  allchat,
+  chatsinroom,
+  deletechat,
+} = require("../controllers/chat");
+
+router.post("/user/addchat", tokenverify, addchat);
+ router.get("/user/unreadmessages/:id", unreadmessages);
+ router.post("/user/markasread/:id", markasread);
+// router.get("/user/chatroom/:id", chatsinroom);
+// router.get("/user/deletechat", deletechat);
+//commit
+//console
+module.exports = router;
