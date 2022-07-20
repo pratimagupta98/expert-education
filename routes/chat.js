@@ -7,7 +7,7 @@ const {
   addchat,
   unreadmessages,
   markasread,
-  allchat,
+   allchat,
   chatsinroom,
   deletechat,
 } = require("../controllers/chat");
@@ -17,6 +17,8 @@ router.post("/user/addchat", tokenverify, addchat);
  router.post("/user/markasread/:id", markasread);
 // router.get("/user/chatroom/:id", chatsinroom);
 // router.get("/user/deletechat", deletechat);
+router.get("/user/allchat", allchat);
+
 //commit
 //console
 module.exports = router;
