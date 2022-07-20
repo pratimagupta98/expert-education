@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const thisSchema = new Schema(
   {
     roomid: { type: Schema.Types.ObjectId, ref: "chatroom" },
-    userid: { type: Schema.Types.ObjectId, ref: "user" },
-    msg_receiver: { type: Schema.Types.ObjectId, ref: "staff" },
+    staffid: { type: Schema.Types.ObjectId, ref: "staff" },
+    msg_receiver: { type: Schema.Types.ObjectId, ref: "user" },
     msg: {
       type: String,
     },
@@ -17,4 +17,4 @@ const thisSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("chat", thisSchema);
+module.exports = mongoose.model("chat_tchr", thisSchema);

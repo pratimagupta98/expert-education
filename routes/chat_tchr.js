@@ -4,26 +4,20 @@ const { tokenverify } = require("../functions/tokenverify");
 const { verifyToken } = require("../functions/stafftoken");
 
 const {
-  addchat,
+    add_tchrchat,
   unreadmessages,
   markasread,
    allchat,
   chatsinroom,
   deletechat,
-  add_tchrchat,
-  all_tchrchat
-} = require("../controllers/chat");
+} = require("../controllers/chat_tchr");
 
-router.post("/user/addchat", tokenverify, addchat);
+router.post("/user/add_tchrchat", verifyToken, add_tchrchat);
  router.get("/user/unreadmessages/:id", unreadmessages);
  router.get("/user/markasread/:id", markasread);
 // router.get("/user/chatroom/:id", chatsinroom);
 // router.get("/user/deletechat", deletechat);
 router.get("/user/allchat", allchat);
-
-// TEACHER CHAT API
-router.post("/user/add_tchrchat", verifyToken, add_tchrchat);
-router.get("/user/all_tchrchat",   all_tchrchat);
 
 //commit
 //console

@@ -8,8 +8,8 @@
 //   deletechatroom,
 // } = require("../controllers/chatroom");
 
-// router.get("/user/addchatroom/:id", verifyToken, addchatroom);
-// router.get("/user/mychatroom", verifyToken, mychatroom);
-// router.get("/user/deletechatroom/:id", deletechatroom);
+// //router.get("/user/addchatroom/:id", verifyToken, addchatroom);
+// // router.get("/user/mychatroom", verifyToken, mychatroom);
+// // router.get("/user/deletechatroom/:id", deletechatroom);
 
 // module.exports = router;

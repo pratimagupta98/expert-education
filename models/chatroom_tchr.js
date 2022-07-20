@@ -14,4 +14,4 @@ const thisSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("chatroom", thisSchema);
+module.exports = mongoose.model("chatroom_tchr", thisSchema);
