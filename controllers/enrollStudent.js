@@ -289,34 +289,34 @@ exports.viewone_enroll_course = async (req, res) => {
 //     .catch((error) => resp.errorr(res, error));
 // };
 
-// exports.enrollStudentbytoken = async (req, res) => {
-// //  const getenroll = await Course.findOne({teacher:req.params.id})
-// //  console.log(getenroll)
-// // if(getenroll){
-//   const getuser = await Course.findOne({ teacher:req.staffId   });
+exports.enrollStudentbytoken = async (req, res) => {
+   const getenroll = await Course.findOne({course_Id:req.body.id})
+//  console.log(getenroll)
+// if(getenroll){
+  const getuser = await Course.findOne({ teacher:req.staffId   });
 
-//   //$or: [{ teacher: req.staffId }, { course_Id: req.params.course_Id }]
-// if(getuser){
-//   console.log("STRING",getuser)
-// const getenroll = await enrollStudent.find({  status: "Enroll" })
-//   // await enrollStudent
-//   //   .find({staffId:req.staffId})
-//     .populate("plan_Id")
-//     .populate("course_Id")
-//     .populate("student_Id")
-//     .populate({
-//       path: "course_Id",
-//       populate: {
-//         path: "teacher",
-//       }
-//     })
+  //$or: [{ teacher: req.staffId }, { course_Id: req.params.course_Id }]
+if(getuser){
+  console.log("STRING",getuser)
+const getenroll = await enrollStudent.find({  status: "Enroll" })
+  // await enrollStudent
+  //   .find({staffId:req.staffId})
+    .populate("plan_Id")
+    .populate("course_Id")
+    .populate("student_Id")
+    .populate({
+      path: "course_Id",
+      populate: {
+        path: "teacher",
+      }
+    })
   
-//     .sort({ sortorder: 1 })
+    .sort({ sortorder: 1 })
   
-//     .then((data) => resp.successr(res, data))
-//     .catch((error) => resp.errorr(res, error));
-// };
-// }
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+}
 
 // exports.enroll_token = async (req,res) =>{
 //   const getdata  = await enrollStudent.find({teacher:req.staffId})
@@ -328,6 +328,8 @@ exports.viewone_enroll_course = async (req, res) => {
 //   }
  
   exports.enrollStudentbytoken = async (req, res) => {
+
+
    const getdetails = await enrollStudent
       .find({ $or :[{teacher: req.staffId},{student_Id: req.userId }]})
       .populate("plan_Id")
