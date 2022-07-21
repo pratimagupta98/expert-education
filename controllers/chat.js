@@ -134,26 +134,43 @@ exports.clearchat = async (req, res) => {
 
 exports.add_tchrchat = async (req, res) => {
   //const uniqueroom = uuidv4();
-  const { userid, msg, msgbysupport ,msg_receiver} = req.body;
+  const { msg_receiver,userid, msg, msgbysupport } = req.body;
 
   const newChat= new Chat({
-    userid: req.params.id, //user
-    msg: msg,
-   // roomid: req.params.rid,
-    msg_receiver :req.staffId, //staff
+     
+    msg_receiver :req.staffId,
+    userid: req.params.id,
+    msg: msg, //staff
     
   });
    
   newChat
-      .save()
-      .then((data) => resp.successr(res, data))
-      .catch((error) => resp.errorr(res, error));
+      .save() .then(( ) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          msg_receiver:req.staffId,
+          userid:req.params.id,
+          msg:msg
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+
+}
+      // .then((data) => resp.successr(res, data))
+      // .catch((error) => resp.errorr(res, error));
   
-};
+ 
 
 exports.tcher_student_allchat = async (req, res) => {
   await Chat.find({ $or :[{msg_receiver: req.staffId},{userid: req.params.id }]})
-  .populate("userid").populate("msg_receiver")
+  .populate("msg_receiver").populate("userid") 
     .sort({ createdAt: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
