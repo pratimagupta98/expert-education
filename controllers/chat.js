@@ -139,7 +139,7 @@ exports.add_tchrchat = async (req, res) => {
   const newChat= new Chat({
     userid: req.params.id, //user
     msg: msg,
-    roomid: req.params.rid,
+   // roomid: req.params.rid,
     msg_receiver :req.staffId, //staff
     
   });
@@ -152,8 +152,8 @@ exports.add_tchrchat = async (req, res) => {
 };
 
 exports.tcher_student_allchat = async (req, res) => {
-  await Chat.find({roomid:req.params.id
-  }).populate("userid").populate("msg_receiver")
+  await Chat.find({ $or :[{msg_receiver: req.staffId},{userid: req.params.id }]})
+  .populate("userid").populate("msg_receiver")
     .sort({ createdAt: 1 })
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));

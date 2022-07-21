@@ -26,13 +26,13 @@ router.get("/user/allchat", allchat);
 // TEACHER CHAT API
 router.post("/user/add_tchrchat", verifyToken, add_tchrchat);
 
-router.get("/user/tcher_student_allchat/:id",   tcher_student_allchat);
+router.get("/user/tcher_student_allchat/:id", verifyToken,  tcher_student_allchat);
 
 
 router.get("/user/mychatwith_tchr/:id", tokenverify,  mychatwith_tchr);
 
 
-router.post("/user/add_tchrchat/:id/:rid", verifyToken, add_tchrchat);
+router.post("/user/add_tchrchat/:id", verifyToken, add_tchrchat);
 
 //commit
 //console
