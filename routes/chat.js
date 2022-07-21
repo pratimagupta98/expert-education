@@ -12,7 +12,8 @@ const {
   deletechat,
   add_tchrchat,
   all_tchrchat,
-  mychatwith_tchr
+  mychatwith_tchr,
+  tcher_student_allchat
 } = require("../controllers/chat");
 
 router.post("/user/addchat", tokenverify, addchat);
@@ -24,8 +25,14 @@ router.get("/user/allchat", allchat);
 
 // TEACHER CHAT API
 router.post("/user/add_tchrchat", verifyToken, add_tchrchat);
-router.get("/user/all_tchrchat",   all_tchrchat);
+
+router.get("/user/tcher_student_allchat/:id",   tcher_student_allchat);
+
+
 router.get("/user/mychatwith_tchr/:id", tokenverify,  mychatwith_tchr);
+
+
+router.post("/user/add_tchrchat/:id/:rid", verifyToken, add_tchrchat);
 
 //commit
 //console
