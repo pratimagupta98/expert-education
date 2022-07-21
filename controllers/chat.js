@@ -64,6 +64,15 @@ exports.allchat = async (req, res) => {
     .catch((error) => resp.errorr(res, error));
 };
 
+exports.mychatwith_tchr = async (req, res) => {
+  await Chat.find({ $and :[{userid: req.userId},{msg_receiver: req.params.id }]})
+    .populate("userid").populate("msg_receiver")
+    .sort({ createdAt: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
+
+
 exports.allchatwithuser = async (req, res) => {
   await Chat.find({ userid: req.params.id })
     .populate("userid")
@@ -71,6 +80,8 @@ exports.allchatwithuser = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
 
 exports.unreadmessages = async (req, res) => {
   await Chatroom.findOne({ userid: req.params.id })
