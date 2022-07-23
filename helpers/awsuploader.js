@@ -11,7 +11,8 @@ const s3 = new AWS.S3({
 exports.uploadFile = (filePath,fileName,type) => {
     try{
         // Read content from the file
-    const fileContent = fs.readFileSync(filePath);
+    //const fileContent = fs.readFileSync(filePath);
+    const fileContent = fs.readFileSync(filePath)
     var fileStream = fs.createReadStream(filePath)
 
     // Setting up S3 upload parameters

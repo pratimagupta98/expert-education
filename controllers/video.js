@@ -62,16 +62,7 @@ exports.addvideo = async (req, res) => {
     //     //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
     //   }
     // }
-    if (req.files.video_file) {
-      for (let i = 0; i < req.files.video_file.length; i++) {
-        const geturl = await uploadFile(
-          req.files.video_file[i]?.path,
-          req.files.video_file[i]?.filename,
-          "mp4"
-        );
-        newVideo.video_file[i] = geturl.Location;
-      }
-    }
+   
     if (video_image) {
       if (video_image) {
         
@@ -93,6 +84,17 @@ exports.addvideo = async (req, res) => {
         }
       }
 
+    }
+
+    if (req.files.video_file) {
+      for (let i = 0; i < req.files.video_file.length; i++) {
+        const geturl = await uploadFile(
+          req.files.video_file[i]?.path,
+          req.files.video_file[i]?.filename,
+          "mp4"
+        );
+        newVideo.video_file[i] = geturl.Location;
+      }
     }
   newVideo
     .save()
