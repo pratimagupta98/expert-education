@@ -19,7 +19,7 @@ exports.uploadFile = (filePath,fileName,type) => {
         Bucket: 'experteducation',
         Key: `${fileName}.${type}`, // File name you want to save as in S3
         Body: fileContent,
-        ContentEncoding: 'base64',
+       // ContentEncoding: 'base64',
         ContentType: type,
         //ACL: 'public-read',
     };
