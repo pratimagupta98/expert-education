@@ -35,6 +35,7 @@ const refer_earn = require("./routes/refer_earn");
 const add_commision = require("./routes/add_commision");
 const chat = require("./routes/chat");
  
+const chatroom = require("./routes/chatroom");
 
 
 var app = express();
@@ -75,6 +76,7 @@ app.use("/api", refer_earn);
 app.use("/api", add_commision);
 
 app.use("/api", chat);
+app.use("/api", chatroom);
 
  
  

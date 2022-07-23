@@ -3,13 +3,14 @@ const Schema = mongoose.Schema;
 
 const thisSchema = new Schema(
   {
-    userid: { type: Schema.Types.ObjectId, ref: "user" },
-    last_msg: {
+    staffid: { type: Schema.Types.ObjectId, ref: "staff" },
+    msg: {
       type: String,
     },
-    new_unread_msg:{
-        type: Number,
-    }
+    userid :
+     { type: Schema.Types.ObjectId, ref: "user" },
+    
+    
   },
   { timestamps: true }
 );

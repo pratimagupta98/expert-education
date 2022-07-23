@@ -3,17 +3,21 @@ const Schema = mongoose.Schema;
 
 const thisSchema = new Schema(
   {
-    roomid: { type: Schema.Types.ObjectId, ref: "chatroom" },
-    msg_receiver: { type: Schema.Types.ObjectId, ref: "staff" },
+    
+   // msg_receiver: { type: Schema.Types.ObjectId, ref: "staff" },
     userid: { type: Schema.Types.ObjectId, ref: "user" },
-    msg_receiver: { type: Schema.Types.ObjectId, ref: "staff" },
     msg: {
       type: String,
     },
+
+    roomid: { type: Schema.Types.ObjectId, ref: "chatroom" },
     msgbysupport: {
       type: Boolean,
       default: false,
     },
+    msg_receiver: { type: Schema.Types.ObjectId, ref: "staff" },
+   
+   
   },
   { timestamps: true }
 );

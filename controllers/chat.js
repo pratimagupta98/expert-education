@@ -13,8 +13,9 @@ exports.addchat = async (req, res) => {
     userid: req.userId,
     msg: msg,
     roomid: uniqueroom,
-    msg_receiver :msg_receiver,
     msgbysupport: msgbysupport,
+    msg_receiver :msg_receiver,
+    
   });
 
   const newChatroom = new Chatroom({
@@ -51,8 +52,31 @@ exports.addchat = async (req, res) => {
       newChat.roomid = savechat._id;
       newChat
         .save()
-        .then((data) => resp.successr(res, data))
-        .catch((error) => resp.errorr(res, error));
+        .then((data) => {
+          res.status(200).json({
+            status: true,
+           // msg:msg,
+          //  msg_receiver:req.params.id,
+          roomid: uniqueroom,
+   
+   
+          data: [{  msg:req.body.msg},{userid: req.userId,
+          }],
+         msg_receiver:req.body.id,
+          });
+        })
+        .catch((error) => {
+          res.status(200).json({
+            status: false,
+            msg: "error",
+            error: error,
+          });
+        });
+    
+
+
+        // .then((data) => resp.successr(res, data))
+        // .catch((error) => resp.errorr(res, error));
     }
   }
 };
@@ -92,7 +116,7 @@ exports.unreadmessages = async (req, res) => {
 };
 
 exports.getallchatrooms = async (req, res) => {
-  await Chatroom.find()
+  await Chatroom.find({roomid:req.params.id})
     .populate("userid")
     .sort({ updatedAt: 1 })
     .then((data) => resp.successr(res, data))
@@ -148,10 +172,14 @@ exports.add_tchrchat = async (req, res) => {
       .save() .then(( ) => {
         res.status(200).json({
           status: true,
-          msg: "success",
-          msg_receiver:req.staffId,
+          //msg: "success",
+         // msg_receiver:req.staffId,
+          msg:msg,
           userid:req.params.id,
-          msg:msg
+   
+   
+          data: [{  msg:req.body.msg},{msg_receiver:req.staffId}]
+          
         });
       })
       .catch((error) => {
@@ -169,9 +197,23 @@ exports.add_tchrchat = async (req, res) => {
  
 
 exports.tcher_student_allchat = async (req, res) => {
-  await Chat.find({ $or :[{msg_receiver: req.staffId},{userid: req.params.id }]})
+ const findall = await Chat.find({ $or :[{msg_receiver: req.staffId},{userid: req.params.id }]})
   .populate("msg_receiver").populate("userid") 
     .sort({ createdAt: 1 })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
+if(findall){
+  res.status(200).json({
+    status: true,
+    //msg: "success",
+   // msg_receiver:req.staffId,
+    //msg:msg,
+   // userid:req.params.id,
+   data :findall
+   
+  //  data: [{findall:findall}]
+    
+  });
+}
+
+    // .then((data) => resp.successr(res, data))
+    // .catch((error) => resp.errorr(res, error));
 };
