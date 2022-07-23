@@ -62,39 +62,20 @@ exports.addvideo = async (req, res) => {
     //     //fs.unlinkSync(`../uploads/${req.files.video_image[i]?.filename}`);
     //   }
     // }
-   
-    if (video_image) {
-      if (video_image) {
-        
 
-        const base64Data = new Buffer.from(video_image.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-        detectMimeType(base64Data);
-        const type = detectMimeType(video_image);
-        // console.log(newCourse,"@@@@@");
-        const geturl = await uploadBase64ImageFile(
-          base64Data,
-          newVideo.id,
-         type
-        );
-        console.log(geturl,"&&&&");
-        if (geturl) {
-          newVideo.video_image = geturl.Location;
-         
-          //fs.unlinkSync(`../uploads/${req.files.course_image[0]?.filename}`);
-        }
+    if(req.files.video_file){
+      console.log(req.files)
+      if(req.files.video_file){
+          const geturl = await uploadFile(
+            req.files.video_file[0]?.path,
+            req.files.video_file[0]?.filename,
+            "mp4"
+            );
+            if (geturl) {
+              newVideo.video_file = geturl.Location;
+           //  fs.unlinkSync(`../uploads/${req.files.video_file[0]?.filename}`);
       }
-
-    }
-
-    if (req.files.video_file) {
-      for (let i = 0; i < req.files.video_file.length; i++) {
-        const geturl = await uploadFile(
-          req.files.video_file[i]?.path,
-          req.files.video_file[i]?.filename,
-          "mp4"
-        );
-        newVideo.video_file[i] = geturl.Location;
-      }
+  }
     }
   newVideo
     .save()
