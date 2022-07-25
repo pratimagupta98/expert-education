@@ -168,32 +168,11 @@ exports.add_tchrchat = async (req, res) => {
     
   });
    
-  newChat
-      .save() .then(( ) => {
-        res.status(200).json({
-          status: true,
-          //msg: "success",
-         // msg_receiver:req.staffId,
-          msg:msg,
-          userid:req.params.id,
-   
-   
-          data: [{  msg:req.body.msg},{msg_receiver:req.staffId}]
-          
-        });
-      })
-      .catch((error) => {
-        res.status(400).json({
-          status: false,
-          msg: "error",
-          error: error,
-        });
-      });
-
-}
-      // .then((data) => resp.successr(res, data))
-      // .catch((error) => resp.errorr(res, error));
+  newChat.save()
   
+      .then((data) => resp.successr(res, data))
+      .catch((error) => resp.errorr(res, error));
+}
  
 
 exports.tcher_student_allchat = async (req, res) => {
