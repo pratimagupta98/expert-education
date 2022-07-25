@@ -197,23 +197,10 @@ exports.add_tchrchat = async (req, res) => {
  
 
 exports.tcher_student_allchat = async (req, res) => {
- const findall = await Chat.find({ $or :[{msg_receiver: req.staffId},{userid: req.params.id }]})
+ await Chat.find({ $or :[{msg_receiver: req.staffId},{userid: req.params.id }]})
   .populate("msg_receiver").populate("userid") 
     .sort({ createdAt: 1 })
-if(findall){
-  res.status(200).json({
-    status: true,
-    //msg: "success",
-   // msg_receiver:req.staffId,
-    //msg:msg,
-   // userid:req.params.id,
-   data :findall
-   
-  //  data: [{findall:findall}]
-    
-  });
-}
-
-    // .then((data) => resp.successr(res, data))
-    // .catch((error) => resp.errorr(res, error));
+ 
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
 };
