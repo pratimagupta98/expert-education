@@ -14,7 +14,8 @@ const {
   all_tchrchat,
   mychatwith_tchr,
   tcher_student_allchat,
-  getallchatrooms
+  getallchatrooms,
+  getone_tchr_chat
 } = require("../controllers/chat");
 
 router.post("/user/addchat/:id", tokenverify, addchat);
@@ -35,6 +36,7 @@ router.get("/user/mychatwith_tchr/:id", tokenverify,  mychatwith_tchr);
 
 router.post("/user/add_tchrchat/:id", verifyToken, add_tchrchat);
 router.get("/user/getallchatrooms/:id",  getallchatrooms);
+router.get("/user/getone_tchr_chat/:userid",  getone_tchr_chat);
 
 // getallchatrooms
 //commit

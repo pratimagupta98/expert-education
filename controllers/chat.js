@@ -183,3 +183,12 @@ exports.tcher_student_allchat = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+
+exports.getone_tchr_chat = async (req, res) => {
+  await Chat.findOne({userid:req.params.userid})
+    .populate("userid").populate("msg_receiver")
+    .sort({ updatedAt: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
