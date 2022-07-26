@@ -192,3 +192,11 @@ exports.getone_tchr_chat = async (req, res) => {
     .then((data) => resp.successr(res, data))
     .catch((error) => resp.errorr(res, error));
 };
+
+exports.getone_student_chat = async (req, res) => {
+  await Chat.findOne({msg_receiver:req.params.msg_receiver})
+    .populate("userid").populate("msg_receiver")
+    .sort({ updatedAt: 1 })
+    .then((data) => resp.successr(res, data))
+    .catch((error) => resp.errorr(res, error));
+};
