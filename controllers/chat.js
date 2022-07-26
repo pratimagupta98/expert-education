@@ -14,7 +14,7 @@ exports.addchat = async (req, res) => {
     msg: msg,
     roomid: uniqueroom,
     msgbysupport: msgbysupport,
-    msg_receiver :msg_receiver,
+    msg_receiver : req.params.id,
     
   });
 

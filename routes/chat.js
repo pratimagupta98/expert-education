@@ -17,7 +17,7 @@ const {
   getallchatrooms
 } = require("../controllers/chat");
 
-router.post("/user/addchat", tokenverify, addchat);
+router.post("/user/addchat/:id", tokenverify, addchat);
  router.get("/user/unreadmessages/:id", unreadmessages);
  router.get("/user/markasread/:id", markasread);
 // router.get("/user/chatroom/:id", chatsinroom);
