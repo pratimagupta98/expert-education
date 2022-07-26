@@ -176,7 +176,7 @@ exports.add_tchrchat = async (req, res) => {
  
 
 exports.tcher_student_allchat = async (req, res) => {
- await Chat.find({ $or :[{msg_receiver: req.staffId},{userid: req.params.id }]})
+ await Chat.find({ $and :[{msg_receiver: req.staffId},{userid: req.params.id }]})
   .populate("msg_receiver").populate("userid") 
     .sort({ createdAt: 1 })
  
