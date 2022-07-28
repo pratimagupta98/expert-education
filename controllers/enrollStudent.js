@@ -503,26 +503,79 @@ exports.chat_techr_list = async (req, res) => {
 
  exports.total_enroll_user = async (req, res) => {
 //   const getcourse = await enrollStudent.countDocuments({course_Id :req.body.course_Id})
-const getdetails = await enrollStudent
-.find(  {teacher: req.staffId } )
+// const getdetails = await enrollStudent
+// .find(  {teacher: req.staffId } )
    
-//    console.log(getcourse)
+// //    console.log(getcourse)
    
- // await enrollStudent.find()
-    // .populate("plan_Id")
-    // .populate("course_Id")
-    .populate("student_Id")
-    .populate({
-      path: "course_Id",
-      populate: {
-        path: "teacher",
-      }
-    })
+//  // await enrollStudent.find()
+//     // .populate("plan_Id")
+//     // .populate("course_Id")
+//     .populate("student_Id")
+//     .populate({
+//       path: "course_Id",
+//       populate: {
+//         path: "teacher",
+//       }
+//     })
     
-    //  .sort({ sortorder: 1 })
-    .then((data) => resp.successr(res, data))
-    .catch((error) => resp.errorr(res, error));
-};
+//     //  .sort({ sortorder: 1 })
+//     .then((data) => resp.successr(res, data))
+//     .catch((error) => resp.errorr(res, error));
+// };
+
+
+//const getdetails = await enrollStudent
+const getdetails = await enrollStudent.find(  {teacher: req.staffId } )
+      .populate("plan_Id")
+          .populate("course_Id")
+          .populate("student_Id")
+          .populate({
+             path: "course_Id",
+             populate: {
+               path: "teacher",
+             }
+           })
+      
+      .sort({ sortorder: 1 })
+
+   //   const findall = await enrollStudent.find({student_Id:req.userId})
+   let record = [];
+   
+ //  let uniqueChars = [...new Set(record)];
+  //  console.log("hfjdbf",record)
+
+   
+     for (const element of getdetails) {
+        if (element.student_Id) {
+         
+          record.push(element.student_Id);
+          // let uniqueChars = [...new Set(record)]
+          // console.log("hfjdbf",uniqueChars)
+          
+          // console.log("EElement",element)
+          // student = element.student_Id
+          // abc = student.fullname
+          // console.log("string",abc)
+        // console.log("STUDENT",element.student_Id);  
+      }
+    }
+    let uniqueCharss = [...new Set(record)]
+    console.log("hfjdbf",uniqueCharss)
+    //let uniqueChars =[]
+    
+      res.status(200).json({
+        status: true,
+        message: "success", 
+        count: uniqueCharss.length,
+        //data : getdetails,
+        //student :record,
+        //count :
+        student:uniqueCharss
+      })
+   
+
+  };
 
 exports.enrollstudent_incourse = async (req, res) => {
   await enrollStudent.countDocuments({course_Id :req.params.id}).populate({
