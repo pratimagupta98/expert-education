@@ -504,7 +504,7 @@ exports.chat_techr_list = async (req, res) => {
  exports.total_enroll_user = async (req, res) => {
 //   const getcourse = await enrollStudent.countDocuments({course_Id :req.body.course_Id})
 const getdetails = await enrollStudent
-.find(  {student_Id: req.userId } )
+.find(  {teacher: req.staffId } )
    
 //    console.log(getcourse)
    
